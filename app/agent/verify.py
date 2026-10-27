@@ -98,6 +98,28 @@ def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry
                       None if similarity is None else round(similarity, 3), invalid)
 
 
+def attribute_citations(answer: str, registry: EvidenceRegistry) -> tuple[list[ClaimCheck], str]:
+    """Match each sentence of an uncited answer to its best-supporting evidence.
+
+    Returns (checks, answer with [S#] appended) when *every* factual sentence is grounded
+    (all numbers/IDs found, enough word overlap); otherwise ([], original answer).
+    """
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+|\n+", answer) if s.strip()]
+    checks: list[ClaimCheck] = []
+    cited_answer = answer
+    for sentence in sentences:
+        if len(sentence.split()) < 4:  # headings, bullets like "Services:" - nothing to verify
+            continue
+        candidates = [check_claim(sentence, [ev.sid], registry) for ev in registry.all()]
+        grounded = [c for c in candidates if not c.missing_tokens and c.support in ("supported", "partial")]
+        if not grounded:
+            return [], answer
+        best = max(grounded, key=lambda c: c.lexical_overlap)
+        checks.append(best)
+        cited_answer = cited_answer.replace(sentence, f"{sentence} [{best.citations[0]}]", 1)
+    return checks, cited_answer
+
+
 def verify_answer(
     submitted: dict[str, Any],
     registry: EvidenceRegistry,
@@ -144,10 +166,19 @@ def verify_answer(
         status = "insufficient_evidence"
         warnings.append("Weak evidence and weakly supported claims; abstaining.")
     elif status == "answered" and not checks:
-        # Strict grounding: an answer that cites nothing cannot be verified, so it is not presented
-        # as an answer (this is how invented "facts" without sources are caught).
-        status = "insufficient_evidence"
-        warnings.append("The draft answer cited no evidence, so it could not be verified; abstaining.")
+        # The model answered without citations. Try to attribute every sentence to evidence it has
+        # seen (post-hoc attribution). If any sentence cannot be grounded - e.g. a number that appears
+        # in no source - the answer is unverifiable and the system abstains instead of guessing.
+        auto_checks, answer_text = attribute_citations(answer_text, registry)
+        if auto_checks:
+            checks = auto_checks
+            supported = [c for c in checks if c.support == "supported"]
+            partial = [c for c in checks if c.support == "partial"]
+            groundedness = (len(supported) + 0.5 * len(partial)) / len(checks)
+            warnings.append("Citations were added automatically by matching each sentence to the evidence.")
+        else:
+            status = "insufficient_evidence"
+            warnings.append("The draft answer cited no evidence and could not be matched to the sources; abstaining.")
 
     contradictions = [c for c in (submitted.get("contradictions") or []) if isinstance(c, dict)]
     covered = " ".join(str(c.get("description", "")) for c in contradictions).lower()

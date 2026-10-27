@@ -235,7 +235,15 @@ def test_submission_written_as_text_is_parsed(store, retriever, corpus):
     assert result["status"] == "insufficient_evidence" and result["answer"] == "Not in the documents."
 
 
-def test_answer_without_citations_abstains(store, retriever, corpus):
+def test_uncited_invented_fact_abstains(store, retriever, corpus):
     result = _agent(store, retriever, ["PayFlex charges roughly 12 EUR per connection."]).run("PayFlex fee?", corpus="t")
     assert result["status"] == "insufficient_evidence"
-    assert any("cited no evidence" in w for w in result["warnings"])
+    assert any("could not be matched" in w for w in result["warnings"])
+
+
+def test_uncited_but_grounded_answer_gets_citations(store, retriever, corpus):
+    result = _agent(store, retriever, ["The incident lasted 107 minutes and started at 14:05 UTC."]).run(
+        "How long did INC-2041 last?", corpus="t")
+    assert result["status"] == "answered"
+    assert "[S" in result["answer"] and result["sources"]
+    assert any("added automatically" in w for w in result["warnings"])
