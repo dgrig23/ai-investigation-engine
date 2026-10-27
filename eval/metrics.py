@@ -89,9 +89,15 @@ def contains_answer(prediction: str, gold: str) -> float:
 _UNICODE = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2013": "-", "\u2014": "-", "\u00a0": " ", "\u202f": " "})
 
 
+def _canon(text: str) -> str:
+    """Lower-case, ASCII hyphens/spaces, no thousands separators, '80 %' == '80%'."""
+    text = text.translate(_UNICODE).lower().replace(",", "")
+    return re.sub(r"(\d)\s+%", r"\1%", text)
+
+
 def fact_present(answer: str, fact: str) -> bool:
-    low = answer.translate(_UNICODE).lower().replace(",", "")
-    return any(alt.strip().lower().replace(",", "") in low for alt in fact.split("|") if alt.strip())
+    low = _canon(answer)
+    return any(_canon(alt.strip()) in low for alt in fact.split("|") if alt.strip())
 
 
 def key_fact_recall(answer: str, facts: Sequence[str]) -> float:

@@ -63,7 +63,7 @@ class Settings(BaseSettings):
     groq_model: str = "openai/gpt-oss-120b"
     cerebras_model: str = "gpt-oss-120b"
     mistral_model: str = "mistral-small-latest"
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-flash-lite-latest"
     llm_timeout_s: float = 60.0
     llm_max_retries: int = 3
     llm_max_wait_s: float = 60.0  # wait this long at most when every provider is rate-limited

@@ -105,3 +105,10 @@ def test_ask_stream_emits_events(client):
 def test_validation_errors(client):
     assert client.post("/api/ask", json={"question": "x"}).status_code == 422
     assert client.get("/api/search", params={"q": "pool", "mode": "nope"}).status_code == 422
+
+
+def test_fact_matching_tolerates_formatting():
+    assert m.fact_present("usage exceeds 80 % for 5 minutes", "80%")
+    assert m.fact_present("usage exceeds 80 % for 5 minutes", "80%")
+    assert m.fact_present("CHG‑1042 was deployed", "CHG-1042")
+    assert not m.fact_present("usage exceeds 8 % for 5 minutes", "80%")
