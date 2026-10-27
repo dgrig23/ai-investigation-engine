@@ -301,3 +301,21 @@ def test_one_unverified_claim_makes_answer_partial():
         {"statement": "PayFlex charges per persistent connection", "citations": ["S1"]},
         {"statement": "The fee is about 12 EUR per connection", "citations": ["S1"]}]}, reg, [], 0.0, -4.0)
     assert out["status"] == "partial" and "could not be verified" in out["warnings"][0]
+
+
+def test_years_multipart_ids_and_commentary():
+    from app.agent.verify import attribute_citations
+
+    reg = EvidenceRegistry()
+    reg.add(Chunk(chunk_id="a", doc_id="inc", corpus="t", position=0, title="Incident report INC-2052",
+                  text="On 2026-04-02 StarReels games loaded slowly because of an outage at StarReels."))
+    reg.add(Chunk(chunk_id="b", doc_id="pm", corpus="t", position=0, title="Postmortem PM-2047",
+                  text="Action items: AI-2047-1 lint migrations (owner: Levan Abashidze)."))
+    assert check_claim("StarReels games were slow in April 2026 because of a StarReels outage", ["S1"], reg).support != "unsupported"
+    assert check_claim("AI-2047-1 lint migrations, owned by Levan Abashidze", ["S2"], reg).missing_tokens == []
+    checks, _ = attribute_citations("StarReels games loaded slowly because of an outage at StarReels. "
+                                    "Lint migrations are owned by Levan Abashidze. "
+                                    "This shows how important vendor monitoring really is.", reg)
+    assert len(checks) == 2  # the commentary sentence is tolerated (1 of 3 ungrounded)
+    checks, _ = attribute_citations("StarReels games loaded slowly because of an outage at StarReels. It lasted 45 minutes.", reg)
+    assert checks == []  # an ungrounded sentence with a number is never tolerated

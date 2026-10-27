@@ -45,7 +45,7 @@ def normalize_llm_text(text: str) -> str:
 # Facts that must appear verbatim in a cited source: IDs (CHG-1042), ISO dates, times (14:05) and
 # free-standing numbers. Numbers glued to letters (v3.2, gpt-4) are part of a name, not a quantity.
 EXACT_TOKEN_RE = re.compile(
-    r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}:\d{2}\b|(?<![\w.\-])\d[\d,]*(?:\.\d+)?%?(?![\w.]*\d)"
+    r"\b[A-Z]{2,6}-\d{2,6}(?:-\d+)*\b|\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}:\d{2}\b|(?<![\w.\-])\d[\d,]*(?:\.\d+)?%?(?![\w.]*\d)"
 )
 CITATION_RE = re.compile(r"\[(S\d+)\]")
 
@@ -67,9 +67,15 @@ def _norm_number(tok: str) -> str:
 
 def _token_in(token: str, text: str) -> bool:
     """Whole-token match: '0' must not match inside '2052'; '1,800' matches '1800'."""
-    tok = re.escape(_norm_number(token))
-    # Not part of a longer number, a version (v3.2) or a date/range (2026-03-12): "12" must stand alone.
-    return re.search(rf"(?<![\w.])(?<!\d-){tok}(?![\w])(?!-\d)", text.replace(",", "")) is not None
+    norm = _norm_number(token)
+    tok = re.escape(norm)
+    text = text.replace(",", "")
+    if not re.fullmatch(r"\d+(?:\.\d+)?%?", norm):  # IDs, dates, times: plain word boundaries
+        return re.search(rf"(?<![\w-]){tok}(?![\w])", text) is not None
+    if re.fullmatch(r"(19|20)\d\d", norm):  # a year may appear inside a date (2026-04-02)
+        return re.search(rf"(?<![\w.-]){tok}(?!\d)", text) is not None
+    # Other numbers stand alone: not part of a version (v3.2), a longer number or a date (…-03-12).
+    return re.search(rf"(?<![\w.])(?<!\d-){tok}(?![\w])(?!-\d)", text) is not None
 
 
 def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry, embedder=None) -> ClaimCheck:
@@ -121,11 +127,11 @@ def attribute_citations(answer: str, registry: EvidenceRegistry) -> tuple[list[C
     (all numbers/IDs found, enough word overlap); otherwise ([], original answer).
     """
     sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+|\n+", answer) if s.strip()]
+    sentences = [s for s in sentences if len(s.split()) >= 4]  # headings, bullets like "Services:"
     checks: list[ClaimCheck] = []
     cited_answer = answer
+    ungrounded = 0
     for sentence in sentences:
-        if len(sentence.split()) < 4:  # headings, bullets like "Services:" - nothing to verify
-            continue
         candidates = [check_claim(sentence, [ev.sid], registry) for ev in registry.all()]
         grounded = [c for c in candidates if not c.missing_tokens and c.support in ("supported", "partial")]
         if not grounded:
@@ -136,7 +142,14 @@ def attribute_citations(answer: str, registry: EvidenceRegistry) -> tuple[list[C
                      for i, a in enumerate(top) for b in top[i + 1:] if a.citations and b.citations]
             grounded = [c for c in pairs if not c.missing_tokens and c.support in ("supported", "partial")]
         if not grounded:
-            return [], answer
+            # A sentence stating a number, date or ID must be grounded; commentary may be tolerated
+            # as long as at least 75% of all sentences are grounded.
+            if EXACT_TOKEN_RE.search(sentence):
+                return [], answer
+            ungrounded += 1
+            if ungrounded > 0.25 * len(sentences):
+                return [], answer
+            continue
         best = max(grounded, key=lambda c: c.lexical_overlap)
         checks.append(best)
         marks = "".join(f"[{sid}]" for sid in best.citations)
