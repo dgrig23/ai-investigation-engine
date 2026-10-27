@@ -24,3 +24,4 @@ data/processed/hotpotqa_docs.jsonl
 STUDY_GUIDE.md
 data/qdrant_*/
 .claude/
+eval/results/*.log
