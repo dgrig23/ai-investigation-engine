@@ -154,6 +154,8 @@ def score_answer(qu: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         "prompt_tokens": result.get("prompt_tokens"), "completion_tokens": result.get("completion_tokens"),
         "latency_ms": result.get("latency_ms"), "cited_docs": cited_docs, "answer": answer[:1500],
         "warnings": result.get("warnings", []), "tools": [t.get("tool") for t in result.get("trace", {}).get("tool_steps", [])],
+        "contradictions": [c.get("description", "")[:300] for c in result.get("contradictions", [])],
+        "missing_information": str(result.get("missing_information", ""))[:300],
     }
     if qu["flag_contradiction"]:
         row["contradiction_detected"] = row["contradiction_flagged"]
@@ -165,6 +167,16 @@ def score_answer(qu: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
     if "answer" in qu:
         row["token_f1"] = m.token_f1(answer, qu["answer"])
     return row
+
+
+def judge_view(result: dict[str, Any]) -> str:
+    """Everything a user sees: status, answer, reported contradictions and missing information."""
+    parts = [f"[status: {result.get('status')}]", result.get("answer", "") or "(no answer text)"]
+    if result.get("contradictions"):
+        parts.append("Reported contradictions: " + " | ".join(c.get("description", "") for c in result["contradictions"]))
+    if result.get("missing_information"):
+        parts.append("Missing information: " + str(result["missing_information"]))
+    return "\n".join(parts)
 
 
 def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep_s: float, ids: list[str] | None,
@@ -182,7 +194,7 @@ def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep
             reference = qu.get("answer") or "; ".join(qu["key_facts"])
             if qu["flag_contradiction"]:
                 reference += " (and the answer must mention that sources disagree)"
-            row.update(judge_answer(judge, qu["question"], qu["expect"], reference, result.get("answer", "")))
+            row.update(judge_answer(judge, qu["question"], qu["expect"], reference, judge_view(result)))
         rows.append(row)
         print(f"[{i}/{len(questions)}] {qu['id']:>10s} {row['status']:22s} correct={row['correct']} "
               f"calls={row['llm_calls']} {time.perf_counter() - started:.1f}s")

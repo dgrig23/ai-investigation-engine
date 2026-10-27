@@ -45,11 +45,11 @@ Layers and their single responsibility:
 synthetic corpus for the investigation scenario the task describes):
 
 1. **HotpotQA** (distractor, validation split, 7,405 questions). Each question ships 10 Wikipedia
-   paragraphs (2 gold + 8 hard distractors). Pooling them gives 74,050 paragraphs; exact dedup leaves
-   the unique documents indexed (see README for the measured count, > 50,000). Gold supporting
+   paragraphs (2 gold + 8 hard distractors). Pooling them gives 73,700 paragraphs (a few questions have fewer than 10); dedup leaves
+   66,552 unique documents (67,680 chunks) indexed. Gold supporting
    paragraphs give exact ground truth for Recall@k/MRR on multi-hop (`bridge`) and comparison questions.
    A fixed random sample (seed 42) is used for evaluation - fully reproducible.
-2. **Acme Play incident corpus** (`scripts/generate_incident_corpus.py`): ~100 files in 7 formats for
+2. **Acme Play incident corpus** (`scripts/generate_incident_corpus.py`): 55 files in 7 formats for
    a fictional gaming platform. Generated from one ground truth, so every answer is known. It
    contains planted cause chains, contradictions, superseded facts, an exact duplicate, a near-duplicate
    draft, missing information and prompt-injection text. This is the corpus that reproduces the task's
@@ -102,7 +102,7 @@ query ─┬─ dense: bge-small-en-v1.5 (ONNX, CPU), cosine, top 40 ─┐
   multi-hop questions pay for more. (Cost decision, important on free tiers.)
 - Tool calling (OpenAI-compatible function calling, works on Groq, Cerebras, Mistral, Gemini):
   `search_documents(query, doc_type?, date_from?, date_to?)`, `find_mentions(entity)`,
-  `read_document(doc_id)`, and `submit_answer(...)` - the final answer itself is a tool call, which
+  `read_document(doc_id)`, `list_documents(doc_type)` (enumerates every document of a type, for "all X" questions where top-k search cannot guarantee completeness), and `submit_answer(...)` - the final answer itself is a tool call, which
   forces a structured result (answer, claims with citations, contradictions, status, missing info).
 - Step budget (default 4) and a context budget (24k chars); on the last step only `submit_answer` is
   offered with `tool_choice="required"`.
