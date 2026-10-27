@@ -113,10 +113,18 @@ def attribute_citations(answer: str, registry: EvidenceRegistry) -> tuple[list[C
         candidates = [check_claim(sentence, [ev.sid], registry) for ev in registry.all()]
         grounded = [c for c in candidates if not c.missing_tokens and c.support in ("supported", "partial")]
         if not grounded:
+            # A synthesis sentence ("A took 107 min, longer than B's 97 min") combines two sources:
+            # try pairs of the most overlapping passages.
+            top = sorted(candidates, key=lambda c: -c.lexical_overlap)[:6]
+            pairs = [check_claim(sentence, [a.citations[0], b.citations[0]], registry)
+                     for i, a in enumerate(top) for b in top[i + 1:] if a.citations and b.citations]
+            grounded = [c for c in pairs if not c.missing_tokens and c.support in ("supported", "partial")]
+        if not grounded:
             return [], answer
         best = max(grounded, key=lambda c: c.lexical_overlap)
         checks.append(best)
-        cited_answer = cited_answer.replace(sentence, f"{sentence} [{best.citations[0]}]", 1)
+        marks = "".join(f"[{sid}]" for sid in best.citations)
+        cited_answer = cited_answer.replace(sentence, f"{sentence} {marks}", 1)
     return checks, cited_answer
 
 

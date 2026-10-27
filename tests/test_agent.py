@@ -247,3 +247,13 @@ def test_uncited_but_grounded_answer_gets_citations(store, retriever, corpus):
     assert result["status"] == "answered"
     assert "[S" in result["answer"] and result["sources"]
     assert any("added automatically" in w for w in result["warnings"])
+
+
+def test_synthesis_sentence_is_grounded_by_two_sources():
+    from app.agent.verify import attribute_citations
+
+    reg = EvidenceRegistry()
+    reg.add(Chunk(chunk_id="a", doc_id="pm1", corpus="t", position=0, title="PM-2041", text="INC-2041 lasted 107 minutes."))
+    reg.add(Chunk(chunk_id="b", doc_id="pm2", corpus="t", position=0, title="PM-2047", text="INC-2047 lasted 97 minutes."))
+    checks, cited = attribute_citations("INC-2041 lasted 107 minutes, longer than INC-2047 at 97 minutes.", reg)
+    assert checks and set(checks[0].citations) == {"S1", "S2"} and cited.endswith("[S1][S2]")
