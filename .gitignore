@@ -19,3 +19,6 @@ data/processed/hotpotqa_docs.jsonl
 .DS_Store
 .vscode/
 .idea/
+
+# Personal notes (not part of the submission)
+STUDY_GUIDE.md
