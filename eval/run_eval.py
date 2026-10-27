@@ -25,10 +25,12 @@ from pathlib import Path
 from typing import Any
 
 from app.config import get_settings
+from app.llm.client import LLMClient
 from app.observability import setup_logging
 from app.retrieval.retriever import RetrievalConfig
 from app.services import Services
 from eval import metrics as m
+from eval.judge import judge_answer
 
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "eval" / "results"
@@ -162,7 +164,8 @@ def score_answer(qu: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
     return row
 
 
-def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep_s: float, ids: list[str] | None) -> dict[str, Any]:
+def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep_s: float, ids: list[str] | None,
+                judge: LLMClient | None = None) -> dict[str, Any]:
     questions, corpus = load_questions(dataset, limit)
     if ids:
         questions = [q for q in questions if q["id"] in ids]
@@ -172,6 +175,11 @@ def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep
         started = time.perf_counter()
         result = svc.investigator.run(qu["question"], corpus=corpus, config=cfg)
         row = score_answer(qu, result)
+        if judge is not None and result.get("status") != "llm_unavailable":
+            reference = qu.get("answer") or "; ".join(qu["key_facts"])
+            if qu["flag_contradiction"]:
+                reference += " (and the answer must mention that sources disagree)"
+            row.update(judge_answer(judge, qu["question"], qu["expect"], reference, result.get("answer", "")))
         rows.append(row)
         print(f"[{i}/{len(questions)}] {qu['id']:>10s} {row['status']:22s} correct={row['correct']} "
               f"calls={row['llm_calls']} {time.perf_counter() - started:.1f}s")
@@ -179,7 +187,7 @@ def run_answers(svc: Services, dataset: str, mode: str, limit: int | None, sleep
             time.sleep(sleep_s)  # be gentle with free-tier rate limits
     keys = ["correct", "key_fact_recall", "abstained", "contradiction_detected", "contradiction_false_positive",
             "injection_resisted", "citation_precision", "citation_recall", "groundedness", "llm_calls",
-            "prompt_tokens", "completion_tokens", "latency_ms", "token_f1"]
+            "prompt_tokens", "completion_tokens", "latency_ms", "token_f1", "judge_score"]
     return {"kind": "answers", "dataset": dataset, "mode": mode, "n_questions": len(rows), "commit": git_commit(),
             "llm": svc.llm.describe(), "llm_stats": svc.llm.stats.as_dict(), "summary": summarize(rows, keys), "rows": rows}
 
@@ -196,6 +204,7 @@ def main() -> None:
     parser.add_argument("--ids", default=None, help="comma-separated question ids")
     parser.add_argument("--sleep", type=float, default=2.0)
     parser.add_argument("--name", default=None, help="output file name (without .json)")
+    parser.add_argument("--judge", default=None, help="LLM provider(s) used as judge, e.g. cerebras")
     args = parser.parse_args()
 
     setup_logging("WARNING")
@@ -212,7 +221,9 @@ def main() -> None:
         report = run_retrieval(svc, args.dataset, args.configs.split(","), args.limit, svc.settings.chunk_strategy)
         name = args.name or f"retrieval_{args.dataset}_{svc.settings.chunk_strategy}"
     else:
-        report = run_answers(svc, args.dataset, args.mode, args.limit, args.sleep, args.ids.split(",") if args.ids else None)
+        judge = LLMClient(svc.settings.model_copy(update={"llm_providers": args.judge})) if args.judge else None
+        report = run_answers(svc, args.dataset, args.mode, args.limit, args.sleep,
+                             args.ids.split(",") if args.ids else None, judge)
         provider = (args.providers or svc.llm.describe()[0]["provider"] if svc.llm.describe() else "none").replace(",", "+")
         name = args.name or f"answers_{args.dataset}_{args.mode}_{provider}"
         o = report["summary"]["overall"]
