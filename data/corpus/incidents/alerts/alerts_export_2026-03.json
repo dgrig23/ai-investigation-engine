@@ -1,0 +1,43 @@
+{
+ "title": "Alert history export March 2026",
+ "doc_type": "alerts",
+ "date": "2026-03-31",
+ "alerts": [
+  {
+   "time": "2026-03-03 07:47",
+   "alert": "KycUploadErrorRate",
+   "service": "kyc-service",
+   "severity": "critical"
+  },
+  {
+   "time": "2026-03-12 14:20",
+   "alert": "PaymentGatewayTimeoutRate",
+   "service": "payment-gateway",
+   "severity": "critical"
+  },
+  {
+   "time": "2026-03-12 14:24",
+   "alert": "DepositSuccessRateLow",
+   "service": "wallet-service",
+   "severity": "critical"
+  },
+  {
+   "time": "2026-03-15 02:30",
+   "alert": "ReportJobFailed",
+   "service": "reporting-service",
+   "severity": "warning"
+  },
+  {
+   "time": "2026-03-18 22:09",
+   "alert": "LedgerWriteLatencyHigh",
+   "service": "ledger-service",
+   "severity": "critical"
+  },
+  {
+   "time": "2026-03-18 22:12",
+   "alert": "WithdrawalQueueBacklog",
+   "service": "wallet-service",
+   "severity": "critical"
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "channel": "#inc-2041",
+ "doc_type": "chat_export",
+ "date": "2026-03-12",
+ "messages": [
+  {
+   "ts": "2026-03-12 14:21",
+   "user": "alertbot",
+   "text": "FIRING: PaymentGatewayTimeoutRate > 5% on payment-gateway (deposits)"
+  },
+  {
+   "ts": "2026-03-12 14:22",
+   "user": "Nika Kapanadze",
+   "text": "Ack, I'm on it. Opening INC-2041 as SEV-1, deposits are timing out."
+  },
+  {
+   "ts": "2026-03-12 14:25",
+   "user": "Nika Kapanadze",
+   "text": "PayFlex status page shows all systems operational. Still looks like PayFlex calls are slow though."
+  },
+  {
+   "ts": "2026-03-12 14:31",
+   "user": "Tom Weber",
+   "text": "Joining. Error rate on deposits is about 18% now."
+  },
+  {
+   "ts": "2026-03-12 14:38",
+   "user": "Tom Weber",
+   "text": "Pool usage is 50/50 on every payment-gateway pod. We lowered the PayFlex pool to 50 on Monday with CHG-1042."
+  },
+  {
+   "ts": "2026-03-12 14:52",
+   "user": "Maya Chen",
+   "text": "fraud-scoring p99 is 470ms since this morning's deploy of model v3.2 (CHG-1051). Before it was ~80ms."
+  },
+  {
+   "ts": "2026-03-12 14:55",
+   "user": "Tom Weber",
+   "text": "That's it: payment-gateway holds the PayFlex connection while waiting for fraud-scoring. Slow scoring + 50 connections = exhausted pool."
+  },
+  {
+   "ts": "2026-03-12 15:20",
+   "user": "Ana Lomidze",
+   "text": "Decision: roll back fraud-scoring to v3.1 now. Pool size change can wait for tomorrow's CAB."
+  },
+  {
+   "ts": "2026-03-12 15:31",
+   "user": "Maya Chen",
+   "text": "Rollback done (CHG-1053), v3.1 serving."
+  },
+  {
+   "ts": "2026-03-12 15:40",
+   "user": "Tom Weber",
+   "text": "Pool usage back to 22/50, timeouts gone."
+  },
+  {
+   "ts": "2026-03-12 15:52",
+   "user": "Nika Kapanadze",
+   "text": "Declaring INC-2041 resolved. Postmortem owner: Ana."
+  }
+ ]
+}

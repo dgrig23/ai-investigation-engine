@@ -1,0 +1,62 @@
+change_id,date,time_utc,service,type,author,description,risk,status
+CHG-1001,2026-01-05,16:00,api-gateway,normal,Sara Klein,Raise rate limit for partner API keys from 300 to 500 requests per minute,low,implemented
+CHG-1002,2026-01-07,17:45,api-gateway,standard,Lisa Novak,Rotate TLS certificates for the public edge,low,implemented
+CHG-1003,2026-01-10,15:15,auth-service,standard,Lisa Novak,Enable WebAuthn as an optional second factor,low,implemented
+CHG-1004,2026-01-11,09:00,auth-service,normal,Lisa Novak,Shorten idle session timeout from 60 to 30 minutes,low,implemented
+CHG-1005,2026-01-14,15:00,bonus-engine,standard,Tom Weber,Add weekend free-spin campaign configuration,low,implemented
+CHG-1006,2026-01-16,11:45,bonus-engine,standard,Sara Klein,Upgrade Redis client library to 5.2,low,implemented
+CHG-1007,2026-01-18,13:45,game-aggregator,normal,Sara Klein,Onboard StarReels studio game catalogue,low,implemented
+CHG-1008,2026-01-19,09:30,game-aggregator,standard,Sara Klein,Increase provider callback timeout from 2s to 3s,low,implemented
+CHG-1009,2026-01-22,10:30,kyc-service,standard,Elene Japaridze,Switch document OCR vendor to new API version,low,implemented
+CHG-1010,2026-01-23,13:45,kyc-service,normal,Sara Klein,Renew storage endpoint TLS certificate,low,implemented
+CHG-1011,2026-01-27,14:45,notification-service,standard,Tom Weber,Add Georgian language templates for deposit receipts,low,implemented
+CHG-1012,2026-01-28,16:45,notification-service,standard,David Okafor,Move SMS sending to a second provider for redundancy,low,implemented
+CHG-1013,2026-01-31,12:45,reporting-service,normal,Giorgi Tsiklauri,Increase Spark executor memory for nightly regulatory report,low,implemented
+CHG-1014,2026-02-02,16:00,reporting-service,standard,Giorgi Tsiklauri,Add daily responsible-gaming limits report,low,implemented
+CHG-1015,2026-02-03,08:00,wallet-service,standard,Maya Chen,Add metrics for balance cache hit rate,low,implemented
+CHG-1016,2026-02-06,10:45,wallet-service,normal,Elene Japaridze,Upgrade JVM from 17 to 21,low,implemented
+CHG-1017,2026-02-07,15:45,ledger-service,standard,Tom Weber,Add read replica for reporting queries,low,implemented
+CHG-1018,2026-02-10,14:30,payment-gateway,standard,Giorgi Tsiklauri,Add CardNova 3-D Secure 2.2 support,low,implemented
+CHG-1019,2026-02-12,14:15,payment-gateway,normal,David Okafor,Log PSP response codes as structured fields,low,implemented
+CHG-1020,2026-02-14,08:00,fraud-scoring,standard,Ana Lomidze,Add feature store cache warm-up on startup,low,implemented
+CHG-1021,2026-02-16,15:45,api-gateway,standard,Lisa Novak,Raise rate limit for partner API keys from 300 to 500 requests per minute (follow-up),low,implemented
+CHG-1031,2026-02-16,10:00,bonus-engine,normal,Sara Klein,Change idempotency key format for bonus credit requests,medium,implemented
+CHG-1022,2026-02-19,12:45,api-gateway,normal,Levan Abashidze,Rotate TLS certificates for the public edge (follow-up),low,implemented
+CHG-1023,2026-02-21,15:45,auth-service,standard,Giorgi Tsiklauri,Enable WebAuthn as an optional second factor (follow-up),low,implemented
+CHG-1024,2026-02-22,13:45,auth-service,standard,Ana Lomidze,Shorten idle session timeout from 60 to 30 minutes (follow-up),low,implemented
+CHG-1025,2026-02-24,16:30,bonus-engine,normal,Elene Japaridze,Add weekend free-spin campaign configuration (follow-up),low,implemented
+CHG-1026,2026-02-27,14:45,bonus-engine,standard,Maya Chen,Upgrade Redis client library to 5.2 (follow-up),low,implemented
+CHG-1027,2026-02-28,15:30,game-aggregator,standard,Ana Lomidze,Onboard StarReels studio game catalogue (follow-up),low,implemented
+CHG-1028,2026-03-02,14:15,game-aggregator,normal,Levan Abashidze,Increase provider callback timeout from 2s to 3s (follow-up),low,implemented
+CHG-1029,2026-03-05,09:00,kyc-service,standard,Nika Kapanadze,Switch document OCR vendor to new API version (follow-up),low,implemented
+CHG-1030,2026-03-07,16:00,kyc-service,standard,Lisa Novak,Renew storage endpoint TLS certificate (follow-up),low,implemented
+CHG-1032,2026-03-09,09:00,notification-service,normal,Levan Abashidze,Add Georgian language templates for deposit receipts (follow-up),low,implemented
+CHG-1042,2026-03-09,10:30,payment-gateway,normal,Tom Weber,Reduce PayFlex connection pool max size from 200 to 50 to lower per-connection PSP fees,low,implemented
+CHG-1033,2026-03-12,10:00,notification-service,standard,Sara Klein,Move SMS sending to a second provider for redundancy (follow-up),low,implemented
+CHG-1051,2026-03-12,09:15,fraud-scoring,normal,Maya Chen,Deploy fraud model v3.2 with new device-fingerprint features,low,implemented
+CHG-1053,2026-03-12,15:31,fraud-scoring,emergency,Maya Chen,Roll back fraud model to v3.1 during INC-2041,low,implemented
+CHG-1055,2026-03-13,11:40,payment-gateway,emergency,Tom Weber,Restore PayFlex connection pool max size to 200 after INC-2041,low,implemented
+CHG-1034,2026-03-14,17:45,reporting-service,standard,Lisa Novak,Increase Spark executor memory for nightly regulatory report (follow-up),low,implemented
+CHG-1035,2026-03-15,11:45,reporting-service,normal,Giorgi Tsiklauri,Add daily responsible-gaming limits report (follow-up),low,implemented
+CHG-1036,2026-03-17,16:30,wallet-service,standard,Lisa Novak,Add metrics for balance cache hit rate (follow-up),low,implemented
+CHG-1047,2026-03-18,22:00,ledger-service,normal,Levan Abashidze,Add index idx_entries_account_created on ledger_entries (online migration),medium,implemented
+CHG-1037,2026-03-19,10:15,wallet-service,standard,David Okafor,Upgrade JVM from 17 to 21 (follow-up),low,implemented
+CHG-1058,2026-03-20,21:00,ledger-service,normal,Levan Abashidze,Rebuild idx_entries_account_created with CREATE INDEX CONCURRENTLY after INC-2047,medium,implemented
+CHG-1038,2026-03-22,14:45,ledger-service,normal,Giorgi Tsiklauri,Add read replica for reporting queries (follow-up),low,implemented
+CHG-1039,2026-03-23,11:45,payment-gateway,standard,Giorgi Tsiklauri,Add CardNova 3-D Secure 2.2 support (follow-up),low,implemented
+CHG-1040,2026-03-25,14:00,payment-gateway,standard,Tom Weber,Log PSP response codes as structured fields (follow-up),low,implemented
+CHG-1041,2026-03-27,13:00,fraud-scoring,normal,Sara Klein,Add feature store cache warm-up on startup (follow-up),low,implemented
+CHG-1043,2026-03-30,15:30,api-gateway,standard,Giorgi Tsiklauri,Raise rate limit for partner API keys from 300 to 500 requests per minute (follow-up),low,implemented
+CHG-1044,2026-04-02,13:00,api-gateway,standard,Elene Japaridze,Rotate TLS certificates for the public edge (follow-up),low,implemented
+CHG-1045,2026-04-04,17:15,auth-service,normal,Elene Japaridze,Enable WebAuthn as an optional second factor (follow-up),low,implemented
+CHG-1046,2026-04-05,16:15,auth-service,standard,Lisa Novak,Shorten idle session timeout from 60 to 30 minutes (follow-up),low,implemented
+CHG-1048,2026-04-08,13:45,bonus-engine,standard,Lisa Novak,Add weekend free-spin campaign configuration (follow-up),low,implemented
+CHG-1049,2026-04-09,16:45,bonus-engine,normal,Tom Weber,Upgrade Redis client library to 5.2 (follow-up),low,implemented
+CHG-1050,2026-04-11,10:00,game-aggregator,standard,Levan Abashidze,Onboard StarReels studio game catalogue (follow-up),low,implemented
+CHG-1052,2026-04-13,11:45,game-aggregator,standard,Elene Japaridze,Increase provider callback timeout from 2s to 3s (follow-up),low,implemented
+CHG-1054,2026-04-15,16:15,kyc-service,normal,Maya Chen,Switch document OCR vendor to new API version (follow-up),low,implemented
+CHG-1056,2026-04-17,10:45,kyc-service,standard,Maya Chen,Renew storage endpoint TLS certificate (follow-up),low,implemented
+CHG-1057,2026-04-21,16:45,notification-service,standard,David Okafor,Add Georgian language templates for deposit receipts (follow-up),low,implemented
+CHG-1059,2026-04-22,12:15,notification-service,normal,David Okafor,Move SMS sending to a second provider for redundancy (follow-up),low,implemented
+CHG-1060,2026-04-25,12:45,reporting-service,standard,Maya Chen,Increase Spark executor memory for nightly regulatory report (follow-up),low,implemented
+CHG-1061,2026-04-27,12:45,reporting-service,standard,David Okafor,Add daily responsible-gaming limits report (follow-up),low,implemented

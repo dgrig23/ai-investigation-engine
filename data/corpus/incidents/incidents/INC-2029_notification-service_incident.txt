@@ -1,0 +1,13 @@
+Incident report INC-2029: Email notification delays
+
+Summary
+Email notification delays (SEV-3). On 2026-01-22 the incident started at 09:10 UTC and was resolved at 12:10 UTC, a duration of 180 minutes. Impact: password-reset and deposit-receipt emails were delayed by up to three hours.
+
+Affected services
+notification-service (owner: Platform team).
+
+Root cause
+The root cause was the email vendor applied a sending rate limit after a marketing campaign burst.
+
+Follow-up
+Action items are tracked in the reliability review.

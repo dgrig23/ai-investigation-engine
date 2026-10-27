@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><title>Service catalog</title>
+<meta name="doc_type" content="service_catalog">
+<meta name="date" content="2025-12-10">
+<meta name="author" content="Platform team">
+</head>
+<body>
+<nav>Acme Play intranet | Home | Services | Status</nav>
+<h1>Service catalog</h1>
+<p>Last updated: 2025-12-10. Owners, tiers and descriptions of production services.</p><table><tr><th>Service</th><th>Owner</th><th>Tier</th><th>Description</th></tr><tr><td>api-gateway</td><td>Edge team</td><td>Tier 1</td><td>Routes all client traffic; rate limiting and authentication checks.</td></tr><tr><td>payment-gateway</td><td>Payments Platform team</td><td>Tier 0</td><td>Talks to payment service providers (PayFlex, CardNova) for deposits and payouts.</td></tr><tr><td>wallet-service</td><td>Payments Platform team</td><td>Tier 0</td><td>Holds player balances; credits deposits and debits withdrawals.</td></tr><tr><td>ledger-service</td><td>Payments Platform team</td><td>Tier 0</td><td>Double-entry ledger of every money movement, stored in the ledger-db PostgreSQL cluster.</td></tr><tr><td>fraud-scoring</td><td>Risk team</td><td>Tier 0</td><td>Scores every deposit synchronously before it is sent to the payment provider.</td></tr><tr><td>kyc-service</td><td>Compliance Engineering</td><td>Tier 1</td><td>Identity verification and document uploads.</td></tr><tr><td>bonus-engine</td><td>Promotions team</td><td>Tier 2</td><td>Bonuses, free spins and loyalty rewards.</td></tr><tr><td>game-aggregator</td><td>Games team</td><td>Tier 1</td><td>Integrates third-party game studios such as StarReels.</td></tr><tr><td>notification-service</td><td>Platform team</td><td>Tier 2</td><td>Email, SMS and push notifications.</td></tr><tr><td>reporting-service</td><td>Data team</td><td>Tier 2</td><td>Nightly regulatory and business reports.</td></tr><tr><td>auth-service</td><td>Identity team</td><td>Tier 0</td><td>Login, sessions and two-factor authentication.</td></tr></table>
+<footer>Internal use only</footer>
+</body></html>
