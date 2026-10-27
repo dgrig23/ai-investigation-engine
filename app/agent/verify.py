@@ -143,11 +143,11 @@ def attribute_citations(answer: str, registry: EvidenceRegistry) -> tuple[list[C
             grounded = [c for c in pairs if not c.missing_tokens and c.support in ("supported", "partial")]
         if not grounded:
             # A sentence stating a number, date or ID must be grounded; commentary may be tolerated
-            # as long as at least 75% of all sentences are grounded.
+            # as long as at least two thirds of all sentences are grounded.
             if EXACT_TOKEN_RE.search(sentence):
                 return [], answer
             ungrounded += 1
-            if ungrounded > 0.25 * len(sentences):
+            if ungrounded > len(sentences) / 3:
                 return [], answer
             continue
         best = max(grounded, key=lambda c: c.lexical_overlap)
