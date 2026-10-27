@@ -86,8 +86,11 @@ def contains_answer(prediction: str, gold: str) -> float:
     return float(bool(g) and g in normalize_answer(prediction))
 
 
+_UNICODE = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2013": "-", "\u2014": "-", "\u00a0": " ", "\u202f": " "})
+
+
 def fact_present(answer: str, fact: str) -> bool:
-    low = answer.lower().replace(",", "")
+    low = answer.translate(_UNICODE).lower().replace(",", "")
     return any(alt.strip().lower().replace(",", "") in low for alt in fact.split("|") if alt.strip())
 
 

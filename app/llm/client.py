@@ -156,6 +156,23 @@ class LLMClient:
         if not self.providers:
             raise LLMUnavailableError("No LLM provider configured. Add at least one API key to .env.")
         errors: list[str] = []
+        for round_ in range(2):
+            response = self._try_providers(messages, tools, tool_choice, max_tokens, errors)
+            if response is not None:
+                return response
+            # Every provider failed. If they are only *temporarily* blocked (e.g. a per-minute token
+            # quota), waiting a little beats giving up; a long block (bad key) is not worth waiting for.
+            wait = min(p.open_until for p in self.providers) - time.time()
+            if round_ == 0 and 0 < wait <= self.settings.llm_max_wait_s:
+                log.warning("all providers cooling down; waiting %.0fs", wait)
+                time.sleep(wait + 0.5)
+                continue
+            break
+        with self._lock:
+            self.stats.errors.extend(errors)
+        raise LLMUnavailableError("All LLM providers failed: " + " | ".join(errors))
+
+    def _try_providers(self, messages, tools, tool_choice, max_tokens, errors: list[str]) -> LLMResponse | None:
         for provider in self.providers:
             if provider.open_until > time.time():
                 errors.append(f"{provider.name}: circuit open")
@@ -174,9 +191,7 @@ class LLMClient:
             if self.cache:
                 self.cache.put(key, asdict(response))
             return response
-        with self._lock:
-            self.stats.errors.extend(errors)
-        raise LLMUnavailableError("All LLM providers failed: " + " | ".join(errors))
+        return None
 
     # ------------------------------------------------------------------ internals
 
@@ -193,6 +208,8 @@ class LLMClient:
                 if tools:
                     kwargs["tools"] = tools
                     kwargs["tool_choice"] = choice
+                if self.settings.llm_reasoning_effort and "gpt-oss" in p.model:
+                    kwargs["reasoning_effort"] = self.settings.llm_reasoning_effort
                 raw = p.client.chat.completions.create(**kwargs)
                 p.failures = 0
                 return self._parse(p, raw, (time.perf_counter() - started) * 1000)

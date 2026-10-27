@@ -176,3 +176,32 @@ def test_llm_client_fails_over_to_next_provider(settings, monkeypatch):
     assert resp.provider == "cerebras" and resp.content == "hello"
     assert bad.n == 2  # retried before failing over
     assert client.providers[0].open_until > 0  # circuit opened for the failing provider
+
+
+def test_unicode_hyphens_from_llm_are_normalized():
+    from app.agent.verify import normalize_llm_text, verify_answer
+
+    assert normalize_llm_text("CHG‑1042 saved EUR 1 800") == "CHG-1042 saved EUR 1 800"
+    reg = _registry_with("CHG-1042 reduced the pool to 50.")
+    out = verify_answer({"answer": "CHG‑1042 reduced the pool to 50 [S1].", "status": "answered", "claims": [
+        {"statement": "CHG‑1042 reduced the pool to 50.", "citations": ["S1"]}]}, reg, [], 0.0, -4.0)
+    assert "CHG-1042" in out["answer"] and out["claims"][0]["missing_tokens"] == []
+
+
+def test_llm_client_waits_when_all_providers_cool_down(settings, monkeypatch):
+    from pydantic import SecretStr
+
+    slept = []
+    s = settings.model_copy(update={"groq_api_key": SecretStr("x"), "llm_providers": "groq", "llm_max_retries": 1})
+    client = LLMClient(s, use_cache=False)
+
+    def fake_sleep(seconds):  # "waiting" ends the cooldown
+        slept.append(seconds)
+        client.providers[0].open_until = 0
+
+    monkeypatch.setattr("app.llm.client.time.sleep", fake_sleep)
+    good = _FakeCompletions(None)
+    client.providers[0].client = type("C", (), {"chat": type("Ch", (), {"completions": good})()})()
+    client.providers[0].open_until = __import__("time").time() + 5  # rate-limited for 5 more seconds
+    resp = client.chat([{"role": "user", "content": "hi"}])
+    assert resp.content == "hello" and slept and 4 <= slept[0] <= 6

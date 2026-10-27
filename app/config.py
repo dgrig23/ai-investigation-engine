@@ -60,14 +60,17 @@ class Settings(BaseSettings):
     cerebras_api_key: SecretStr | None = None
     mistral_api_key: SecretStr | None = None
     gemini_api_key: SecretStr | None = None
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "openai/gpt-oss-120b"
     cerebras_model: str = "gpt-oss-120b"
     mistral_model: str = "mistral-small-latest"
     gemini_model: str = "gemini-2.5-flash"
     llm_timeout_s: float = 60.0
     llm_max_retries: int = 3
+    llm_max_wait_s: float = 60.0  # wait this long at most when every provider is rate-limited
     llm_temperature: float = 0.0
-    llm_max_output_tokens: int = 1200
+    llm_max_output_tokens: int = 2000
+    # Reasoning models (gpt-oss) think before answering; "low" keeps latency and tokens down.
+    llm_reasoning_effort: str | None = "low"
     llm_cache_path: str = str(DATA_DIR / "cache" / "llm_cache.sqlite")
 
     # --- Agent ---

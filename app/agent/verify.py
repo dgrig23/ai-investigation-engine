@@ -13,6 +13,7 @@ support is weak, the system abstains ("insufficient evidence") instead of answer
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -22,6 +23,18 @@ import numpy as np
 from app.agent.contradictions import ConflictHint
 from app.agent.evidence import EvidenceRegistry
 from app.index.bm25 import tokenize
+
+_UNICODE_FIXES = str.maketrans({
+    "‐": "-", "‑": "-", "‒": "-", "\u2013": "-", "\u2014": "-", "−": "-",  # hyphens/dashes
+    " ": " ", " ": " ", " ": " ", " ": " ",  # non-breaking / thin spaces
+})
+
+
+def normalize_llm_text(text: str) -> str:
+    """Models often write 'CHG‑1042' with a non-breaking hyphen (U+2011) or '1 800' with a narrow
+    space. Normalizing keeps IDs and numbers comparable with the source documents."""
+    return text.translate(_UNICODE_FIXES)
+
 
 EXACT_TOKEN_RE = re.compile(r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{1,2}:\d{2}\b|\b\d[\d,]*(?:\.\d+)?%?")
 CITATION_RE = re.compile(r"\[(S\d+)\]")
@@ -89,7 +102,9 @@ def verify_answer(
     best_rerank_score: float | None,
     abstain_threshold: float,
     embedder=None,
+    question: str = "",
 ) -> dict[str, Any]:
+    submitted = json.loads(normalize_llm_text(json.dumps(submitted, ensure_ascii=False)))
     status = str(submitted.get("status", "answered")).lower()
     claims_in = submitted.get("claims") or []
     answer_text = str(submitted.get("answer", "")).strip()
@@ -130,7 +145,10 @@ def verify_answer(
 
     contradictions = [c for c in (submitted.get("contradictions") or []) if isinstance(c, dict)]
     covered = " ".join(str(c.get("description", "")) for c in contradictions).lower()
+    context = (question + " " + answer_text).upper()
     for hint in conflict_hints:
+        if hint.entity.upper() not in context:
+            continue  # only report conflicts about something the question or answer is about
         key_terms = [hint.attribute.split()[0], hint.entity.lower()]
         if not all(t.lower() in covered for t in key_terms):
             contradictions.append({

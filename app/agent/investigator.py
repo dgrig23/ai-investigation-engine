@@ -127,7 +127,8 @@ class Investigator:
                          "missing_information": "The agent did not reach a conclusion within its step budget."}
 
         all_hints = find_conflicts(registry.all())
-        verified = verify_answer(submitted, registry, all_hints, state.best_rerank, cfg.abstain_threshold, self.embedder)
+        verified = verify_answer(submitted, registry, all_hints, state.best_rerank, cfg.abstain_threshold, self.embedder,
+                                 question=question)
         result = {
             "question": question,
             "corpus": corpus,
