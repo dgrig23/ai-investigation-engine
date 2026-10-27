@@ -34,6 +34,9 @@ def normalize_llm_text(text: str) -> str:
     """Models often write 'CHG‑1042' with a non-breaking hyphen (U+2011), '1 800' with a narrow
     space or '[ S1 ]' with spaces. Normalizing keeps IDs, numbers and citations comparable."""
     text = text.translate(_UNICODE_FIXES)
+    text = re.sub(r"[\u200b\u200c\u200d\u2060\ufeff]", "", text)  # zero-width characters
+    # gpt-oss style "【S8】" / "【S8†L3-L9】" -> "[S8]"
+    text = re.sub(r"【\s*(S\d+)[^】]*】", r"[\1]", text)
     # "[ S6 , S13 ]" or "[S6, S13]" -> "[S6][S13]"
     return re.sub(r"\[\s*(S\d+(?:\s*[,;]\s*S\d+)*)\s*\]",
                   lambda m: "".join(f"[{sid}]" for sid in re.findall(r"S\d+", m.group(1))), text)
@@ -58,6 +61,12 @@ def _norm_number(tok: str) -> str:
     return tok.replace(",", "").rstrip("%").rstrip(".")
 
 
+def _token_in(token: str, text: str) -> bool:
+    """Whole-token match: '0' must not match inside '2052'; '1,800' matches '1800'."""
+    tok = re.escape(_norm_number(token))
+    return re.search(rf"(?<![\w.]){tok}(?![\w])", text.replace(",", "")) is not None
+
+
 def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry, embedder=None) -> ClaimCheck:
     valid = [c.upper() for c in citations if c in registry]
     invalid = [c for c in citations if c not in registry]
@@ -66,12 +75,11 @@ def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry
 
     cited_texts = [registry.get(c).chunk.context_text() for c in valid]
     joined = " ".join(cited_texts)
-    joined_norm = _norm_number(joined)
     # Ignore numbers that are only part of a citation marker like [S3].
     claim_wo_citations = CITATION_RE.sub("", statement)
     missing = []
     for tok in EXACT_TOKEN_RE.findall(claim_wo_citations):
-        if tok not in joined and _norm_number(tok) not in joined_norm.replace(",", ""):
+        if not _token_in(tok, joined):
             missing.append(tok)
 
     claim_terms = set(tokenize(claim_wo_citations))
@@ -86,11 +94,12 @@ def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry
 
     strong = overlap >= 0.5 or (similarity is not None and similarity >= 0.75)
     weak_ok = overlap >= 0.25 or (similarity is not None and similarity >= 0.6)
-    if not missing and strong:
+    # A number, time or ID that appears in none of the cited sources is an unverified fact.
+    if missing:
+        support = "unsupported"
+    elif strong:
         support = "supported"
-    elif not missing and weak_ok:
-        support = "partial"
-    elif missing and weak_ok:
+    elif weak_ok:
         support = "partial"
     else:
         support = "unsupported"
@@ -170,7 +179,10 @@ def verify_answer(
     if status == "answered" and checks and not supported and not partial:
         status = "insufficient_evidence"
         warnings.append("No claim in the draft answer was supported by the cited evidence; abstaining.")
-    elif status == "answered" and low_retrieval and groundedness < 0.5:
+    elif status == "answered" and any(c.support == "unsupported" for c in checks):
+        bad = [c.statement[:80] for c in checks if c.support == "unsupported"]
+        warnings.append(f"{len(bad)} claim(s) could not be verified against the cited sources: " + " | ".join(bad))
+    if status == "answered" and low_retrieval and groundedness < 0.5:
         status = "insufficient_evidence"
         warnings.append("Weak evidence and weakly supported claims; abstaining.")
     elif status == "answered" and not checks:

@@ -269,5 +269,11 @@ class VectorStore:
         )
         return [dict(p.payload or {}) for p in points], (str(next_offset) if next_offset else None)
 
+    def list_documents_by_type(self, doc_type: str, corpus: str | None = None, limit: int = 60) -> list[dict[str, Any]]:
+        must: list[models.Condition] = [models.FieldCondition(key="metadata.doc_type", match=models.MatchValue(value=doc_type))]
+        if corpus:
+            must.append(models.FieldCondition(key="corpus", match=models.MatchValue(value=corpus)))
+        return self._find_docs(must, limit)
+
     def count_documents(self, corpus: str | None = None) -> int:
         return self.client.count(self.docs_collection, count_filter=build_filter(corpus=corpus), exact=True).count

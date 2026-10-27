@@ -46,8 +46,8 @@ def _agent(store, retriever, script, mode="agent"):
 def test_agent_multi_step_with_citations(store, retriever, corpus):
     script = [
         [("find_mentions", {"entity": "CHG-1042"})],
-        [("submit_answer", {"answer": "INC-2041 lasted 107 minutes [S1].", "status": "answered",
-                            "claims": [{"statement": "The incident lasted 107 minutes.", "citations": ["S1"]}]})],
+        [("submit_answer", {"answer": "INC-2041 lasted 107 minutes [S1][S2].", "status": "answered",
+                            "claims": [{"statement": "The incident lasted 107 minutes.", "citations": ["S1", "S2"]}]})],
     ]
     agent = _agent(store, retriever, script)
     events = list(agent.stream("How long did INC-2041 last?", corpus="t"))
@@ -57,7 +57,7 @@ def test_agent_multi_step_with_citations(store, retriever, corpus):
     result = events[-1]["result"]
     assert result["status"] == "answered"
     assert result["claims"][0]["support"] in ("supported", "partial")
-    assert result["sources"][0]["id"] == "S1"
+    assert {src["id"] for src in result["sources"]} == {"S1", "S2"}
     # Tool results were sent back to the model as `tool` messages
     assert any(m["role"] == "tool" for m in agent.llm.calls[-1]["messages"])
 
@@ -257,3 +257,23 @@ def test_synthesis_sentence_is_grounded_by_two_sources():
     reg.add(Chunk(chunk_id="b", doc_id="pm2", corpus="t", position=0, title="PM-2047", text="INC-2047 lasted 97 minutes."))
     checks, cited = attribute_citations("INC-2041 lasted 107 minutes, longer than INC-2047 at 97 minutes.", reg)
     assert checks and set(checks[0].citations) == {"S1", "S2"} and cited.endswith("[S1][S2]")
+
+
+def test_citation_styles_and_whole_token_numbers():
+    from app.agent.verify import normalize_llm_text
+
+    assert normalize_llm_text("lasted 107 minutes\u3010S8\u3011 and [\u200bS4]") == "lasted 107 minutes[S8] and [S4]"
+    reg = _registry_with("INC-2052: StarReels games loaded slowly for 31 minutes.")
+    assert check_claim("0 deposits failed during INC-2052", ["S1"], reg).support == "unsupported"  # '0' is not in '2052'
+    assert check_claim("PayFlex charges 12 EUR per connection", ["S1"], reg).missing_tokens == ["12"]
+
+
+def test_list_documents_tool(store, retriever, corpus):
+    script = [[("list_documents", {"doc_type": "postmortem"})],
+              [("submit_answer", {"answer": "x", "status": "insufficient_evidence", "claims": []})]]
+    agent = _agent(store, retriever, script)
+    events = list(agent.stream("List all postmortems", corpus="t"))
+    result_event = next(e for e in events if e["type"] == "tool_result" and e["tool"] == "list_documents")
+    assert "1 postmortem" in result_event["message"]
+    tool_replies = [m["content"] for m in agent.llm.calls[-1]["messages"] if m["role"] == "tool"]
+    assert any("t:pm.md" in r for r in tool_replies)

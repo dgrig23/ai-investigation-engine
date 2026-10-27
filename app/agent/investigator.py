@@ -162,6 +162,8 @@ class Investigator:
                 res = self._find_mentions(str(args.get("entity", "")).strip(), corpus, registry, state, cfg)
             elif name == "read_document":
                 res = self._read_document(str(args.get("doc_id", "")).strip(), registry, state, cfg)
+            elif name == "list_documents":
+                res = self._list_documents(str(args.get("doc_type", "")).strip(), corpus, state)
             else:
                 return _tool_text(f"Error: unknown tool '{name}'.")
         except Exception as exc:  # a failing tool must not crash the whole investigation
@@ -227,6 +229,19 @@ class Investigator:
         text = f"Full document {doc_id} ({len(chunks)} passages):\n"
         text += "\n".join(EvidenceRegistry.render(e, cfg.snippet_chars + 300) for e in evs)
         return {"text": text, "event": {"evidence": [e.to_dict(max_chars=300) for e in evs]}}
+
+    def _list_documents(self, doc_type, corpus, state) -> dict[str, Any]:
+        """Enumerate every document of a type from the registry (no ranking, no top-k cut-off)."""
+        if not doc_type:
+            return _tool_text("Error: 'doc_type' is required.")
+        docs = self.store.list_documents_by_type(doc_type.lower().replace(" ", "_"), corpus=corpus, limit=60)
+        state.tool_trace.append({"tool": "list_documents", "doc_type": doc_type, "count": len(docs)})
+        if not docs:
+            return _tool_text(f"No documents of type '{doc_type}'.")
+        docs.sort(key=lambda d: str((d.get("metadata") or {}).get("date", "")))
+        lines = [f"- {d['title']} | doc_id={d['doc_id']} | date={(d.get('metadata') or {}).get('date', 'unknown')}" for d in docs]
+        text = f"{len(docs)} documents of type {doc_type} (use read_document or search to see their content):\n" + "\n".join(lines)
+        return {"text": text, "event": {"evidence": [], "message": f"{len(docs)} {doc_type} documents"}}
 
     # ------------------------------------------------------------------ degraded mode
 
