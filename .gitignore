@@ -22,3 +22,5 @@ data/processed/hotpotqa_docs.jsonl
 
 # Personal notes (not part of the submission)
 STUDY_GUIDE.md
+data/qdrant_*/
+.claude/
