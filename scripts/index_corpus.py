@@ -26,7 +26,21 @@ from app.services import Services
 
 INCIDENTS_DIR = DATA_DIR / "corpus" / "incidents"
 HOTPOT_DOCS = DATA_DIR / "processed" / "hotpotqa_docs.jsonl"
-EMBED_CACHE = DATA_DIR / "cache" / "hotpotqa_embeddings.npz"
+EMBED_CACHE = DATA_DIR / "cache" / "hotpotqa_embeddings.npz"  # default model (bge-small)
+HOTPOT_QUESTIONS = DATA_DIR.parent / "eval" / "datasets" / "hotpotqa_questions.jsonl"
+
+
+def embed_cache_path(model: str) -> Path:
+    """One cache file per embedding model - vectors of different models must never be mixed."""
+    if model == "BAAI/bge-small-en-v1.5":
+        return EMBED_CACHE
+    return DATA_DIR / "cache" / f"hotpotqa_embeddings_{model.replace('/', '_')}.npz"
+
+
+def embedding_dim(model: str) -> int:
+    from fastembed import TextEmbedding
+
+    return next(m["dim"] for m in TextEmbedding.list_supported_models() if m["model"] == model)
 
 
 def index_incidents(svc: Services, force: bool = False) -> None:
@@ -48,21 +62,32 @@ def index_incidents(svc: Services, force: bool = False) -> None:
     print(f"incidents: {counts}; avg chunk length {sum(lengths) / max(len(lengths), 1):.1f} tokens")
 
 
-def index_hotpotqa(svc: Services, limit: int | None, embed_only: bool = False) -> None:
+def index_hotpotqa(svc: Services, limit: int | None, embed_only: bool = False, subset: int | None = None) -> None:
     if not HOTPOT_DOCS.exists():
         raise SystemExit("Missing HotpotQA docs. Run: python -m scripts.prepare_hotpotqa")
     docs = []
+    keep: set[str] | None = None
+    if subset:  # gold paragraphs of the evaluation questions + `subset` random other paragraphs (seed 42)
+        import random
+
+        gold = {g for line in HOTPOT_QUESTIONS.open() for g in json.loads(line)["gold_doc_ids"]}
+        all_ids = [json.loads(line)["doc_id"] for line in HOTPOT_DOCS.open()]
+        others = [d for d in all_ids if d not in gold]
+        keep = gold | set(random.Random(42).sample(others, subset))
+        print(f"subset: {len(gold)} gold + {subset} other paragraphs")
     with HOTPOT_DOCS.open() as f:
         for i, line in enumerate(f):
             if limit and i >= limit:
                 break
             d = json.loads(line)
+            if keep is not None and d["doc_id"] not in keep:
+                continue
             docs.append(Document(
                 doc_id=d["doc_id"], title=d["title"], text=d["text"], corpus="hotpotqa", source="hotpot_qa/distractor/validation",
                 format="jsonl", metadata={"doc_type": "encyclopedia", "entities": extract_entities(d["text"])},
             ))
     started = time.time()
-    cache = CachedPassageEmbedder(svc.embedder, str(EMBED_CACHE))
+    cache = CachedPassageEmbedder(svc.embedder, str(embed_cache_path(svc.settings.embedding_model)))
     print(f"embedding cache: {len(cache)} vectors already computed")
     svc.__dict__["embedder"] = cache  # the ingestion service below picks up the cached embedder
     svc.__dict__.pop("ingestion", None)
@@ -91,6 +116,9 @@ def main() -> None:
     parser.add_argument("--force", action="store_true", help="incidents: re-ingest every file even if unchanged")
     parser.add_argument("--limit", type=int, default=None, help="index only the first N HotpotQA docs")
     parser.add_argument("--embed-only", action="store_true", help="HotpotQA: only compute and cache embeddings")
+    parser.add_argument("--subset", type=int, default=None, help="HotpotQA: eval gold paragraphs + N random others")
+    parser.add_argument("--embedding-model", default=None, help="e.g. BAAI/bge-base-en-v1.5 (for model comparison)")
+    parser.add_argument("--prefix", default=None, help="collection prefix, to keep comparison indexes separate")
     args = parser.parse_args()
 
     setup_logging("INFO")
@@ -98,6 +126,11 @@ def main() -> None:
     settings = get_settings()
     if args.strategy:
         settings = settings.model_copy(update={"chunk_strategy": args.strategy})
+    if args.embedding_model:
+        settings = settings.model_copy(update={"embedding_model": args.embedding_model,
+                                               "embedding_dim": embedding_dim(args.embedding_model)})
+    if args.prefix:
+        settings = settings.model_copy(update={"collection_prefix": args.prefix})
     svc = Services(settings)
     print(f"Qdrant: {'cloud ' + settings.qdrant_url if settings.qdrant_url else 'local ' + settings.qdrant_path}; "
           f"collection {svc.store.chunks_collection}")
@@ -106,7 +139,7 @@ def main() -> None:
     if args.corpus == "incidents":
         index_incidents(svc, args.force)
     else:
-        index_hotpotqa(svc, args.limit, args.embed_only)
+        index_hotpotqa(svc, args.limit, args.embed_only, args.subset)
     print(f"total chunks in collection: {svc.store.count_chunks()}")
 
 

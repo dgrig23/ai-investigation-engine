@@ -114,8 +114,10 @@ ORDER = ["dense", "bm25", "hybrid_rrf", "hybrid_rrf_mmr", "hybrid_rrf_rerank", "
 
 def merge_retrieval(reports: list[dict]) -> list[dict]:
     """Runs of the same dataset + chunking strategy (e.g. an extra config run later) become one table."""
-    merged: dict[tuple[str, str], dict] = {}
+    merged: dict[tuple, dict] = {}
     for r in reports:
+        if r.get("index", "ie") != "ie":
+            continue  # embedding-model comparison indexes get their own table
         key = (r["dataset"], r["strategy"])
         if key in merged:
             merged[key]["configs"].update(r["configs"])
@@ -124,6 +126,20 @@ def merge_retrieval(reports: list[dict]) -> list[dict]:
     for r in merged.values():
         r["configs"] = {k: r["configs"][k] for k in sorted(r["configs"], key=lambda c: ORDER.index(c) if c in ORDER else 99)}
     return list(merged.values())
+
+
+def embedding_table(reports: list[dict]) -> str:
+    rows = [r for r in reports if r["kind"] == "retrieval" and r.get("index", "ie") != "ie"]
+    if not rows:
+        return ""
+    lines = ["**Embedding models (same chunks, same questions; HotpotQA = 300 questions' gold paragraphs + 5,000 others)**", "",
+             "| embedding model | dataset | config | recall@5 | recall@10 | all@10 | mrr | latency_ms |", "|---" * 8 + "|"]
+    for r in sorted(rows, key=lambda x: (x["dataset"], x["embedding_model"])):
+        for name, data in r["configs"].items():
+            o = data["summary"]["overall"]
+            lines.append(f"| {r['embedding_model']} | {r['dataset']} | {name} | " + " | ".join(
+                _fmt(o.get(c)) for c in ("recall@5", "recall@10", "all@10", "mrr", "latency_ms")) + " |")
+    return "\n".join(lines)
 
 
 def main() -> None:
@@ -142,6 +158,9 @@ def main() -> None:
             parts += [retrieval_table(r), ""]
             best = "hybrid_rrf_rerank_mmr" if "hybrid_rrf_rerank_mmr" in r["configs"] else list(r["configs"])[-1]
             parts += [retrieval_by_category(r, best), ""]
+        emb = embedding_table(reports)
+        if emb:
+            parts += [emb, ""]
         for img in chart(retrieval):
             parts += [f"![{img}](img/{img})", ""]
     if answers:

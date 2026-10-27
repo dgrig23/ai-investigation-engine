@@ -112,12 +112,20 @@ query ─┬─ dense: bge-small-en-v1.5 (ONNX, CPU), cosine, top 40 ─┐
 
 - **Evidence registry** (`evidence.py`): every chunk shown to the model gets an id; only those ids are
   valid citations.
-- **Verification** (`verify.py`), no extra LLM call: removes invented citations; checks that every
-  number/time/ID in a claim literally appears in the cited chunks (the most harmful hallucination is
-  a wrong number attached to a real source); lexical overlap + embedding similarity give a support label.
-- **Abstention:** the prompt requires `insufficient_evidence` when evidence is missing; the verifier
-  additionally abstains when no claim is supported, or when retrieval confidence is low *and* support
-  is weak.
+- **Verification** (`verify.py`), no extra LLM call. Model output is normalized first (non-breaking
+  hyphens, `【S8】`-style or `[S6, S13]` citations). Then, per claim:
+  1. invented citation ids are removed;
+  2. every number, date, time and ID in the claim must appear **as a whole token** in the cited passages
+     or their document's title/date ("0" does not match inside "2052", "12" not inside "2026-03-12",
+     "v3.2" is a version name, not the number 3.2) - a missing one makes the claim *unsupported*;
+  3. lexical overlap + embedding similarity give *supported* / *partial* / *unsupported*.
+- **Answer-level decisions:** no supported claim → abstain (`insufficient_evidence`); some claims
+  unsupported → `partial`, naming the unverified claims; an answer with **no citations at all** goes
+  through *post-hoc attribution* - each sentence is matched to the best passage (or a pair of passages,
+  for comparisons); it is kept only if every sentence with a number/ID is grounded and at most a third
+  of the sentences are ungrounded commentary, otherwise the system abstains. Low retrieval confidence
+  plus weak support also abstains. If the model writes its final JSON as text instead of a tool call, it
+  is parsed as the submission.
 - **Contradictions** (`contradictions.py`): rule-based extraction of (incident, attribute, value) facts -
   duration, start time, root cause - compared across *different* documents. Conflicts are shown to the
   model during the investigation and merged into the answer if the model omitted them. The model is

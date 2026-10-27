@@ -111,11 +111,38 @@ By question type (best config): **comparison** All@10 = 0.983, **bridge** All@10
 
 ## 3. Answer results
 
-### 3.1 Final configuration (v4)
+### 3.1 Final results (investigation set, gpt-oss-120b)
 
-_Filled in from `answers_investigation_agent_gpt-oss-120b.json` and
-`answers_investigation_single_shot_gpt-oss-120b.json` - see section 3.4 if this section still shows
-v3 numbers._
+| Metric | Agent (final) | Single-shot RAG |
+|---|---|---|
+| **Correct (strict)** | **0.98** (49/50) | 0.92 (46/50) |
+| LLM-as-judge score | **0.92** | 0.90 |
+| Key-fact recall | **1.00** | 0.93 |
+| Citation precision / recall | 0.97 / **0.88** | 0.96 / 0.81 |
+| Groundedness (verifier) | **0.89** | 0.82 |
+| Contradictions reported (contradiction questions) | 0.75 | **0.88** |
+| Conflict reported on ordinary questions (false-positive rate) | 0.21 | 0.18 |
+| Prompt-injection resistance | 1.00 | 1.00 |
+| Strict metric agrees with judge | 49/50 | 49/50 |
+| LLM calls / prompt tokens per question | 1.66 / 4,802 | 1.00 / 1,989 |
+
+| Category (n) | Agent correct | Single-shot correct | Agent LLM calls |
+|---|---|---|---|
+| simple (12) | 1.00 | 1.00 | 1.0 |
+| multi_hop (10) | 1.00 | 0.90 | 1.1 |
+| multi_doc (8) | **1.00** | 0.63 | 2.4 |
+| contradiction (8) | 1.00 | 1.00 | 1.0 |
+| unanswerable (9) | 0.89 | 1.00 | 3.2 |
+| injection (3) | 1.00 | 1.00 | 1.3 |
+
+The only remaining agent error is **u05** ("How many deposits failed during INC-2052?"): the agent
+answered that the incident "did not involve any deposit failures" - it turned *absence of a mention*
+into a *fact*, instead of saying the documents do not say. Single-shot fails on multi-document
+questions (m01, d02, d04, d05): one retrieval does not bring in the second and third documents.
+
+**Caveat - development set.** The fixes in 3.2 were driven by failures on these 50 questions, so
+these numbers are optimistic even though every fix is a general rule. Section 3.5 reports the same
+system on held-out HotpotQA questions that were never used during development (agent 0.62 strict / 0.74 judge).
 
 ### 3.2 How the system improved: evaluation-driven iterations
 
@@ -127,7 +154,7 @@ question-specific patch). All runs use gpt-oss-120b, the same 50 questions and t
 | v1 | 0.92 | 0.88 | baseline |
 | v2 | 0.92 | 0.88 | **source-reliability ranking** for conflicting facts (d02 used the initial report's 60 min instead of the postmortem's 107 min); **completeness re-search** for list questions (d04 missed INC-2033). Both fixed; key-fact recall 0.962 → 0.976, citation precision 0.924 → 0.972 |
 | v3 | 0.88 | 0.85 | **parse submissions written as text** (u01/u04 abstained correctly but as plain JSON text); **automatic citation**: uncited answers are kept only if every sentence is grounded in the evidence (u08 invented a per-connection fee). A first, stricter version ("abstain if uncited") wrongly rejected three correct answers and was replaced. |
-| v4 | see 3.1 | | **gpt-oss citation styles** (`【S8】`, zero-width characters - d02/c07 correct answers were rejected); **whole-token number matching** ("0" matched inside "2052" in u05); **numbers missing from the cited sources make a claim unsupported** (u08's derived €12); **false-premise rule** in the prompt (u09); **`list_documents` tool** to enumerate all documents of a type (d04) |
+| v4 | **0.98** | **0.92** | **gpt-oss citation styles** (`【S8】`, zero-width characters - d02/c07 correct answers were rejected); **whole-token number matching** ("0" matched inside "2052" in u05); **numbers missing from the cited sources make a claim unsupported** (u08's derived €12); **false-premise rule** in the prompt (u09); **`list_documents` tool** to enumerate all documents of a type (d04). Verifier calibration: version numbers (v3.2), years inside dates, multi-part IDs (AI-2047-1), empty claims, up to ⅓ ungrounded commentary sentences, and *one unverified claim → partial answer* (each found as a correct answer wrongly rejected, or an invented number accepted) |
 
 ### 3.3 Model and mode comparisons
 
@@ -137,6 +164,8 @@ question-specific patch). All runs use gpt-oss-120b, the same 50 questions and t
 | agent · gpt-oss-20b (v1 code) | 0.909* | 0.907 | 0.866 | 0.500 | 0.841 | 1.16 | 2,903 |
 | single-shot · gpt-oss-120b (v1 code) | 0.920 | 0.962 | 0.952 | 0.625 | - | 1.00 | 1,853 |
 | single-shot · gpt-oss-120b (v3 code) | 0.936* | 0.899 | 0.888 | 0.875 | 0.777 | 0.94 | 1,806 |
+| **agent · gpt-oss-120b (final)** | **0.980** | **1.000** | 0.967 | 0.750 | **0.920** | 1.66 | 4,802 |
+| **single-shot · gpt-oss-120b (final)** | 0.920 | 0.927 | 0.963 | 0.875 | 0.900 | 1.00 | 1,989 |
 
 \* 6 (20b) and 3 (single-shot v3) questions could not be answered because free-tier quotas ran out;
 they are excluded from the average, which flatters those runs slightly.
@@ -145,12 +174,15 @@ they are excluded from the average, which flatters those runs slightly.
   (0.96 vs 0.91), citations (0.92 vs 0.87) and especially reporting contradictions (0.75 vs 0.50). The
   20B model is cheaper (fewer calls and tokens: it searches less) but is the wrong trade-off for an
   investigation tool, where a missed conflict is the costly error.
-- **Agent vs single-shot:** on this corpus, retrieval is strong enough that single-shot RAG answers
-  most questions correctly with ~2.4× fewer prompt tokens. The agent's advantage is concentrated where
-  the evidence is not reachable with one query - multi-hop chains, enumerations ("all incidents") and
-  unanswerable questions, where it searches more before abstaining (3.1 calls on average) instead of
-  answering from whatever the first search returned. Single-shot is the better choice for simple
-  lookups; a production system could route by question type (cheap classifier) to get both.
+- **Agent vs single-shot (final code):** single-shot RAG is equally good on simple, contradiction
+  and injection questions with ~2.4× fewer prompt tokens. The agent's advantage is concentrated where
+  the evidence is not reachable with one query: multi-document questions (1.00 vs 0.63) and multi-hop
+  chains (1.00 vs 0.90). On unanswerable questions it searches more (3.2 calls) before abstaining;
+  single-shot abstains more often in general (22% vs 14% of all questions), which helps on
+  unanswerable questions but costs it three answerable multi-document questions. Single-shot reports
+  slightly more conflicts (0.88 vs 0.75): with one retrieval, the conflicting documents are more often
+  all present in the same context. A production system could route by question type (a cheap
+  classifier) to get the cost of single-shot on simple lookups and the agent where it matters.
 
 ### 3.4 Robustness
 
@@ -164,6 +196,31 @@ they are excluded from the average, which flatters those runs slightly.
 - **Judge validity:** disagreements between the strict key-fact metric and the judge were inspected and led to two fixes - a metric bug (`80 %` vs `80%`) and the judge only seeing the
   answer text (not the reported contradictions or the abstention status), which under-scored correct
   contradiction and abstention answers in v1-v3.
+
+### 3.5 Held-out check: HotpotQA questions never used during development
+
+30 HotpotQA questions (the first 30 of the seed-42 sample; 26 bridge, 4 comparison) over the full
+66,552-document index, same final code, gpt-oss-120b. *Correct* = the gold answer string appears in
+the answer (strict: "Andy Roddick" does not match "Andrew Stephen Roddick"); the judge allows
+paraphrases. One question per run hit a free-tier limit and is excluded.
+
+| | correct (strict) | judge | abstained | LLM calls / q | prompt tokens / q |
+|---|---|---|---|---|---|
+| agent | **0.62** | **0.74** | 2 | 1.37 | 3,192 |
+| single-shot RAG | 0.55 | 0.62 | 6 | 0.97 | 1,498 |
+
+- **Generalisation gap.** 0.62-0.74 on unseen questions vs 0.98 on the development set: the
+  development number is optimistic, as expected, and HotpotQA is harder (open-domain Wikipedia with
+  eight hand-picked distractors per question). With n = 30 the uncertainty is roughly ±0.17, so treat
+  these as indicative.
+- **The agent still beats single-shot by 7-12 points**, mostly on *bridge* questions, by searching
+  for the second hop (0.64 vs 0.56 strict) - the same pattern as in the retrieval results (bridge
+  All@10 = 0.70). Single-shot abstains three times as often because the second paragraph is missing.
+- **Failure types (agent):** wrong second-hop entity (e.g. answering about the wrong song of the right
+  album), an answer to a neighbouring question (the *source* of funding instead of its *type*), and
+  correct-but-differently-named answers that only the judge accepts. Improvements: explicit query
+  decomposition into hops with an answer-type check ("the question asks for a *character
+  description*, not a name"), and alias-aware answer matching for evaluation.
 
 ## 4. Where the system still fails, why, and how to improve it
 

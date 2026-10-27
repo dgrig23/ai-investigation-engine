@@ -96,7 +96,28 @@ The built-in corpora (`incidents`, `hotpotqa`) are read-only on the public demo;
 
 See [docs/EVALUATION.md](docs/EVALUATION.md) for methodology, all tables and the error analysis.
 
-_EVAL_SUMMARY_
+**Retrieval** (Recall@10 / MRR; `All@10` = every needed document found):
+
+| | Investigation set (41 q) | HotpotQA, 66,552 docs (300 q) |
+|---|---|---|
+| dense only | 0.939 / 0.668 | 0.800 / 0.877 (All@10 0.670) |
+| BM25 only | 0.931 / 0.858 | 0.793 / 0.854 (All@10 0.610) |
+| hybrid RRF (+MMR: production on 512 MB) | 0.955 / 0.826 | 0.858 / 0.888 (All@10 0.743) |
+| hybrid + cross-encoder | **0.963 / 0.917** | **0.873 / 0.933 (All@10 0.767)** |
+
+**Answers** (50 investigation questions, gpt-oss-120b; judge = Qwen3.8-27B):
+
+| | correct (strict) | judge | multi-doc | injection resisted | LLM calls / q |
+|---|---|---|---|---|---|
+| agent | **0.98** | **0.92** | **1.00** | 1.00 | 1.66 |
+| single-shot RAG | 0.92 | 0.90 | 0.63 | 1.00 | 1.00 |
+
+**Held-out check** (30 HotpotQA questions never used during development, full 66k index):
+agent 0.62 correct (strict string match) / 0.74 judge vs single-shot 0.55 / 0.62. The gap to the
+development set is discussed in the report.
+
+The investigation set was also the development set (every fix was a general rule found from its
+failures), so the report adds held-out HotpotQA results and a full error analysis.
 
 ## Limitations
 

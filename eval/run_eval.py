@@ -100,7 +100,8 @@ def run_retrieval(svc: Services, dataset: str, configs: list[str], limit: int | 
     questions = [q for q in questions if q["evidence"]]
     base = RetrievalConfig.from_settings(svc.settings).with_overrides(candidate_k=50, final_k=20, rerank_top_n=30)
     report: dict[str, Any] = {"kind": "retrieval", "dataset": dataset, "strategy": strategy, "n_questions": len(questions),
-                              "commit": git_commit(), "configs": {}}
+                              "commit": git_commit(), "configs": {}, "embedding_model": svc.settings.embedding_model,
+                              "index": svc.settings.collection_prefix}
     for name in configs:
         cfg = replace(base, **RETRIEVAL_CONFIGS[name])
         rows, started = [], time.perf_counter()
@@ -215,6 +216,8 @@ def main() -> None:
     parser.add_argument("--strategy", choices=["structure", "fixed"], default=None)
     parser.add_argument("--mode", choices=["agent", "single_shot"], default="agent")
     parser.add_argument("--providers", default=None, help="comma-separated LLM providers to use, e.g. groq")
+    parser.add_argument("--embedding-model", default=None, help="evaluate an index built with another embedding model")
+    parser.add_argument("--prefix", default=None, help="collection prefix of that index")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--ids", default=None, help="comma-separated question ids")
     parser.add_argument("--sleep", type=float, default=2.0)
@@ -229,6 +232,12 @@ def main() -> None:
     updates: dict[str, Any] = {}
     if args.strategy:
         updates["chunk_strategy"] = args.strategy
+    if args.embedding_model:
+        from scripts.index_corpus import embedding_dim
+
+        updates.update(embedding_model=args.embedding_model, embedding_dim=embedding_dim(args.embedding_model))
+    if args.prefix:
+        updates["collection_prefix"] = args.prefix
     if args.providers:
         updates["llm_providers"] = args.providers
     if args.model and args.providers:
