@@ -66,10 +66,12 @@ def index_hotpotqa(svc: Services, limit: int | None, embed_only: bool = False) -
     try:
         if embed_only:
             chunks = [c for d in docs for c in svc.ingestion.make_chunks(d, version=1)]
-            for start in range(0, len(chunks), 2048):
-                cache.embed_passages([c.context_text() for c in chunks[start:start + 2048]], batch_size=128)
+            for i, start in enumerate(range(0, len(chunks), 2048), start=1):
+                cache.embed_passages([c.context_text() for c in chunks[start:start + 2048]], batch_size=32)
                 print(f"  embedded {min(start + 2048, len(chunks))}/{len(chunks)} chunks "
                       f"({time.time() - started:.0f}s)", flush=True)
+                if i % 4 == 0:
+                    cache.save()  # checkpoint: an interrupted run resumes from here
             print(f"avg chunk length {sum(len(tokenize(c.context_text())) for c in chunks) / len(chunks):.1f} tokens")
             return
         stats = svc.ingestion.ingest_bulk(docs, batch_size=512, protected=True, detect_near_duplicates=True)

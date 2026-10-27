@@ -179,7 +179,11 @@ def load_markdown(data: bytes) -> LoadedFile:
 
 
 def load_txt(data: bytes) -> LoadedFile:
-    return LoadedFile(text=data.decode("utf-8", errors="replace"))
+    text = data.decode("utf-8", errors="replace")
+    first = next((line.strip() for line in text.splitlines() if line.strip()), "")
+    # A short first line without a final period is almost always the title of a plain-text note.
+    title = first if len(first) <= 120 and not first.endswith(".") else ""
+    return LoadedFile(text=text, title=title)
 
 
 def load_html(data: bytes) -> LoadedFile:
