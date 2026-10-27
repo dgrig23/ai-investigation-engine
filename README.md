@@ -1,13 +1,3 @@
----
-title: AI Investigation Engine
-emoji: 🔎
-colorFrom: indigo
-colorTo: gray
-sdk: docker
-app_port: 7860
-pinned: false
----
-
 # AI Investigation Engine
 
 An evidence-based investigation system over large document collections. It answers questions that
@@ -44,7 +34,7 @@ when the evidence is not there.
 | ≥ 50,000 documents | HotpotQA distractor set: 74,050 paragraphs → _N_HOTPOT_ unique documents after dedup |
 | Evaluation | 49 investigation questions + 300 HotpotQA questions; Recall@k, All@k, MRR, correctness, citation precision/recall, abstention, contradiction detection, injection resistance; 5 retrieval configs, 2 chunkers, agent vs single-shot, 2 LLMs |
 | Python backend + UI | FastAPI + single-page UI with live streamed investigation trace |
-| Free deployment | Hugging Face Spaces (Docker) + Qdrant Cloud free tier + free LLM tiers |
+| Free deployment | Render free web service (Docker) + Qdrant Cloud free tier + free LLM tiers |
 | Bonus | agentic RAG, cross-encoder re-ranking, prompt-injection tests, caching, streaming, metrics endpoint, 2 LLMs compared |
 
 ## Quick start (local, no accounts needed for search)

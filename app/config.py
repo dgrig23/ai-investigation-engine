@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_dim: int = 384
     reranker_model: str = "Xenova/ms-marco-MiniLM-L-6-v2"
+    onnx_threads: int | None = None  # None = all cores; 1 on tiny free-tier CPUs avoids oversubscription
 
     # --- Chunking ---
     chunk_strategy: str = "structure"  # "structure" | "fixed"

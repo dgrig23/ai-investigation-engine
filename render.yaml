@@ -1,0 +1,29 @@
+# Render Blueprint: New -> Blueprint -> pick this repository. Render builds the Dockerfile and asks for
+# the values marked `sync: false` (secrets are stored by Render, never in the repository).
+services:
+  - type: web
+    name: ai-investigation-engine
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /api/health
+    envVars:
+      # The free instance has 512 MB RAM: with the cross-encoder the app peaks at ~650 MB, without it ~380 MB.
+      - key: USE_RERANKER
+        value: "false"
+      - key: ONNX_THREADS
+        value: "1"
+      - key: LLM_PROVIDERS
+        value: groq,cerebras,gemini
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: CEREBRAS_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ADMIN_TOKEN
+        generateValue: true

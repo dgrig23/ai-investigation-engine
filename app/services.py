@@ -35,14 +35,14 @@ class Services:
     @cached_property
     def embedder(self) -> Embedder:
         log.info("loading embedding model %s", self.settings.embedding_model)
-        return Embedder(self.settings.embedding_model)
+        return Embedder(self.settings.embedding_model, threads=self.settings.onnx_threads)
 
     @cached_property
     def reranker(self) -> CrossEncoderReranker | None:
         if not self.settings.use_reranker:
             return None
         log.info("loading reranker %s", self.settings.reranker_model)
-        return CrossEncoderReranker(self.settings.reranker_model)
+        return CrossEncoderReranker(self.settings.reranker_model, threads=self.settings.onnx_threads)
 
     @cached_property
     def bm25(self) -> BM25Encoder:

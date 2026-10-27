@@ -147,7 +147,7 @@ query ─┬─ dense: bge-small-en-v1.5 (ONNX, CPU), cosine, top 40 ─┐
 | bge-small-en-v1.5 via fastembed (ONNX) | OpenAI/Gemini embedding APIs, bge-base | Free, no rate limits for 66k docs, same model in the container, 384-d keeps the index small for the free tier. |
 | No LangChain / LlamaIndex | both | The pipeline is the product; owning every step makes it explainable, testable and debuggable, and the task requires our own algorithms. |
 | FastAPI + one HTML page | Streamlit, Gradio | One process, one container, native streaming (SSE), the API is usable without the UI. |
-| Hugging Face Spaces (Docker) | Render, Koyeb, Vercel | Free tier has 16 GB RAM - enough for ONNX models; Render/Koyeb free tiers have 512 MB. |
+| Render free web service (Docker) | Hugging Face Spaces, Koyeb, Vercel | Hugging Face now requires a paid PRO plan for Docker/Gradio Spaces (only static Spaces are free - discovered when deploying). Render deploys the Dockerfile straight from GitHub for free; its 512 MB RAM forced a measured trade-off: the cross-encoder is disabled in production (peak RAM 650 MB → 380 MB). Vercel's serverless functions cannot keep ONNX models loaded. |
 
 ## 9. Performance and cost
 

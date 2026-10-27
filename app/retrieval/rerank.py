@@ -15,11 +15,11 @@ from app.models import SearchHit
 
 
 class CrossEncoderReranker:
-    def __init__(self, model_name: str, max_chars: int = 800):
+    def __init__(self, model_name: str, max_chars: int = 800, threads: int | None = None):
         from fastembed.rerank.cross_encoder import TextCrossEncoder
 
         self.model_name = model_name
-        self._model = TextCrossEncoder(model_name=model_name)
+        self._model = TextCrossEncoder(model_name=model_name, threads=threads)
         # Cost grows with passage length (attention is quadratic and a batch is padded to its longest
         # passage). The first ~800 characters carry the gist; measured: 30 passages ≈ 0.3 s on CPU.
         self.max_chars = max_chars

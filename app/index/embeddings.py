@@ -18,11 +18,11 @@ BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
 class Embedder:
-    def __init__(self, model_name: str, cache_size: int = 2048):
+    def __init__(self, model_name: str, cache_size: int = 2048, threads: int | None = None):
         from fastembed import TextEmbedding
 
         self.model_name = model_name
-        self._model = TextEmbedding(model_name=model_name)
+        self._model = TextEmbedding(model_name=model_name, threads=threads)
         self._query_prefix = BGE_QUERY_PREFIX if "bge" in model_name.lower() else ""
         self._cache: OrderedDict[str, np.ndarray] = OrderedDict()
         self._cache_size = cache_size
