@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Investigation Engine</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #5d6676; --border: #dde1e7;
+    --accent: #2f5bd3; --accent-bg: #e8eefc; --ok: #1d7a46; --ok-bg: #e3f4ea; --warn: #8a5a00; --warn-bg: #fdf1d8;
+    --bad: #a3262a; --bad-bg: #fbe5e5; --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14171c; --panel: #1c2027; --text: #e6e8ec; --muted: #9aa3b2; --border: #2d333d;
+      --accent: #7ea0ff; --accent-bg: #222c45; --ok: #6fd39b; --ok-bg: #1b3326; --warn: #f0c36b; --warn-bg: #3a2f17;
+      --bad: #ff8d8f; --bad-bg: #3d1e20; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+  header { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--panel); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  nav button { background: none; border: 1px solid transparent; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: var(--text); font: inherit; }
+  nav button.active { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  main { max-width: 1250px; margin: 0 auto; padding: 18px 16px 60px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  textarea, input[type=text], select { width: 100%; font: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
+  textarea { min-height: 70px; resize: vertical; }
+  button.primary { background: var(--accent); color: #fff; border: 0; padding: 8px 18px; border-radius: 6px; font: inherit; cursor: pointer; }
+  button.primary:disabled { opacity: .55; cursor: wait; }
+  button.small { font-size: 13px; padding: 3px 9px; border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 5px; cursor: pointer; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .row > * { flex: 0 0 auto; }
+  .grow { flex: 1 1 260px !important; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+  .chip { font-size: 13px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg); cursor: pointer; color: var(--text); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .b-answered, .b-supported { background: var(--ok-bg); color: var(--ok); }
+  .b-partial { background: var(--warn-bg); color: var(--warn); }
+  .b-insufficient_evidence, .b-unsupported, .b-llm_unavailable { background: var(--bad-bg); color: var(--bad); }
+  .answer { white-space: pre-wrap; font-size: 15.5px; }
+  a.cite { color: var(--accent); text-decoration: none; font-weight: 600; cursor: pointer; padding: 0 1px; }
+  a.cite:hover { text-decoration: underline; }
+  .trace li { margin: 3px 0; font-size: 13.5px; }
+  .trace code, .mono { font-family: var(--mono); font-size: 12.5px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .callout { border-left: 3px solid var(--warn); background: var(--warn-bg); padding: 8px 12px; margin: 8px 0; border-radius: 0; }
+  .callout.bad { border-left-color: var(--bad); background: var(--bad-bg); }
+  .source { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; background: var(--bg); }
+  .source.hl { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .source h4 { margin: 0 0 4px; font-size: 14px; }
+  .source .text { white-space: pre-wrap; font-size: 13.5px; max-height: 260px; overflow: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .hidden { display: none; }
+  .err { color: var(--bad); }
+  .kv { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); margin-top: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>AI Investigation Engine</h1>
+    <div class="sub" id="health">Connecting…</div>
+  </div>
+  <nav>
+    <button data-tab="ask" class="active">Investigate</button>
+    <button data-tab="docs">Documents</button>
+    <button data-tab="search">Search</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============================ INVESTIGATE ============================ -->
+  <section id="tab-ask">
+    <div class="panel">
+      <div class="row">
+        <textarea id="question" class="grow" placeholder="Ask a question that may need several documents…"></textarea>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="muted">Corpus <select id="corpus" style="width:auto">
+          <option value="incidents">Acme Play incidents</option>
+          <option value="hotpotqa">HotpotQA Wikipedia (66k)</option>
+          <option value="uploads">My uploads</option>
+          <option value="">All corpora</option>
+        </select></label>
+        <label class="muted">Mode <select id="mode" style="width:auto">
+          <option value="agent">Agent (multi-step)</option>
+          <option value="single_shot">Single-shot RAG</option>
+        </select></label>
+        <button class="primary" id="askBtn">Investigate</button>
+      </div>
+      <div class="chips" id="examples"></div>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="panel" id="tracePanel" style="display:none">
+          <strong>Investigation trace</strong>
+          <ol class="trace" id="trace"></ol>
+        </div>
+        <div class="panel" id="resultPanel" style="display:none"></div>
+      </div>
+      <div>
+        <div class="panel" id="sourcesPanel" style="display:none">
+          <strong>Sources</strong> <span class="muted">(click a citation to jump)</span>
+          <div id="sources" style="margin-top:10px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ DOCUMENTS ============================ -->
+  <section id="tab-docs" class="hidden">
+    <div class="panel">
+      <strong>Add documents</strong>
+      <p class="muted">Supported: PDF, DOCX, Markdown, HTML, TXT, CSV, JSON, JSONL. Re-uploading a file with the same name creates a new version; identical content is detected as a duplicate.</p>
+      <div class="row">
+        <input type="file" id="files" multiple>
+        <label class="muted">into <select id="uploadCorpus" style="width:auto"><option>uploads</option><option>incidents</option></select></label>
+        <button class="primary" id="uploadBtn">Upload</button>
+      </div>
+      <div id="uploadResult" class="muted" style="margin-top:8px"></div>
+    </div>
+    <div class="panel">
+      <div class="row">
+        <strong class="grow">Documents</strong>
+        <select id="docCorpus" style="width:auto"><option value="incidents">incidents</option><option value="uploads">uploads</option><option value="hotpotqa">hotpotqa</option></select>
+        <button class="small" id="refreshDocs">Refresh</button>
+      </div>
+      <div id="docStats" class="muted" style="margin:6px 0"></div>
+      <table><thead><tr><th>Title</th><th>Type</th><th>Format</th><th>Ver.</th><th>Chunks</th><th>Notes</th><th></th></tr></thead>
+        <tbody id="docRows"></tbody></table>
+      <div class="row" style="margin-top:8px"><button class="small" id="moreDocs" style="display:none">Load more</button></div>
+      <input type="file" id="replaceFile" class="hidden">
+    </div>
+    <div class="panel hidden" id="docDetail"></div>
+  </section>
+
+  <!-- ============================ SEARCH ============================ -->
+  <section id="tab-search" class="hidden">
+    <div class="panel">
+      <div class="row">
+        <input type="text" id="sq" class="grow" placeholder="Search query (shows every ranking stage)">
+        <select id="smode" style="width:auto"><option value="hybrid">Hybrid</option><option value="dense">Dense only</option><option value="sparse">BM25 only</option></select>
+        <label class="muted"><input type="checkbox" id="srerank" checked> rerank</label>
+        <label class="muted"><input type="checkbox" id="smmr" checked> MMR</label>
+        <select id="scorpus" style="width:auto"><option value="incidents">incidents</option><option value="hotpotqa">hotpotqa</option><option value="uploads">uploads</option><option value="">all</option></select>
+        <button class="primary" id="searchBtn">Search</button>
+      </div>
+      <div id="searchMeta" class="muted" style="margin-top:8px"></div>
+    </div>
+    <div id="searchResults"></div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const EXAMPLES = {
+  incidents: [
+    "Which system changes caused the payment processing delays in March 2026, which services were affected, and which documents confirm this?",
+    "How long did INC-2041 last and when did it start?",
+    "What is the default PayFlex connection pool size in payment-gateway?",
+    "Who owns the fraud-scoring service?",
+    "What was the financial loss in EUR caused by INC-2041?",
+    "Summarize the email from the PayFlex account manager.",
+  ],
+  hotpotqa: [
+    "Were Scott Derrickson and Ed Wood of the same nationality?",
+    "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+  ],
+  uploads: ["What do my uploaded documents say?"],
+  "": ["Which incidents were caused by changes?"],
+};
+
+// ---------- tabs
+document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach((x) => x.classList.toggle("active", x === b));
+  ["ask", "docs", "search"].forEach((t) => $("tab-" + t).classList.toggle("hidden", t !== b.dataset.tab));
+  if (b.dataset.tab === "docs") loadDocs(true);
+});
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, opts);
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body;
+}
+
+// ---------- health
+async function loadHealth() {
+  try {
+    const h = await api("/api/health");
+    const llm = h.llm_providers.map((p) => `${p.provider} (${p.model})`).join(", ") || "none configured";
+    $("health").textContent = `Vector DB: ${h.vector_db} (${h.vector_db_mode}) · LLMs: ${llm} · chunking: ${h.chunk_strategy}`;
+  } catch (e) { $("health").textContent = "Backend unreachable: " + e.message; }
+}
+
+// ---------- examples
+function renderExamples() {
+  const list = EXAMPLES[$("corpus").value] || [];
+  $("examples").innerHTML = list.map((q) => `<button class="chip">${esc(q)}</button>`).join("");
+  $("examples").querySelectorAll(".chip").forEach((c) => c.onclick = () => { $("question").value = c.textContent; });
+}
+$("corpus").onchange = renderExamples;
+
+// ---------- investigate (streaming)
+function traceLine(ev) {
+  if (ev.type === "tool_call") {
+    const args = Object.entries(ev.args || {}).filter(([, v]) => v).map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(" ");
+    return `<li><b>${esc(ev.tool)}</b> <code>${esc(args)}</code></li>`;
+  }
+  if (ev.type === "tool_result") {
+    const ids = (ev.evidence || []).map((e) => e.id).join(", ");
+    return `<li class="muted">→ ${ev.evidence?.length || 0} passages ${ids ? "(" + esc(ids) + ")" : ""} ${esc(ev.message || "")}</li>`;
+  }
+  if (ev.type === "thought") return `<li class="muted"><i>${esc(ev.text)}</i></li>`;
+  return "";
+}
+
+function linkCitations(text) {
+  return esc(text).replace(/\[(S\d+)\]/g, (m, id) => `<a class="cite" data-sid="${id}">[${id}]</a>`);
+}
+
+function renderResult(r) {
+  const status = r.status || "unknown";
+  const label = { answered: "Answered", partial: "Partial answer", insufficient_evidence: "Insufficient evidence", llm_unavailable: "LLM unavailable" }[status] || status;
+  let html = `<div class="row"><span class="badge b-${esc(status)}">${esc(label)}</span>${r.cached ? '<span class="muted">cached</span>' : ""}</div>`;
+  html += `<div class="answer" style="margin-top:10px">${linkCitations(r.answer || "(no answer)")}</div>`;
+  if (r.missing_information) html += `<div class="callout"><b>Missing information:</b> ${esc(r.missing_information)}</div>`;
+  for (const c of r.contradictions || []) {
+    html += `<div class="callout bad"><b>Contradiction:</b> ${linkCitations(c.description)} ${(c.citations || []).map((s) => `<a class="cite" data-sid="${esc(s)}">[${esc(s)}]</a>`).join(" ")}</div>`;
+  }
+  for (const w of r.warnings || []) html += `<div class="callout">${esc(w)}</div>`;
+  if ((r.claims || []).length) {
+    html += `<details style="margin-top:12px"><summary><b>Claim verification</b> (${r.claims.length} claims, groundedness ${r.groundedness})</summary><table style="margin-top:6px"><tr><th>Claim</th><th>Sources</th><th>Support</th></tr>`;
+    for (const c of r.claims) {
+      const missing = c.missing_tokens?.length ? `<div class="muted">not found in sources: ${esc(c.missing_tokens.join(", "))}</div>` : "";
+      html += `<tr><td>${linkCitations(c.statement)}${missing}</td><td>${(c.citations || []).map((s) => `<a class="cite" data-sid="${esc(s)}">${esc(s)}</a>`).join(" ")}</td><td><span class="badge b-${esc(c.support)}">${esc(c.support)}</span></td></tr>`;
+    }
+    html += `</table></details>`;
+  }
+  const conf = r.retrieval_confidence == null ? "n/a" : r.retrieval_confidence.toFixed(2);
+  html += `<div class="kv"><span>mode: ${esc(r.mode)}</span><span>LLM calls: ${r.llm_calls}</span><span>tokens: ${r.prompt_tokens} in / ${r.completion_tokens} out</span><span>latency: ${(r.latency_ms / 1000).toFixed(1)} s</span><span>retrieval confidence: ${conf}</span><span>evidence seen: ${(r.evidence || []).length}</span></div>`;
+  $("resultPanel").innerHTML = html;
+  $("resultPanel").style.display = "";
+
+  const cited = new Set(r.cited_ids || []);
+  const all = [...(r.sources || []), ...(r.evidence || []).filter((e) => !cited.has(e.id))];
+  $("sources").innerHTML = all.map((s) => `
+    <div class="source" id="src-${esc(s.id)}">
+      <h4>[${esc(s.id)}] ${esc(s.title)} ${cited.has(s.id) ? '<span class="badge b-answered">cited</span>' : ""} ${s.suspicious ? '<span class="badge b-unsupported">injection warning</span>' : ""}</h4>
+      <div class="muted">${esc(s.doc_type || "")} · ${esc(s.date || "no date")} · ${esc(s.section || "")} · <span class="mono">${esc(s.doc_id)}</span></div>
+      <div class="text">${esc(s.text)}</div>
+    </div>`).join("") || '<div class="muted">No sources.</div>';
+  $("sourcesPanel").style.display = "";
+  document.querySelectorAll("a.cite").forEach((a) => a.onclick = () => {
+    const el = $("src-" + a.dataset.sid);
+    if (!el) return;
+    document.querySelectorAll(".source.hl").forEach((x) => x.classList.remove("hl"));
+    el.classList.add("hl");
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
+
+$("askBtn").onclick = async () => {
+  const question = $("question").value.trim();
+  if (question.length < 3) { $("question").focus(); return; }
+  $("askBtn").disabled = true; $("askBtn").textContent = "Investigating…";
+  $("trace").innerHTML = ""; $("tracePanel").style.display = "";
+  $("resultPanel").style.display = "none"; $("sourcesPanel").style.display = "none";
+  try {
+    const res = await fetch("/api/ask/stream", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, corpus: $("corpus").value || null, mode: $("mode").value }) });
+    if (!res.ok) { const b = await res.json().catch(() => ({})); throw new Error(b.detail || `HTTP ${res.status}`); }
+    const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let idx;
+      while ((idx = buf.indexOf("\n\n")) >= 0) {
+        const line = buf.slice(0, idx).replace(/^data: /, ""); buf = buf.slice(idx + 2);
+        if (!line.trim()) continue;
+        const ev = JSON.parse(line);
+        if (ev.type === "final") renderResult(ev.result);
+        else if (ev.type === "error") throw new Error(ev.message);
+        else $("trace").insertAdjacentHTML("beforeend", traceLine(ev));
+      }
+    }
+  } catch (e) {
+    $("resultPanel").innerHTML = `<div class="err">Error: ${esc(e.message)}</div>`; $("resultPanel").style.display = "";
+  } finally { $("askBtn").disabled = false; $("askBtn").textContent = "Investigate"; }
+};
+
+// ---------- documents
+let docOffset = null;
+async function loadDocs(reset) {
+  const corpus = $("docCorpus").value;
+  if (reset) { docOffset = null; $("docRows").innerHTML = ""; }
+  try {
+    const stats = await api("/api/stats");
+    const s = stats.corpora[corpus] || {};
+    $("docStats").textContent = `${s.documents ?? "?"} documents, ${s.chunks ?? "?"} chunks in '${corpus}'`;
+    const q = new URLSearchParams({ corpus, limit: 50 }); if (docOffset) q.set("offset", docOffset);
+    const data = await api("/api/documents?" + q);
+    docOffset = data.next_offset;
+    $("moreDocs").style.display = docOffset ? "" : "none";
+    $("docRows").insertAdjacentHTML("beforeend", data.documents.map((d) => {
+      const notes = [];
+      if ((d.near_duplicates || []).length) notes.push("near-duplicate of " + d.near_duplicates.map((n) => `${n.doc_id} (${n.similarity})`).join(", "));
+      if (d.protected) notes.push("read-only");
+      return `<tr><td>${esc(d.title)}<div class="muted mono">${esc(d.doc_id)}</div></td><td>${esc(d.metadata?.doc_type || "")}</td><td>${esc(d.format)}</td><td>${d.version}</td><td>${d.chunk_count}</td><td class="muted">${esc(notes.join("; "))}</td>
+        <td class="row"><button class="small" data-act="view" data-id="${esc(d.doc_id)}">View</button>${d.protected ? "" : `<button class="small" data-act="replace" data-id="${esc(d.doc_id)}">Replace</button><button class="small" data-act="delete" data-id="${esc(d.doc_id)}">Delete</button>`}</td></tr>`;
+    }).join(""));
+  } catch (e) { $("docStats").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+}
+$("refreshDocs").onclick = () => loadDocs(true);
+$("docCorpus").onchange = () => loadDocs(true);
+$("moreDocs").onclick = () => loadDocs(false);
+
+let replaceTarget = null;
+$("docRows").onclick = async (e) => {
+  const btn = e.target.closest("button"); if (!btn) return;
+  const id = btn.dataset.id;
+  if (btn.dataset.act === "view") {
+    const d = await api("/api/documents/" + encodeURIComponent(id));
+    $("docDetail").innerHTML = `<strong>${esc(d.document.title)}</strong> <span class="muted mono">${esc(id)} · v${d.document.version} · ${esc(d.document.source)}</span>` +
+      `<div class="muted">entities: ${esc((d.document.entities || []).join(", "))}</div>` +
+      d.chunks.map((c) => `<div class="source"><div class="muted">chunk ${c.position} · ${esc(c.section)}</div><div class="text">${esc(c.text)}</div></div>`).join("");
+    $("docDetail").classList.remove("hidden"); $("docDetail").scrollIntoView({ behavior: "smooth" });
+  } else if (btn.dataset.act === "delete") {
+    if (!confirm(`Delete ${id}?`)) return;
+    try { await api("/api/documents/" + encodeURIComponent(id), { method: "DELETE" }); loadDocs(true); }
+    catch (err) { alert(err.message); }
+  } else if (btn.dataset.act === "replace") { replaceTarget = id; $("replaceFile").click(); }
+};
+$("replaceFile").onchange = async () => {
+  const f = $("replaceFile").files[0]; if (!f || !replaceTarget) return;
+  const fd = new FormData(); fd.append("file", f);
+  try { const r = await api("/api/documents/" + encodeURIComponent(replaceTarget), { method: "PUT", body: fd }); alert(`${r.doc_id}: ${r.status} (version ${r.version})`); loadDocs(true); }
+  catch (err) { alert(err.message); }
+  $("replaceFile").value = "";
+};
+
+$("uploadBtn").onclick = async () => {
+  const files = $("files").files; if (!files.length) return;
+  const fd = new FormData(); for (const f of files) fd.append("files", f); fd.append("corpus", $("uploadCorpus").value);
+  $("uploadBtn").disabled = true; $("uploadResult").textContent = "Processing…";
+  try {
+    const r = await api("/api/documents", { method: "POST", body: fd });
+    $("uploadResult").innerHTML = r.results.map((x) => `${esc(x.filename)}: <b>${esc(x.status)}</b>` +
+      (x.error ? ` - ${esc(x.error)}` : "") + (x.duplicate_of ? ` (same content as ${esc(x.duplicate_of)})` : "") +
+      (x.chunks ? `, ${x.chunks} chunks, v${x.version}` : "") +
+      ((x.near_duplicates || []).length ? `, near-duplicate of ${esc(x.near_duplicates.map((n) => n.doc_id).join(", "))}` : "")).join("<br>");
+    $("docCorpus").value = $("uploadCorpus").value; loadDocs(true);
+  } catch (e) { $("uploadResult").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+  finally { $("uploadBtn").disabled = false; }
+};
+
+// ---------- search
+$("searchBtn").onclick = async () => {
+  const q = $("sq").value.trim(); if (q.length < 2) return;
+  const p = new URLSearchParams({ q, mode: $("smode").value, rerank: $("srerank").checked, mmr: $("smmr").checked, k: 10 });
+  if ($("scorpus").value) p.set("corpus", $("scorpus").value);
+  try {
+    const r = await api("/api/search?" + p);
+    $("searchMeta").textContent = "timings: " + Object.entries(r.timings_ms).map(([k, v]) => `${k} ${v}`).join(" · ");
+    $("searchResults").innerHTML = r.hits.map((h, i) => `<div class="panel source"><h4>${i + 1}. ${esc(h.title)} <span class="muted">${esc(h.section || "")}</span></h4>
+      <div class="muted mono">${esc(h.doc_id)} · ${esc(h.doc_type || "")} · ${esc(h.date || "")} · ${esc(Object.entries(h.scores).map(([k, v]) => `${k}=${v}`).join("  "))}</div>
+      <div class="text">${esc(h.text)}</div></div>`).join("") || '<div class="panel muted">No results.</div>';
+  } catch (e) { $("searchMeta").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+};
+$("sq").addEventListener("keydown", (e) => { if (e.key === "Enter") $("searchBtn").click(); });
+
+loadHealth(); renderExamples();
+</script>
+</body>
+</html>
