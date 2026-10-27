@@ -1,8 +1,0 @@
-  hybrid_rrf_mmr: 50/300 (75s)
-  hybrid_rrf_mmr: 100/300 (158s)
-  hybrid_rrf_mmr: 150/300 (259s)
-  hybrid_rrf_mmr: 200/300 (399s)
-  hybrid_rrf_mmr: 250/300 (518s)
-  hybrid_rrf_mmr: 300/300 (641s)
-hybrid_rrf_mmr           R@5=0.772 R@10=0.857 All@10=0.737 MRR=0.888 p50~2140ms
--> /Users/user/ai-investigation-engine/eval/results/retrieval_hotpotqa_structure_prod.json
