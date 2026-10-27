@@ -1,0 +1,60 @@
+{
+ "health": {
+  "status": "ok",
+  "vector_db": "ok",
+  "vector_db_mode": "cloud",
+  "llm_providers": [
+   {
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b"
+   },
+   {
+    "provider": "cerebras",
+    "model": "gpt-oss-120b"
+   },
+   {
+    "provider": "gemini",
+    "model": "gemini-flash-lite-latest"
+   }
+  ],
+  "chunk_strategy": "structure"
+ },
+ "results": [
+  {
+   "concurrency": 1,
+   "requests": 64,
+   "errors": 0,
+   "p50_ms": 391,
+   "p95_ms": 553,
+   "max_ms": 1209,
+   "throughput_rps": 2.41
+  },
+  {
+   "concurrency": 4,
+   "requests": 64,
+   "errors": 0,
+   "p50_ms": 451,
+   "p95_ms": 589,
+   "max_ms": 893,
+   "throughput_rps": 8.44
+  },
+  {
+   "concurrency": 8,
+   "requests": 64,
+   "errors": 0,
+   "p50_ms": 512,
+   "p95_ms": 698,
+   "max_ms": 1070,
+   "throughput_rps": 14.06
+  },
+  {
+   "concurrency": 16,
+   "requests": 64,
+   "errors": 0,
+   "p50_ms": 713,
+   "p95_ms": 1275,
+   "max_ms": 1375,
+   "throughput_rps": 19.27
+  }
+ ]
+}

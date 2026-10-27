@@ -35,7 +35,7 @@ when the evidence is not there.
 | Evaluation | 50 investigation questions + 300 HotpotQA questions; Recall@k, All@k, MRR, correctness, citation precision/recall, abstention, contradiction detection, injection resistance; 5 retrieval configs, 2 chunkers, agent vs single-shot, 2 LLMs |
 | Python backend + UI | FastAPI + single-page UI with live streamed investigation trace |
 | Free deployment | Render free web service (Docker) + Qdrant Cloud free tier + free LLM tiers |
-| Bonus | agentic RAG, cross-encoder re-ranking, prompt-injection tests, caching, streaming, metrics endpoint, 2 LLMs compared |
+| Bonus | agentic RAG, cross-encoder re-ranking, prompt-injection tests, caching, streaming, metrics endpoint, 2 LLMs **and 3 embedding models** compared, **load test** on the 66k index (19 req/s, 0 errors) |
 
 ## Quick start (local, no accounts needed for search)
 

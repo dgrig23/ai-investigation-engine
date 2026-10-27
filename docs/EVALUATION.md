@@ -109,6 +109,45 @@ By question type (best config): **comparison** All@10 = 0.983, **bridge** All@10
 6. **Quantization:** on Qdrant Cloud vectors are int8-quantized to fit the free tier; compared to the
    unquantized local index, dense retrieval differed by at most 0.025 on any metric on the investigation set.
 
+### 2.5 Embedding models (bonus)
+
+Same chunks, same questions, separate indexes. HotpotQA here = the 599 gold paragraphs of the 300
+questions hidden among 5,000 random other paragraphs (re-embedding all 66k documents per model would
+take hours on a laptop CPU), so absolute numbers are higher than in 2.2 - compare models, not tables.
+
+| Embedding model (dimensions, size) | Investigation dense R@10 / MRR | Investigation hybrid R@10 / MRR | HotpotQA-subset dense R@10 / MRR | HotpotQA-subset hybrid R@10 / MRR |
+|---|---|---|---|---|
+| all-MiniLM-L6-v2 (384, 90 MB) | 0.842 / 0.683 | 0.931 / 0.828 | 0.860 / 0.923 | 0.923 / 0.961 |
+| **bge-small-en-v1.5 (384, 67 MB) - used** | **0.939** / 0.668 | 0.963 / 0.832 | 0.928 / 0.968 | 0.957 / 0.979 |
+| bge-base-en-v1.5 (768, 210 MB) | 0.927 / **0.769** | **0.968 / 0.882** | **0.952 / 0.970** | **0.965 / 0.978** |
+
+- bge-base is best on the open-domain HotpotQA subset (+0.024 dense Recall@10) and orders better on
+  the incident corpus (MRR +0.10), at 3× the size, 2× the vector dimensions and ~2× slower embedding.
+- MiniLM, the most common default, is clearly weaker (−0.10 dense Recall@10 on the incident corpus).
+- **Hybrid search shrinks the gap between embedding models** (0.931-0.968 vs 0.842-0.939 for dense
+  alone): BM25 compensates for a weaker embedding. With 512 MB RAM in production and RAM-bound
+  int8 vectors on the 1 GB Qdrant tier, bge-small is the right trade-off; bge-base is the first upgrade
+  on a larger host.
+
+### 2.6 Performance under load (bonus)
+
+`scripts/load_test.py`: 64 HotpotQA questions per level sent concurrently to `GET /api/search` on a
+local server (8-core laptop) using the full 66,552-document index on Qdrant Cloud. No LLM involved.
+
+| concurrent requests | production (no cross-encoder): p50 / p95 / throughput | with cross-encoder: p50 / p95 / throughput |
+|---|---|---|
+| 1 | 391 / 553 ms / 2.4 req/s | 952 / 1,107 ms / 1.0 req/s |
+| 4 | 451 / 589 ms / 8.4 req/s | 2,016 / 2,176 ms / 1.9 req/s |
+| 8 | 512 / 698 ms / 14.1 req/s | 4,050 / 4,260 ms / 1.9 req/s |
+| 16 | 713 / 1,275 ms / **19.3 req/s** | 8,134 / 8,284 ms / **1.9 req/s** |
+
+0 errors in 512 requests. Without the cross-encoder, throughput scales with concurrency (the time is
+mostly network I/O to Qdrant Cloud, which overlaps). With it, throughput is **capped at ~2 req/s** and
+latency grows linearly: `CrossEncoderReranker` serializes calls with a lock around the single ONNX
+session, so it is a CPU-bound queue. Fixes: a small pool of sessions (one per core), batching
+concurrent requests into one model call, or a GPU. On the free 512 MB host the reranker is off anyway;
+end-to-end question latency is dominated by the LLM (seconds), not by search.
+
 ## 3. Answer results
 
 ### 3.1 Final results (investigation set, gpt-oss-120b)

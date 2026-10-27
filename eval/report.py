@@ -145,7 +145,7 @@ def embedding_table(reports: list[dict]) -> str:
 def main() -> None:
     reports = []
     for p in sorted(RESULTS.glob("*.json")):
-        if not p.name.startswith("smoke"):
+        if not p.name.startswith(("smoke", "load_test")):
             rep = json.loads(p.read_text())
             rep["_file"] = p.name
             reports.append(rep)
