@@ -80,7 +80,7 @@ class HybridRetriever:
         if cfg.mode in ("dense", "hybrid"):
             t = time.perf_counter()
             qvec = self.embedder.embed_query(query)
-            lists.append(self.store.search_dense(qvec, cfg.candidate_k, flt))
+            lists.append(self.store.search_dense(qvec, cfg.candidate_k, flt, with_vectors=cfg.use_mmr))
             weights.append(cfg.dense_weight)
             timings["dense_ms"] = (time.perf_counter() - t) * 1000
         if cfg.mode in ("sparse", "hybrid"):

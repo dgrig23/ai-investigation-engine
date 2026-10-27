@@ -177,10 +177,12 @@ class VectorStore:
             wait=True,
         )
 
-    def search_dense(self, vector: np.ndarray, limit: int, flt: models.Filter | None = None) -> list[SearchHit]:
+    def search_dense(self, vector: np.ndarray, limit: int, flt: models.Filter | None = None,
+                     with_vectors: bool = True) -> list[SearchHit]:
+        # Returning 40 vectors adds ~100 KB per query; only MMR needs them.
         res = self.client.query_points(
             self.chunks_collection, query=vector.tolist(), using=DENSE, limit=limit,
-            query_filter=flt, with_payload=True, with_vectors=[DENSE],
+            query_filter=flt, with_payload=True, with_vectors=[DENSE] if with_vectors else False,
         )
         return [
             SearchHit(chunk=_payload_to_chunk(p.id, p.payload or {}), score=float(p.score),

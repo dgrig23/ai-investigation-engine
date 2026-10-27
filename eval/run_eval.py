@@ -41,6 +41,7 @@ RETRIEVAL_CONFIGS: dict[str, dict[str, Any]] = {
     "dense": dict(mode="dense", use_reranker=False, use_mmr=False),
     "bm25": dict(mode="sparse", use_reranker=False, use_mmr=False),
     "hybrid_rrf": dict(mode="hybrid", use_reranker=False, use_mmr=False),
+    "hybrid_rrf_mmr": dict(mode="hybrid", use_reranker=False, use_mmr=True),  # production on 512 MB
     "hybrid_rrf_rerank": dict(mode="hybrid", use_reranker=True, use_mmr=False),
     "hybrid_rrf_rerank_mmr": dict(mode="hybrid", use_reranker=True, use_mmr=True),
 }
@@ -103,7 +104,9 @@ def run_retrieval(svc: Services, dataset: str, configs: list[str], limit: int | 
     for name in configs:
         cfg = replace(base, **RETRIEVAL_CONFIGS[name])
         rows, started = [], time.perf_counter()
-        for qu in questions:
+        for i, qu in enumerate(questions, start=1):
+            if i % 50 == 0:
+                print(f"  {name}: {i}/{len(questions)} ({time.perf_counter() - started:.0f}s)", flush=True)
             res = svc.retriever.search(qu["question"], corpus=corpus, config=cfg)
             ranked = m.unique_in_order(h.chunk.doc_id for h in res.hits)
             rows.append({"id": qu["id"], "category": qu["category"], **group_metrics(ranked, qu["evidence"]),
