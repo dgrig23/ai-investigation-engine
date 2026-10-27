@@ -3,14 +3,14 @@
  "dataset": "investigation",
  "strategy": "fixed",
  "n_questions": 41,
- "commit": "unknown",
+ "commit": "a866884",
  "configs": {
   "dense": {
    "summary": {
     "overall": {
      "recall@1": 0.4675,
      "recall@3": 0.6382,
-     "recall@5": 0.7967,
+     "recall@5": 0.8028,
      "recall@10": 0.9309,
      "recall@20": 0.9675,
      "all@1": 0.3171,
@@ -18,8 +18,8 @@
      "all@5": 0.7073,
      "all@10": 0.878,
      "all@20": 0.9268,
-     "mrr": 0.7184,
-     "latency_ms": 7.7143,
+     "mrr": 0.7188,
+     "latency_ms": 129.6248,
      "n": 41
     },
     "contradiction": {
@@ -34,7 +34,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.8125,
-     "latency_ms": 7.6861,
+     "latency_ms": 161.4151,
      "n": 8
     },
     "injection": {
@@ -49,13 +49,13 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.75,
-     "latency_ms": 7.5558,
+     "latency_ms": 189.2754,
      "n": 3
     },
     "multi_doc": {
      "recall@1": 0.2083,
      "recall@3": 0.4583,
-     "recall@5": 0.5833,
+     "recall@5": 0.6146,
      "recall@10": 0.7708,
      "recall@20": 0.8958,
      "all@1": 0.125,
@@ -63,8 +63,8 @@
      "all@5": 0.375,
      "all@10": 0.625,
      "all@20": 0.75,
-     "mrr": 0.4412,
-     "latency_ms": 7.6974,
+     "mrr": 0.4435,
+     "latency_ms": 105.3232,
      "n": 8
     },
     "multi_hop": {
@@ -79,7 +79,7 @@
      "all@10": 0.8,
      "all@20": 0.9,
      "mrr": 0.8375,
-     "latency_ms": 8.5521,
+     "latency_ms": 117.2514,
      "n": 10
     },
     "simple": {
@@ -94,7 +94,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.7333,
-     "latency_ms": 7.086,
+     "latency_ms": 120.031,
      "n": 12
     }
    },
@@ -115,12 +115,12 @@
      "mrr": 1.0,
      "top_docs": [
       "incidents:inc-2033_bonus-engine.pdf",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:q1_2026_reliability_review.docx",
       "incidents:change_log_2026_q1.csv",
-      "incidents:inc-2041_initial_incident_report.md"
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:inc-2029_notification-service_incident.txt"
      ],
-     "latency_ms": 7.405042997561395
+     "latency_ms": 165.5672909982968
     },
     {
      "id": "s02",
@@ -143,7 +143,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 8.036292012548074
+     "latency_ms": 121.38120901363436
     },
     {
      "id": "s03",
@@ -166,7 +166,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:inc-2038_kyc-service.md"
      ],
-     "latency_ms": 7.244707987410948
+     "latency_ms": 262.7200839924626
     },
     {
      "id": "s04",
@@ -189,7 +189,7 @@
       "incidents:org_announcement_fraud_scoring_ownership.md",
       "incidents:inc-2033_bonus-engine.pdf"
      ],
-     "latency_ms": 7.062582997605205
+     "latency_ms": 99.54129098332487
     },
     {
      "id": "s05",
@@ -212,7 +212,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:oncall_handover_notes_2026-03-19.txt"
      ],
-     "latency_ms": 6.883791007567197
+     "latency_ms": 91.02724998956546
     },
     {
      "id": "s06",
@@ -231,11 +231,11 @@
      "top_docs": [
       "incidents:chg-1047_change_record.md",
       "incidents:chg-1053_change_record.md",
-      "incidents:oncall_handover_notes_2026-03-19.txt",
       "incidents:weekly_ops_report_2026_w07.md",
+      "incidents:oncall_handover_notes_2026-03-19.txt",
       "incidents:weekly_ops_report_2026_w04.md"
      ],
-     "latency_ms": 6.684082007268444
+     "latency_ms": 91.00454200233798
     },
     {
      "id": "s07",
@@ -258,7 +258,7 @@
       "incidents:weekly_ops_report_2026_w03.md",
       "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 7.699249996221624
+     "latency_ms": 116.3964580046013
     },
     {
      "id": "s08",
@@ -281,7 +281,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 6.863582995720208
+     "latency_ms": 88.0802090105135
     },
     {
      "id": "s09",
@@ -304,7 +304,7 @@
       "incidents:chg-1031_change_record.md",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 6.755958005669527
+     "latency_ms": 109.1165830148384
     },
     {
      "id": "s10",
@@ -327,7 +327,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 7.2666660125833005
+     "latency_ms": 91.30400000140071
     },
     {
      "id": "s11",
@@ -347,10 +347,10 @@
       "incidents:payments_architecture_overview_v1.docx",
       "incidents:runbook_payment_gateway.docx",
       "incidents:service_catalog.html",
-      "incidents:pm-2041_deposit_delays_postmortem.pdf",
-      "incidents:slack_inc-2041_export.json"
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 6.618832994718105
+     "latency_ms": 115.57491699932143
     },
     {
      "id": "s12",
@@ -373,7 +373,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 6.510749997687526
+     "latency_ms": 88.65812500880565
     },
     {
      "id": "m01",
@@ -396,7 +396,7 @@
       "incidents:pm-2047_withdrawals_postmortem.md",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 7.415875006699935
+     "latency_ms": 114.20454201288521
     },
     {
      "id": "m02",
@@ -419,7 +419,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 8.484956997563131
+     "latency_ms": 91.10900000086986
     },
     {
      "id": "m03",
@@ -442,7 +442,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 9.176541992928833
+     "latency_ms": 287.0359999942593
     },
     {
      "id": "m04",
@@ -465,7 +465,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 8.763834004639648
+     "latency_ms": 99.2404999997234
     },
     {
      "id": "m05",
@@ -488,7 +488,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:weekly_ops_report_2026_w14.md"
      ],
-     "latency_ms": 8.482667006319389
+     "latency_ms": 94.0169160021469
     },
     {
      "id": "m06",
@@ -511,7 +511,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:service_catalog.html"
      ],
-     "latency_ms": 8.12337500974536
+     "latency_ms": 94.43454199936241
     },
     {
      "id": "m07",
@@ -534,7 +534,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 9.518042003037408
+     "latency_ms": 97.84104199206922
     },
     {
      "id": "m08",
@@ -557,7 +557,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 7.197667000582442
+     "latency_ms": 98.21970899065491
     },
     {
      "id": "m09",
@@ -580,7 +580,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 10.341165994759649
+     "latency_ms": 104.60016700380947
     },
     {
      "id": "m10",
@@ -603,7 +603,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 8.01662499725353
+     "latency_ms": 91.81141600129195
     },
     {
      "id": "d01",
@@ -612,7 +612,7 @@
      "all@1": 0.0,
      "recall@3": 0.0,
      "all@3": 0.0,
-     "recall@5": 0.5,
+     "recall@5": 0.75,
      "all@5": 0.0,
      "recall@10": 1.0,
      "all@10": 1.0,
@@ -624,9 +624,9 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:status_page_2026-03-12.html",
       "incidents:change_log_2026_q1.csv",
-      "incidents:inc-2029_notification-service_incident.txt"
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 8.942667001974769
+     "latency_ms": 99.53174999100156
     },
     {
      "id": "d02",
@@ -649,7 +649,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 8.475042006466538
+     "latency_ms": 91.88383299624547
     },
     {
      "id": "d03",
@@ -672,7 +672,7 @@
       "incidents:weekly_ops_report_2026_w07.md",
       "incidents:weekly_ops_report_2026_w06.md"
      ],
-     "latency_ms": 6.758667004760355
+     "latency_ms": 202.53700099419802
     },
     {
      "id": "d04",
@@ -695,7 +695,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 8.414709009230137
+     "latency_ms": 99.0203749970533
     },
     {
      "id": "d05",
@@ -718,7 +718,7 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:inc-2044_reporting-service.md"
      ],
-     "latency_ms": 8.297624997794628
+     "latency_ms": 89.92891700472683
     },
     {
      "id": "d06",
@@ -733,7 +733,7 @@
      "all@10": 1.0,
      "recall@20": 1.0,
      "all@20": 1.0,
-     "mrr": 0.125,
+     "mrr": 0.14285714285714285,
      "top_docs": [
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:email_payflex_account_manager_2026-03-13.html",
@@ -741,7 +741,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 6.206749982084148
+     "latency_ms": 85.42349998606369
     },
     {
      "id": "d07",
@@ -762,9 +762,9 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:change_log_2026_q1.csv",
       "incidents:weekly_ops_report_2026_w05.md",
-      "incidents:inc-2029_notification-service_incident.txt"
+      "incidents:inc-2044_reporting-service.md"
      ],
-     "latency_ms": 6.380540988175198
+     "latency_ms": 85.75458299310412
     },
     {
      "id": "d08",
@@ -787,7 +787,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 8.10349998937454
+     "latency_ms": 88.5055839898996
     },
     {
      "id": "c01",
@@ -810,7 +810,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 6.800750008551404
+     "latency_ms": 93.34716699959245
     },
     {
      "id": "c02",
@@ -833,7 +833,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 7.721874993876554
+     "latency_ms": 99.23129199887626
     },
     {
      "id": "c03",
@@ -856,7 +856,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 6.795499997679144
+     "latency_ms": 90.63454100396484
     },
     {
      "id": "c04",
@@ -879,7 +879,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 7.425998992403038
+     "latency_ms": 95.0830420042621
     },
     {
      "id": "c05",
@@ -902,7 +902,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:service_catalog.html"
      ],
-     "latency_ms": 6.3780829950701445
+     "latency_ms": 225.1118749991292
     },
     {
      "id": "c06",
@@ -925,7 +925,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:status_page_2026-03-12.html"
      ],
-     "latency_ms": 8.047917013755068
+     "latency_ms": 199.05395798559766
     },
     {
      "id": "c07",
@@ -948,7 +948,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 8.8768340065144
+     "latency_ms": 296.21070899884216
     },
     {
      "id": "c08",
@@ -971,7 +971,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 9.44204100233037
+     "latency_ms": 192.6482079870766
     },
     {
      "id": "i01",
@@ -994,7 +994,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 7.570792004116811
+     "latency_ms": 184.51879198255483
     },
     {
      "id": "i02",
@@ -1017,7 +1017,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 8.048956995480694
+     "latency_ms": 174.5789159904234
     },
     {
      "id": "i03",
@@ -1040,41 +1040,41 @@
       "incidents:weekly_ops_report_2026_w13.md",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 7.047541992506012
+     "latency_ms": 208.72862498799805
     }
    ],
-   "seconds": 0.5
+   "seconds": 6.0
   },
   "bm25": {
    "summary": {
     "overall": {
      "recall@1": 0.5833,
-     "recall@3": 0.815,
+     "recall@3": 0.8028,
      "recall@5": 0.9004,
      "recall@10": 0.9431,
      "recall@20": 0.9553,
      "all@1": 0.4146,
-     "all@3": 0.6829,
+     "all@3": 0.6585,
      "all@5": 0.8049,
      "all@10": 0.878,
      "all@20": 0.9024,
      "mrr": 0.8565,
-     "latency_ms": 2.9647,
+     "latency_ms": 286.1945,
      "n": 41
     },
     "contradiction": {
      "recall@1": 0.3125,
-     "recall@3": 0.8125,
+     "recall@3": 0.75,
      "recall@5": 0.875,
      "recall@10": 0.9375,
      "recall@20": 1.0,
      "all@1": 0.0,
-     "all@3": 0.625,
+     "all@3": 0.5,
      "all@5": 0.75,
      "all@10": 0.875,
      "all@20": 1.0,
      "mrr": 0.8125,
-     "latency_ms": 2.1355,
+     "latency_ms": 224.8779,
      "n": 8
     },
     "injection": {
@@ -1089,7 +1089,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.75,
-     "latency_ms": 2.1558,
+     "latency_ms": 161.9124,
      "n": 3
     },
     "multi_doc": {
@@ -1104,7 +1104,7 @@
      "all@10": 0.75,
      "all@20": 0.75,
      "mrr": 0.8167,
-     "latency_ms": 6.4073,
+     "latency_ms": 274.1503,
      "n": 8
     },
     "multi_hop": {
@@ -1119,7 +1119,7 @@
      "all@10": 0.8,
      "all@20": 0.8,
      "mrr": 0.8333,
-     "latency_ms": 2.1939,
+     "latency_ms": 330.788,
      "n": 10
     },
     "simple": {
@@ -1134,7 +1134,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.9583,
-     "latency_ms": 2.0669,
+     "latency_ms": 329.0111,
      "n": 12
     }
    },
@@ -1160,7 +1160,7 @@
       "incidents:runbook_payment_gateway.docx",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 2.404291008133441
+     "latency_ms": 147.06112499698065
     },
     {
      "id": "s02",
@@ -1183,7 +1183,7 @@
       "incidents:weekly_ops_report_2026_w03.md",
       "incidents:weekly_ops_report_2026_w15.md"
      ],
-     "latency_ms": 2.430457010632381
+     "latency_ms": 340.86854101042263
     },
     {
      "id": "s03",
@@ -1206,7 +1206,7 @@
       "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2052_game-aggregator.pdf"
      ],
-     "latency_ms": 2.1188740065554157
+     "latency_ms": 343.5723330039764
     },
     {
      "id": "s04",
@@ -1226,10 +1226,10 @@
       "incidents:runbook_bonus_engine.docx",
       "incidents:weekly_ops_report_2026_w03.md",
       "incidents:inc-2033_bonus-engine.pdf",
-      "incidents:weekly_ops_report_2026_w09.md",
-      "incidents:weekly_ops_report_2026_w15.md"
+      "incidents:weekly_ops_report_2026_w15.md",
+      "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 2.215624990640208
+     "latency_ms": 543.7584580067778
     },
     {
      "id": "s05",
@@ -1252,7 +1252,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 1.537707998068072
+     "latency_ms": 262.67687501967885
     },
     {
      "id": "s06",
@@ -1275,7 +1275,7 @@
       "incidents:cab_meeting_notes_2026-03-06.md",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 1.9109170098090544
+     "latency_ms": 410.0984170072479
     },
     {
      "id": "s07",
@@ -1296,9 +1296,9 @@
       "incidents:weekly_ops_report_2026_w14.md",
       "incidents:runbook_game_aggregator.docx",
       "incidents:weekly_ops_report_2026_w03.md",
-      "incidents:weekly_ops_report_2026_w15.md"
+      "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 2.3373750009341165
+     "latency_ms": 285.4982499993639
     },
     {
      "id": "s08",
@@ -1321,7 +1321,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:service_catalog.html"
      ],
-     "latency_ms": 1.694541992037557
+     "latency_ms": 362.63695899106096
     },
     {
      "id": "s09",
@@ -1344,7 +1344,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 1.8654169980436563
+     "latency_ms": 212.96716599317733
     },
     {
      "id": "s10",
@@ -1367,7 +1367,7 @@
       "incidents:chg-1058_change_record.md",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 2.1512920066015795
+     "latency_ms": 483.9859170024283
     },
     {
      "id": "s11",
@@ -1390,7 +1390,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 2.1535409905482084
+     "latency_ms": 333.7649989989586
     },
     {
      "id": "s12",
@@ -1413,7 +1413,7 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 1.9831670069834217
+     "latency_ms": 221.24420799082145
     },
     {
      "id": "m01",
@@ -1436,7 +1436,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 2.068167013931088
+     "latency_ms": 396.5882490010699
     },
     {
      "id": "m02",
@@ -1459,7 +1459,7 @@
       "incidents:weekly_ops_report_2026_w11.md",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 2.180374984163791
+     "latency_ms": 492.574666015571
     },
     {
      "id": "m03",
@@ -1482,7 +1482,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 2.261833011289127
+     "latency_ms": 260.4596669989405
     },
     {
      "id": "m04",
@@ -1505,7 +1505,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 2.127333005773835
+     "latency_ms": 337.11475001473445
     },
     {
      "id": "m05",
@@ -1524,11 +1524,11 @@
      "top_docs": [
       "incidents:inc-2038_kyc-service.md",
       "incidents:runbook_payment_gateway.docx",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:weekly_ops_report_2026_w02.md",
-      "incidents:inc-2044_reporting-service.md"
+      "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2029_notification-service_incident.txt"
      ],
-     "latency_ms": 2.188290993217379
+     "latency_ms": 308.89329200726934
     },
     {
      "id": "m06",
@@ -1551,7 +1551,7 @@
       "incidents:weekly_ops_report_2026_w11.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 2.229457997600548
+     "latency_ms": 353.94058300880715
     },
     {
      "id": "m07",
@@ -1574,7 +1574,7 @@
       "incidents:chg-1055_change_record.md",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 2.257457992527634
+     "latency_ms": 314.7570419823751
     },
     {
      "id": "m08",
@@ -1597,7 +1597,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 2.043457978288643
+     "latency_ms": 231.92091600503772
     },
     {
      "id": "m09",
@@ -1620,7 +1620,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 2.4274579918710515
+     "latency_ms": 460.2189579891274
     },
     {
      "id": "m10",
@@ -1643,7 +1643,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 2.1549589873757213
+     "latency_ms": 151.41187600966077
     },
     {
      "id": "d01",
@@ -1666,7 +1666,7 @@
       "incidents:status_page_2026-03-12.html",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 2.405084000201896
+     "latency_ms": 221.49695799453184
     },
     {
      "id": "d02",
@@ -1689,7 +1689,7 @@
       "incidents:chg-1058_change_record.md",
       "incidents:oncall_handover_notes_2026-03-19.txt"
      ],
-     "latency_ms": 1.9688749889610335
+     "latency_ms": 237.12950001936406
     },
     {
      "id": "d03",
@@ -1712,7 +1712,7 @@
       "incidents:service_catalog.html",
       "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 2.3145430168369785
+     "latency_ms": 214.99495800526347
     },
     {
      "id": "d04",
@@ -1735,7 +1735,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:weekly_ops_report_2026_w05.md"
      ],
-     "latency_ms": 2.34604200522881
+     "latency_ms": 221.39737399993464
     },
     {
      "id": "d05",
@@ -1758,7 +1758,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 35.54812500078697
+     "latency_ms": 264.18525000917725
     },
     {
      "id": "d06",
@@ -1781,7 +1781,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 2.232124999864027
+     "latency_ms": 429.04108299990185
     },
     {
      "id": "d07",
@@ -1801,10 +1801,10 @@
       "incidents:chg-1055_change_record.md",
       "incidents:chg-1053_change_record.md",
       "incidents:email_payflex_account_manager_2026-03-13.html",
-      "incidents:cab_meeting_notes_2026-03-06.md",
-      "incidents:change_log_2026_q1.csv"
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:cab_meeting_notes_2026-03-06.md"
      ],
-     "latency_ms": 2.3418750060955063
+     "latency_ms": 306.5869589918293
     },
     {
      "id": "d08",
@@ -1827,7 +1827,7 @@
       "incidents:inc-2044_reporting-service.md",
       "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 2.1017079998273402
+     "latency_ms": 298.3701249904698
     },
     {
      "id": "c01",
@@ -1850,7 +1850,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:weekly_ops_report_2026_w11.md"
      ],
-     "latency_ms": 1.8316250061616302
+     "latency_ms": 308.3728760102531
     },
     {
      "id": "c02",
@@ -1873,7 +1873,7 @@
       "incidents:chg-1055_change_record.md",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 2.101709003909491
+     "latency_ms": 350.9837909950875
     },
     {
      "id": "c03",
@@ -1894,9 +1894,9 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:pm-2041_draft_v0.9.md",
-      "incidents:inc-2029_notification-service_incident.txt"
+      "incidents:inc-2052_game-aggregator.pdf"
      ],
-     "latency_ms": 1.9694160000653937
+     "latency_ms": 237.82420900533907
     },
     {
      "id": "c04",
@@ -1919,7 +1919,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 2.2143749956740066
+     "latency_ms": 232.51033399719745
     },
     {
      "id": "c05",
@@ -1942,7 +1942,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 2.1737920033046976
+     "latency_ms": 215.80345800612122
     },
     {
      "id": "c06",
@@ -1960,20 +1960,20 @@
      "mrr": 1.0,
      "top_docs": [
       "incidents:inc-2041_initial_incident_report.md",
-      "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:status_page_2026-03-12.html",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 2.3521249822806567
+     "latency_ms": 149.23245800309815
     },
     {
      "id": "c07",
      "category": "contradiction",
      "recall@1": 0.0,
      "all@1": 0.0,
-     "recall@3": 1.0,
-     "all@3": 1.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
      "recall@5": 1.0,
      "all@5": 1.0,
      "recall@10": 1.0,
@@ -1984,11 +1984,11 @@
      "top_docs": [
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:status_page_2026-03-12.html",
-      "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 2.3739170137559995
+     "latency_ms": 148.5844580020057
     },
     {
      "id": "c08",
@@ -2011,7 +2011,7 @@
       "incidents:weekly_ops_report_2026_w04.md",
       "incidents:weekly_ops_report_2026_w10.md"
      ],
-     "latency_ms": 2.0670840167440474
+     "latency_ms": 155.7119170029182
     },
     {
      "id": "i01",
@@ -2034,7 +2034,7 @@
       "incidents:cab_meeting_notes_2026-03-06.md",
       "incidents:chg-1047_change_record.md"
      ],
-     "latency_ms": 2.2190409945324063
+     "latency_ms": 147.64570898842067
     },
     {
      "id": "i02",
@@ -2057,7 +2057,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 2.1207910031080246
+     "latency_ms": 147.03324899892323
     },
     {
      "id": "i03",
@@ -2080,41 +2080,41 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:org_announcement_fraud_scoring_ownership.md"
      ],
-     "latency_ms": 2.127458996255882
+     "latency_ms": 191.05829200998414
     }
    ],
-   "seconds": 0.1
+   "seconds": 11.7
   },
   "hybrid_rrf": {
    "summary": {
     "overall": {
-     "recall@1": 0.5528,
-     "recall@3": 0.8028,
+     "recall@1": 0.5407,
+     "recall@3": 0.7907,
      "recall@5": 0.8882,
      "recall@10": 0.9431,
      "recall@20": 0.9675,
      "all@1": 0.3659,
-     "all@3": 0.7073,
+     "all@3": 0.6829,
      "all@5": 0.8049,
      "all@10": 0.878,
      "all@20": 0.9268,
-     "mrr": 0.8348,
-     "latency_ms": 3.4308,
+     "mrr": 0.8267,
+     "latency_ms": 596.3368,
      "n": 41
     },
     "contradiction": {
-     "recall@1": 0.5,
-     "recall@3": 0.875,
+     "recall@1": 0.4375,
+     "recall@3": 0.8125,
      "recall@5": 0.875,
      "recall@10": 1.0,
      "recall@20": 1.0,
      "all@1": 0.0,
-     "all@3": 0.75,
+     "all@3": 0.625,
      "all@5": 0.75,
      "all@10": 1.0,
      "all@20": 1.0,
-     "mrr": 1.0,
-     "latency_ms": 3.4122,
+     "mrr": 0.9375,
+     "latency_ms": 406.7745,
      "n": 8
     },
     "injection": {
@@ -2129,7 +2129,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.75,
-     "latency_ms": 3.4223,
+     "latency_ms": 697.687,
      "n": 3
     },
     "multi_doc": {
@@ -2143,8 +2143,8 @@
      "all@5": 0.5,
      "all@10": 0.625,
      "all@20": 0.875,
-     "mrr": 0.6845,
-     "latency_ms": 3.5355,
+     "mrr": 0.7054,
+     "latency_ms": 672.3696,
      "n": 8
     },
     "multi_hop": {
@@ -2159,7 +2159,7 @@
      "all@10": 0.8,
      "all@20": 0.8,
      "mrr": 0.825,
-     "latency_ms": 3.5109,
+     "latency_ms": 751.9188,
      "n": 10
     },
     "simple": {
@@ -2174,7 +2174,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.8542,
-     "latency_ms": 3.3087,
+     "latency_ms": 517.0338,
      "n": 12
     }
    },
@@ -2200,7 +2200,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 3.350166996824555
+     "latency_ms": 310.29858299007174
     },
     {
      "id": "s02",
@@ -2223,7 +2223,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.705166993313469
+     "latency_ms": 758.088166010566
     },
     {
      "id": "s03",
@@ -2244,9 +2244,9 @@
       "incidents:inc-2038_kyc-service.md",
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:inc-2041_initial_incident_report.md",
-      "incidents:inc-2029_notification-service_incident.txt"
+      "incidents:email_payflex_account_manager_2026-03-13.html"
      ],
-     "latency_ms": 3.2442490046378225
+     "latency_ms": 644.3830419884762
     },
     {
      "id": "s04",
@@ -2267,9 +2267,9 @@
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:service_catalog.html",
       "incidents:weekly_ops_report_2026_w03.md",
-      "incidents:weekly_ops_report_2026_w09.md"
+      "incidents:weekly_ops_report_2026_w15.md"
      ],
-     "latency_ms": 3.4715840010903776
+     "latency_ms": 1189.218624989735
     },
     {
      "id": "s05",
@@ -2292,7 +2292,7 @@
       "incidents:runbook_payment_gateway.docx",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 2.820623994921334
+     "latency_ms": 442.9131249926286
     },
     {
      "id": "s06",
@@ -2315,7 +2315,7 @@
       "incidents:chg-1053_change_record.md",
       "incidents:cab_meeting_notes_2026-03-06.md"
      ],
-     "latency_ms": 3.169374991557561
+     "latency_ms": 399.64341699669603
     },
     {
      "id": "s07",
@@ -2338,7 +2338,7 @@
       "incidents:weekly_ops_report_2026_w03.md",
       "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 3.65258299279958
+     "latency_ms": 425.01870698470157
     },
     {
      "id": "s08",
@@ -2361,7 +2361,7 @@
       "incidents:weekly_ops_report_2026_w11.md",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 2.971625013742596
+     "latency_ms": 306.96050002006814
     },
     {
      "id": "s09",
@@ -2384,7 +2384,7 @@
       "incidents:chg-1055_change_record.md",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 3.1227909930748865
+     "latency_ms": 427.3602920002304
     },
     {
      "id": "s10",
@@ -2407,7 +2407,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 3.4449170052539557
+     "latency_ms": 338.80337500886526
     },
     {
      "id": "s11",
@@ -2430,7 +2430,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.494042990496382
+     "latency_ms": 433.8277089991607
     },
     {
      "id": "s12",
@@ -2453,7 +2453,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.2575429941061884
+     "latency_ms": 527.889833014342
     },
     {
      "id": "m01",
@@ -2476,7 +2476,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:chg-1058_change_record.md"
      ],
-     "latency_ms": 3.4046660002786666
+     "latency_ms": 558.3245409943629
     },
     {
      "id": "m02",
@@ -2499,7 +2499,7 @@
       "incidents:chg-1051_change_record.md",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 3.4602909872774035
+     "latency_ms": 740.5539590108674
     },
     {
      "id": "m03",
@@ -2522,7 +2522,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 3.610958010540344
+     "latency_ms": 572.1740419976413
     },
     {
      "id": "m04",
@@ -2545,7 +2545,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.4353330120211467
+     "latency_ms": 1728.3783330058213
     },
     {
      "id": "m05",
@@ -2565,10 +2565,10 @@
       "incidents:inc-2038_kyc-service.md",
       "incidents:weekly_ops_report_2026_w04.md",
       "incidents:inc-2041_initial_incident_report.md",
-      "incidents:inc-2029_notification-service_incident.txt",
-      "incidents:weekly_ops_report_2026_w10.md"
+      "incidents:weekly_ops_report_2026_w10.md",
+      "incidents:weekly_ops_report_2026_w14.md"
      ],
-     "latency_ms": 3.515249991323799
+     "latency_ms": 694.2100830056006
     },
     {
      "id": "m06",
@@ -2591,7 +2591,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.554291994078085
+     "latency_ms": 882.8684169857297
     },
     {
      "id": "m07",
@@ -2610,11 +2610,11 @@
      "top_docs": [
       "incidents:q1_2026_reliability_review.docx",
       "incidents:slack_inc-2041_export.json",
-      "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:pm-2041_draft_v0.9.md",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 3.548749999026768
+     "latency_ms": 977.9966679925565
     },
     {
      "id": "m08",
@@ -2637,7 +2637,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 3.3639159955782816
+     "latency_ms": 571.3506669999333
     },
     {
      "id": "m09",
@@ -2660,7 +2660,7 @@
       "incidents:pm-2047_withdrawals_postmortem.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.7533750000875443
+     "latency_ms": 450.75416698819026
     },
     {
      "id": "m10",
@@ -2683,7 +2683,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:oncall_handover_notes_2026-03-19.txt"
      ],
-     "latency_ms": 3.4620829828782007
+     "latency_ms": 342.57745899958536
     },
     {
      "id": "d01",
@@ -2698,15 +2698,15 @@
      "all@10": 0.0,
      "recall@20": 1.0,
      "all@20": 1.0,
-     "mrr": 0.3333333333333333,
+     "mrr": 0.5,
      "top_docs": [
       "incidents:q1_2026_reliability_review.docx",
-      "incidents:status_page_2026-03-12.html",
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:status_page_2026-03-12.html",
       "incidents:status_page_2026-03-18.html"
      ],
-     "latency_ms": 3.724333000718616
+     "latency_ms": 791.7366669862531
     },
     {
      "id": "d02",
@@ -2729,7 +2729,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.245874002459459
+     "latency_ms": 1068.635291987448
     },
     {
      "id": "d03",
@@ -2752,7 +2752,7 @@
       "incidents:weekly_ops_report_2026_w07.md",
       "incidents:weekly_ops_report_2026_w06.md"
      ],
-     "latency_ms": 3.7214579933788627
+     "latency_ms": 914.8991249967366
     },
     {
      "id": "d04",
@@ -2775,7 +2775,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.644500990048982
+     "latency_ms": 883.9405000035185
     },
     {
      "id": "d05",
@@ -2798,7 +2798,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:inc-2044_reporting-service.md"
      ],
-     "latency_ms": 3.6132919922238216
+     "latency_ms": 590.4967499955092
     },
     {
      "id": "d06",
@@ -2818,10 +2818,10 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2047_withdrawals_postmortem.md",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
-      "incidents:inc-2029_notification-service_incident.txt",
-      "incidents:change_log_2026_q1.csv"
+      "incidents:change_log_2026_q1.csv",
+      "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 3.3718330087140203
+     "latency_ms": 384.54283399914857
     },
     {
      "id": "d07",
@@ -2842,9 +2842,9 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:alerts_export_2026-03.json",
       "incidents:chg-1053_change_record.md",
-      "incidents:cab_meeting_notes_2026-03-06.md"
+      "incidents:oncall_handover_notes_2026-03-19.txt"
      ],
-     "latency_ms": 3.589751009712927
+     "latency_ms": 309.0075420041103
     },
     {
      "id": "d08",
@@ -2867,7 +2867,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 3.3730009890859947
+     "latency_ms": 435.6984580081189
     },
     {
      "id": "c01",
@@ -2890,7 +2890,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 3.0632499983767048
+     "latency_ms": 312.630374028231
     },
     {
      "id": "c02",
@@ -2913,7 +2913,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 3.3542910096002743
+     "latency_ms": 538.330124996719
     },
     {
      "id": "c03",
@@ -2936,7 +2936,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.2708329963497818
+     "latency_ms": 395.74174999142997
     },
     {
      "id": "c04",
@@ -2959,7 +2959,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.477917009149678
+     "latency_ms": 365.76233299274463
     },
     {
      "id": "c05",
@@ -2982,12 +2982,12 @@
       "incidents:chg-1051_change_record.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 3.4703330165939406
+     "latency_ms": 440.0909999967553
     },
     {
      "id": "c06",
      "category": "contradiction",
-     "recall@1": 0.5,
+     "recall@1": 0.0,
      "all@1": 0.0,
      "recall@3": 1.0,
      "all@3": 1.0,
@@ -2997,23 +2997,23 @@
      "all@10": 1.0,
      "recall@20": 1.0,
      "all@20": 1.0,
-     "mrr": 1.0,
+     "mrr": 0.5,
      "top_docs": [
-      "incidents:inc-2041_initial_incident_report.md",
       "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:status_page_2026-03-12.html"
      ],
-     "latency_ms": 3.6395409842953086
+     "latency_ms": 311.54212399269454
     },
     {
      "id": "c07",
      "category": "contradiction",
      "recall@1": 0.5,
      "all@1": 0.0,
-     "recall@3": 1.0,
-     "all@3": 1.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
      "recall@5": 1.0,
      "all@5": 1.0,
      "recall@10": 1.0,
@@ -3024,11 +3024,11 @@
      "top_docs": [
       "incidents:status_page_2026-03-12.html",
       "incidents:inc-2041_initial_incident_report.md",
-      "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx",
-      "incidents:status_page_2026-03-18.html"
+      "incidents:status_page_2026-03-18.html",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 3.6676239978987724
+     "latency_ms": 305.5210839956999
     },
     {
      "id": "c08",
@@ -3051,7 +3051,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:weekly_ops_report_2026_w10.md"
      ],
-     "latency_ms": 3.3535819966346025
+     "latency_ms": 584.576916997321
     },
     {
      "id": "i01",
@@ -3074,7 +3074,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:cab_meeting_notes_2026-03-06.md"
      ],
-     "latency_ms": 3.4570410061860457
+     "latency_ms": 889.235666996683
     },
     {
      "id": "i02",
@@ -3097,7 +3097,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 3.424166003242135
+     "latency_ms": 538.0722510017222
     },
     {
      "id": "i03",
@@ -3120,10 +3120,1050 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:cab_meeting_notes_2026-03-06.md"
      ],
-     "latency_ms": 3.3858329989016056
+     "latency_ms": 665.7529989897739
     }
    ],
-   "seconds": 0.1
+   "seconds": 24.5
+  },
+  "hybrid_rrf_mmr": {
+   "summary": {
+    "overall": {
+     "recall@1": 0.5407,
+     "recall@3": 0.7785,
+     "recall@5": 0.8882,
+     "recall@10": 0.9553,
+     "recall@20": 0.9675,
+     "all@1": 0.3659,
+     "all@3": 0.6585,
+     "all@5": 0.8049,
+     "all@10": 0.9024,
+     "all@20": 0.9268,
+     "mrr": 0.8214,
+     "latency_ms": 1681.2586,
+     "n": 41
+    },
+    "contradiction": {
+     "recall@1": 0.4375,
+     "recall@3": 0.6875,
+     "recall@5": 0.875,
+     "recall@10": 1.0,
+     "recall@20": 1.0,
+     "all@1": 0.0,
+     "all@3": 0.375,
+     "all@5": 0.75,
+     "all@10": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.9375,
+     "latency_ms": 2091.8972,
+     "n": 8
+    },
+    "injection": {
+     "recall@1": 0.6667,
+     "recall@3": 0.6667,
+     "recall@5": 1.0,
+     "recall@10": 1.0,
+     "recall@20": 1.0,
+     "all@1": 0.6667,
+     "all@3": 0.6667,
+     "all@5": 1.0,
+     "all@10": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.7333,
+     "latency_ms": 1607.9304,
+     "n": 3
+    },
+    "multi_doc": {
+     "recall@1": 0.3958,
+     "recall@3": 0.6771,
+     "recall@5": 0.6771,
+     "recall@10": 0.8958,
+     "recall@20": 0.9583,
+     "all@1": 0.25,
+     "all@3": 0.5,
+     "all@5": 0.5,
+     "all@10": 0.75,
+     "all@20": 0.875,
+     "mrr": 0.6845,
+     "latency_ms": 1727.2447,
+     "n": 8
+    },
+    "multi_hop": {
+     "recall@1": 0.45,
+     "recall@3": 0.8,
+     "recall@5": 0.9,
+     "recall@10": 0.9,
+     "recall@20": 0.9,
+     "all@1": 0.2,
+     "all@3": 0.7,
+     "all@5": 0.8,
+     "all@10": 0.8,
+     "all@20": 0.8,
+     "mrr": 0.825,
+     "latency_ms": 1082.529,
+     "n": 10
+    },
+    "simple": {
+     "recall@1": 0.75,
+     "recall@3": 0.9167,
+     "recall@5": 1.0,
+     "recall@10": 1.0,
+     "recall@20": 1.0,
+     "all@1": 0.75,
+     "all@3": 0.9167,
+     "all@5": 1.0,
+     "all@10": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.8542,
+     "latency_ms": 1894.1156,
+     "n": 12
+    }
+   },
+   "rows": [
+    {
+     "id": "s01",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2033_bonus-engine.pdf",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2029_notification-service_incident.txt",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:chg-1053_change_record.md"
+     ],
+     "latency_ms": 2862.2901669878047
+    },
+    {
+     "id": "s02",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2033_bonus-engine.pdf",
+      "incidents:weekly_ops_report_2026_w08.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:weekly_ops_report_2026_w03.md"
+     ],
+     "latency_ms": 2330.6693760096096
+    },
+    {
+     "id": "s03",
+     "category": "simple",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2038_kyc-service.md",
+      "incidents:inc-2033_bonus-engine.pdf",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:email_payflex_account_manager_2026-03-13.html"
+     ],
+     "latency_ms": 1546.0674170026323
+    },
+    {
+     "id": "s04",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:runbook_bonus_engine.docx",
+      "incidents:inc-2033_bonus-engine.pdf",
+      "incidents:service_catalog.html",
+      "incidents:weekly_ops_report_2026_w03.md",
+      "incidents:chg-1031_change_record.md"
+     ],
+     "latency_ms": 2051.3229169882834
+    },
+    {
+     "id": "s05",
+     "category": "simple",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.0,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.25,
+     "top_docs": [
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:runbook_payment_gateway.docx",
+      "incidents:alerts_export_2026-03.json"
+     ],
+     "latency_ms": 1559.3100840051193
+    },
+    {
+     "id": "s06",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:chg-1047_change_record.md",
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:chg-1053_change_record.md",
+      "incidents:weekly_ops_report_2026_w07.md"
+     ],
+     "latency_ms": 2307.343290987774
+    },
+    {
+     "id": "s07",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2052_game-aggregator.pdf",
+      "incidents:weekly_ops_report_2026_w14.md",
+      "incidents:runbook_game_aggregator.docx",
+      "incidents:weekly_ops_report_2026_w03.md",
+      "incidents:weekly_ops_report_2026_w09.md"
+     ],
+     "latency_ms": 1706.7720820050454
+    },
+    {
+     "id": "s08",
+     "category": "simple",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:weekly_ops_report_2026_w11.md",
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf"
+     ],
+     "latency_ms": 1704.3223759828834
+    },
+    {
+     "id": "s09",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:chg-1058_change_record.md",
+      "incidents:chg-1031_change_record.md",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:chg-1055_change_record.md",
+      "incidents:chg-1051_change_record.md"
+     ],
+     "latency_ms": 1240.0617920065997
+    },
+    {
+     "id": "s10",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:status_page_2026-03-18.html"
+     ],
+     "latency_ms": 3193.746542005101
+    },
+    {
+     "id": "s11",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:payments_architecture_overview_v1.docx",
+      "incidents:runbook_payment_gateway.docx",
+      "incidents:service_catalog.html",
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:pm-2041_draft_v0.9.md"
+     ],
+     "latency_ms": 1291.4955000014743
+    },
+    {
+     "id": "s12",
+     "category": "simple",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:chg-1053_change_record.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:email_payflex_account_manager_2026-03-13.html"
+     ],
+     "latency_ms": 935.9854570066091
+    },
+    {
+     "id": "m01",
+     "category": "multi_hop",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:change_log_2026_q1.csv",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:chg-1058_change_record.md",
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf"
+     ],
+     "latency_ms": 925.5148750235094
+    },
+    {
+     "id": "m02",
+     "category": "multi_hop",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:chg-1053_change_record.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:weekly_ops_report_2026_w11.md",
+      "incidents:chg-1051_change_record.md"
+     ],
+     "latency_ms": 901.250581999193
+    },
+    {
+     "id": "m03",
+     "category": "multi_hop",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:chg-1053_change_record.md",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:slack_inc-2041_export.json"
+     ],
+     "latency_ms": 896.5940430061892
+    },
+    {
+     "id": "m04",
+     "category": "multi_hop",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:cab_meeting_notes_2026-03-06.md",
+      "incidents:chg-1042_change_record.md",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:chg-1055_change_record.md",
+      "incidents:slack_inc-2041_export.json"
+     ],
+     "latency_ms": 923.5899170162156
+    },
+    {
+     "id": "m05",
+     "category": "multi_hop",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 0.5,
+     "all@5": 0.0,
+     "recall@10": 0.5,
+     "all@10": 0.0,
+     "recall@20": 0.5,
+     "all@20": 0.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2038_kyc-service.md",
+      "incidents:weekly_ops_report_2026_w04.md",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:inc-2044_reporting-service.md"
+     ],
+     "latency_ms": 1293.5062930046115
+    },
+    {
+     "id": "m06",
+     "category": "multi_hop",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:org_announcement_fraud_scoring_ownership.md",
+      "incidents:slack_inc-2041_export.json",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:email_payflex_account_manager_2026-03-13.html"
+     ],
+     "latency_ms": 1187.2043749754084
+    },
+    {
+     "id": "m07",
+     "category": "multi_hop",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:slack_inc-2041_export.json",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:pm-2041_draft_v0.9.md"
+     ],
+     "latency_ms": 1187.606791019789
+    },
+    {
+     "id": "m08",
+     "category": "multi_hop",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 0.5,
+     "all@5": 0.0,
+     "recall@10": 0.5,
+     "all@10": 0.0,
+     "recall@20": 0.5,
+     "all@20": 0.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:change_log_2026_q1.csv",
+      "incidents:chg-1031_change_record.md",
+      "incidents:chg-1053_change_record.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:chg-1058_change_record.md"
+     ],
+     "latency_ms": 1171.357082988834
+    },
+    {
+     "id": "m09",
+     "category": "multi_hop",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.0,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.25,
+     "top_docs": [
+      "incidents:cab_meeting_notes_2026-03-06.md",
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:change_log_2026_q1.csv"
+     ],
+     "latency_ms": 1249.979999003699
+    },
+    {
+     "id": "m10",
+     "category": "multi_hop",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf",
+      "incidents:chg-1058_change_record.md",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:change_log_2026_q1.csv"
+     ],
+     "latency_ms": 1088.686457995209
+    },
+    {
+     "id": "d01",
+     "category": "multi_doc",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.25,
+     "all@3": 0.0,
+     "recall@5": 0.25,
+     "all@5": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.3333333333333333,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:status_page_2026-03-12.html",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:oncall_handover_notes_2026-03-19.txt"
+     ],
+     "latency_ms": 1139.8071679868735
+    },
+    {
+     "id": "d02",
+     "category": "multi_doc",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
+     ],
+     "latency_ms": 1122.297374997288
+    },
+    {
+     "id": "d03",
+     "category": "multi_doc",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:alerts_export_2026-03.json",
+      "incidents:weekly_ops_report_2026_w05.md",
+      "incidents:weekly_ops_report_2026_w07.md",
+      "incidents:weekly_ops_report_2026_w06.md"
+     ],
+     "latency_ms": 2849.1750820103334
+    },
+    {
+     "id": "d04",
+     "category": "multi_doc",
+     "recall@1": 0.6666666666666666,
+     "all@1": 0.0,
+     "recall@3": 0.6666666666666666,
+     "all@3": 0.0,
+     "recall@5": 0.6666666666666666,
+     "all@5": 0.0,
+     "recall@10": 0.6666666666666666,
+     "all@10": 0.0,
+     "recall@20": 0.6666666666666666,
+     "all@20": 0.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
+     ],
+     "latency_ms": 2448.586292011896
+    },
+    {
+     "id": "d05",
+     "category": "multi_doc",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 0.5,
+     "all@5": 0.0,
+     "recall@10": 0.5,
+     "all@10": 0.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:alerts_export_2026-03.json",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:weekly_ops_report_2026_w03.md",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:inc-2044_reporting-service.md"
+     ],
+     "latency_ms": 1802.4776249949355
+    },
+    {
+     "id": "d06",
+     "category": "multi_doc",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2047_withdrawals_postmortem.md",
+      "incidents:inc-2047_withdrawal_processing_stalled.pdf",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:inc-2041_initial_incident_report.md"
+     ],
+     "latency_ms": 1831.3848739780951
+    },
+    {
+     "id": "d07",
+     "category": "multi_doc",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:alerts_export_2026-03.json",
+      "incidents:chg-1053_change_record.md",
+      "incidents:oncall_handover_notes_2026-03-19.txt"
+     ],
+     "latency_ms": 1498.1701249926118
+    },
+    {
+     "id": "d08",
+     "category": "multi_doc",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.0,
+     "all@3": 0.0,
+     "recall@5": 0.0,
+     "all@5": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.14285714285714285,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2033_bonus-engine.pdf",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:change_log_2026_q1.csv",
+      "incidents:inc-2052_game-aggregator.pdf"
+     ],
+     "latency_ms": 1126.0591250029393
+    },
+    {
+     "id": "c01",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:slack_inc-2041_export.json",
+      "incidents:weekly_ops_report_2026_w11.md"
+     ],
+     "latency_ms": 971.6556679923087
+    },
+    {
+     "id": "c02",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:change_log_2026_q1.csv"
+     ],
+     "latency_ms": 2613.4050830005435
+    },
+    {
+     "id": "c03",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:inc-2033_bonus-engine.pdf"
+     ],
+     "latency_ms": 2000.9969990205718
+    },
+    {
+     "id": "c04",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 0.5,
+     "all@5": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:runbook_payment_gateway.docx",
+      "incidents:chg-1042_change_record.md",
+      "incidents:chg-1055_change_record.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:pm-2041_draft_v0.9.md"
+     ],
+     "latency_ms": 2178.5272910055937
+    },
+    {
+     "id": "c05",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 0.5,
+     "all@5": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:org_announcement_fraud_scoring_ownership.md",
+      "incidents:runbook_fraud_scoring.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:chg-1051_change_record.md",
+      "incidents:pm-2041_draft_v0.9.md"
+     ],
+     "latency_ms": 3181.945791002363
+    },
+    {
+     "id": "c06",
+     "category": "contradiction",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.5,
+     "top_docs": [
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:status_page_2026-03-12.html",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:pm-2041_draft_v0.9.md"
+     ],
+     "latency_ms": 2344.160542008467
+    },
+    {
+     "id": "c07",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 0.5,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:status_page_2026-03-12.html",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:status_page_2026-03-18.html"
+     ],
+     "latency_ms": 1797.7710010163719
+    },
+    {
+     "id": "c08",
+     "category": "contradiction",
+     "recall@1": 0.5,
+     "all@1": 0.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:weekly_ops_report_2026_w11.md",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:weekly_ops_report_2026_w12.md",
+      "incidents:weekly_ops_report_2026_w10.md"
+     ],
+     "latency_ms": 1646.7149990057806
+    },
+    {
+     "id": "i01",
+     "category": "injection",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:pm-2041_draft_v0.9.md",
+      "incidents:cab_meeting_notes_2026-03-06.md",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf",
+      "incidents:inc-2029_notification-service_incident.txt"
+     ],
+     "latency_ms": 1500.9044159814948
+    },
+    {
+     "id": "i02",
+     "category": "injection",
+     "recall@1": 0.0,
+     "all@1": 0.0,
+     "recall@3": 0.0,
+     "all@3": 0.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 0.2,
+     "top_docs": [
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:inc-2041_initial_incident_report.md",
+      "incidents:inc-2038_kyc-service.md",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:pm-2041_deposit_delays_postmortem.pdf"
+     ],
+     "latency_ms": 1651.7245409922907
+    },
+    {
+     "id": "i03",
+     "category": "injection",
+     "recall@1": 1.0,
+     "all@1": 1.0,
+     "recall@3": 1.0,
+     "all@3": 1.0,
+     "recall@5": 1.0,
+     "all@5": 1.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
+     "recall@20": 1.0,
+     "all@20": 1.0,
+     "mrr": 1.0,
+     "top_docs": [
+      "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:email_payflex_account_manager_2026-03-13.html",
+      "incidents:alerts_export_2026-03.json",
+      "incidents:q1_2026_reliability_review.docx",
+      "incidents:cab_meeting_notes_2026-03-06.md"
+     ],
+     "latency_ms": 1671.1621670110617
+    }
+   ],
+   "seconds": 69.0
   },
   "hybrid_rrf_rerank": {
    "summary": {
@@ -3131,30 +4171,30 @@
      "recall@1": 0.6016,
      "recall@3": 0.7602,
      "recall@5": 0.8699,
-     "recall@10": 0.8943,
+     "recall@10": 0.9146,
      "recall@20": 0.9817,
      "all@1": 0.439,
      "all@3": 0.5854,
      "all@5": 0.7805,
-     "all@10": 0.8293,
+     "all@10": 0.878,
      "all@20": 0.9512,
      "mrr": 0.8472,
-     "latency_ms": 699.1034,
+     "latency_ms": 1411.709,
      "n": 41
     },
     "contradiction": {
      "recall@1": 0.375,
      "recall@3": 0.625,
      "recall@5": 0.875,
-     "recall@10": 0.875,
+     "recall@10": 0.9375,
      "recall@20": 1.0,
      "all@1": 0.0,
      "all@3": 0.25,
      "all@5": 0.75,
-     "all@10": 0.75,
+     "all@10": 0.875,
      "all@20": 1.0,
      "mrr": 0.875,
-     "latency_ms": 699.0881,
+     "latency_ms": 1259.2184,
      "n": 8
     },
     "injection": {
@@ -3169,22 +4209,22 @@
      "all@10": 0.6667,
      "all@20": 1.0,
      "mrr": 0.697,
-     "latency_ms": 698.415,
+     "latency_ms": 1218.4012,
      "n": 3
     },
     "multi_doc": {
      "recall@1": 0.3333,
      "recall@3": 0.5208,
      "recall@5": 0.6458,
-     "recall@10": 0.7708,
+     "recall@10": 0.8125,
      "recall@20": 0.9688,
      "all@1": 0.25,
      "all@3": 0.25,
      "all@5": 0.375,
-     "all@10": 0.625,
+     "all@10": 0.75,
      "all@20": 0.875,
      "mrr": 0.5807,
-     "latency_ms": 692.6206,
+     "latency_ms": 1214.8882,
      "n": 8
     },
     "multi_hop": {
@@ -3199,7 +4239,7 @@
      "all@10": 0.9,
      "all@20": 0.9,
      "mrr": 0.95,
-     "latency_ms": 707.2855,
+     "latency_ms": 1691.3174,
      "n": 10
     },
     "simple": {
@@ -3214,7 +4254,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.9583,
-     "latency_ms": 696.789,
+     "latency_ms": 1459.9032,
      "n": 12
     }
    },
@@ -3236,11 +4276,11 @@
      "top_docs": [
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:inc-2038_kyc-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:weekly_ops_report_2026_w08.md"
      ],
-     "latency_ms": 715.2414570009569
+     "latency_ms": 1277.2185009816894
     },
     {
      "id": "s02",
@@ -3263,7 +4303,7 @@
       "incidents:weekly_ops_report_2026_w15.md",
       "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 706.3992080220487
+     "latency_ms": 1618.433042021934
     },
     {
      "id": "s03",
@@ -3286,7 +4326,7 @@
       "incidents:inc-2044_reporting-service.md",
       "incidents:email_payflex_account_manager_2026-03-13.html"
      ],
-     "latency_ms": 689.839042010135
+     "latency_ms": 1842.0871249982156
     },
     {
      "id": "s04",
@@ -3309,7 +4349,7 @@
       "incidents:weekly_ops_report_2026_w09.md",
       "incidents:weekly_ops_report_2026_w15.md"
      ],
-     "latency_ms": 654.7612930007745
+     "latency_ms": 1672.0308329968248
     },
     {
      "id": "s05",
@@ -3332,7 +4372,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 716.341958992416
+     "latency_ms": 1479.2954169970471
     },
     {
      "id": "s06",
@@ -3351,11 +4391,11 @@
      "top_docs": [
       "incidents:chg-1047_change_record.md",
       "incidents:change_log_2026_q1.csv",
-      "incidents:chg-1031_change_record.md",
       "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:chg-1031_change_record.md",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 655.8910830062814
+     "latency_ms": 1228.9879170130007
     },
     {
      "id": "s07",
@@ -3378,7 +4418,7 @@
       "incidents:weekly_ops_report_2026_w15.md",
       "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 698.4765410015825
+     "latency_ms": 1423.390041993116
     },
     {
      "id": "s08",
@@ -3401,7 +4441,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 811.5178329899209
+     "latency_ms": 1374.4422500021756
     },
     {
      "id": "s09",
@@ -3424,7 +4464,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 664.3277080147527
+     "latency_ms": 1350.6766260252334
     },
     {
      "id": "s10",
@@ -3447,7 +4487,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 687.206790986238
+     "latency_ms": 1314.831248993869
     },
     {
      "id": "s11",
@@ -3470,7 +4510,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 681.2443340168102
+     "latency_ms": 1547.2678340011043
     },
     {
      "id": "s12",
@@ -3493,7 +4533,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 680.2211259928299
+     "latency_ms": 1390.1776670099935
     },
     {
      "id": "m01",
@@ -3516,7 +4556,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 699.8908749956172
+     "latency_ms": 1664.6929999842541
     },
     {
      "id": "m02",
@@ -3539,7 +4579,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 707.9185430047801
+     "latency_ms": 1440.2349999872968
     },
     {
      "id": "m03",
@@ -3562,7 +4602,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 729.664626007434
+     "latency_ms": 1520.4974579974078
     },
     {
      "id": "m04",
@@ -3585,7 +4625,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 716.6678759967908
+     "latency_ms": 1867.3795000067912
     },
     {
      "id": "m05",
@@ -3603,12 +4643,12 @@
      "mrr": 1.0,
      "top_docs": [
       "incidents:inc-2038_kyc-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2052_game-aggregator.pdf",
       "incidents:inc-2033_bonus-engine.pdf"
      ],
-     "latency_ms": 682.7779159939382
+     "latency_ms": 1618.4961249964545
     },
     {
      "id": "m06",
@@ -3631,7 +4671,7 @@
       "incidents:weekly_ops_report_2026_w11.md",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 717.2556250152411
+     "latency_ms": 1568.5989169869572
     },
     {
      "id": "m07",
@@ -3654,7 +4694,7 @@
       "incidents:slack_inc-2041_export.json",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 723.5650000075111
+     "latency_ms": 1772.7852919924771
     },
     {
      "id": "m08",
@@ -3677,7 +4717,7 @@
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 659.1950830043061
+     "latency_ms": 2012.3341660073493
     },
     {
      "id": "m09",
@@ -3700,7 +4740,7 @@
       "incidents:cab_meeting_notes_2026-03-06.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 729.0487080026651
+     "latency_ms": 2264.2670000059297
     },
     {
      "id": "m10",
@@ -3723,7 +4763,7 @@
       "incidents:oncall_handover_notes_2026-03-19.txt",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 706.8704999983311
+     "latency_ms": 1183.8876239926321
     },
     {
      "id": "d01",
@@ -3746,7 +4786,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 691.8832920055138
+     "latency_ms": 1227.6784579880768
     },
     {
      "id": "d02",
@@ -3769,7 +4809,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 716.3615849858616
+     "latency_ms": 1496.8801260110922
     },
     {
      "id": "d03",
@@ -3792,7 +4832,7 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:weekly_ops_report_2026_w03.md"
      ],
-     "latency_ms": 686.5457500098273
+     "latency_ms": 1360.914082993986
     },
     {
      "id": "d04",
@@ -3803,8 +4843,8 @@
      "all@3": 0.0,
      "recall@5": 0.6666666666666666,
      "all@5": 0.0,
-     "recall@10": 0.6666666666666666,
-     "all@10": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
      "recall@20": 1.0,
      "all@20": 1.0,
      "mrr": 1.0,
@@ -3815,7 +4855,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:weekly_ops_report_2026_w02.md"
      ],
-     "latency_ms": 670.6171239929972
+     "latency_ms": 1183.8823330035666
     },
     {
      "id": "d05",
@@ -3838,7 +4878,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:inc-2033_bonus-engine.pdf"
      ],
-     "latency_ms": 720.1430419954704
+     "latency_ms": 1119.9749160150532
     },
     {
      "id": "d06",
@@ -3858,10 +4898,10 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:inc-2044_reporting-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
-      "incidents:weekly_ops_report_2026_w12.md"
+      "incidents:weekly_ops_report_2026_w12.md",
+      "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 684.0480829996523
+     "latency_ms": 1072.1888339903671
     },
     {
      "id": "d07",
@@ -3884,7 +4924,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 652.0573749876348
+     "latency_ms": 1131.4755419880385
     },
     {
      "id": "d08",
@@ -3907,7 +4947,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:inc-2038_kyc-service.md"
      ],
-     "latency_ms": 719.3089170032181
+     "latency_ms": 1126.111082994612
     },
     {
      "id": "c01",
@@ -3930,7 +4970,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:inc-2044_reporting-service.md"
      ],
-     "latency_ms": 681.6519579733722
+     "latency_ms": 1468.382584003848
     },
     {
      "id": "c02",
@@ -3953,7 +4993,7 @@
       "incidents:inc-2044_reporting-service.md",
       "incidents:inc-2052_game-aggregator.pdf"
      ],
-     "latency_ms": 691.2300839903764
+     "latency_ms": 1612.6244160113856
     },
     {
      "id": "c03",
@@ -3976,7 +5016,7 @@
       "incidents:inc-2052_game-aggregator.pdf",
       "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 694.3579159997171
+     "latency_ms": 1208.6347910080804
     },
     {
      "id": "c04",
@@ -3987,8 +5027,8 @@
      "all@3": 0.0,
      "recall@5": 0.5,
      "all@5": 0.0,
-     "recall@10": 0.5,
-     "all@10": 0.0,
+     "recall@10": 1.0,
+     "all@10": 1.0,
      "recall@20": 1.0,
      "all@20": 1.0,
      "mrr": 1.0,
@@ -3999,7 +5039,7 @@
       "incidents:chg-1042_change_record.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 696.9797490019118
+     "latency_ms": 1327.6198740059044
     },
     {
      "id": "c05",
@@ -4022,7 +5062,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:service_catalog.html"
      ],
-     "latency_ms": 677.1679579978809
+     "latency_ms": 1138.5506259975955
     },
     {
      "id": "c06",
@@ -4045,7 +5085,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:email_payflex_account_manager_2026-03-13.html"
      ],
-     "latency_ms": 703.5380000015721
+     "latency_ms": 1128.7100420013303
     },
     {
      "id": "c07",
@@ -4068,7 +5108,7 @@
       "incidents:status_page_2026-03-12.html",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 721.8733330082614
+     "latency_ms": 1091.9987500092248
     },
     {
      "id": "c08",
@@ -4091,7 +5131,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 725.9059569914825
+     "latency_ms": 1097.2259169939207
     },
     {
      "id": "i01",
@@ -4114,7 +5154,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 699.2931669810787
+     "latency_ms": 1404.3430000165245
     },
     {
      "id": "i02",
@@ -4137,7 +5177,7 @@
       "incidents:pm-2047_withdrawals_postmortem.md",
       "incidents:inc-2038_kyc-service.md"
      ],
-     "latency_ms": 703.5169590089936
+     "latency_ms": 1003.7628319987562
     },
     {
      "id": "i03",
@@ -4160,10 +5200,10 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:alerts_export_2026-03.json"
      ],
-     "latency_ms": 692.4349150067428
+     "latency_ms": 1247.097625018796
     }
    ],
-   "seconds": 28.7
+   "seconds": 57.9
   },
   "hybrid_rrf_rerank_mmr": {
    "summary": {
@@ -4179,7 +5219,7 @@
      "all@10": 0.8537,
      "all@20": 0.9512,
      "mrr": 0.8432,
-     "latency_ms": 759.8662,
+     "latency_ms": 2154.7113,
      "n": 41
     },
     "contradiction": {
@@ -4194,7 +5234,7 @@
      "all@10": 0.75,
      "all@20": 1.0,
      "mrr": 0.8542,
-     "latency_ms": 796.5554,
+     "latency_ms": 2253.0738,
      "n": 8
     },
     "injection": {
@@ -4209,7 +5249,7 @@
      "all@10": 0.6667,
      "all@20": 1.0,
      "mrr": 0.697,
-     "latency_ms": 745.5752,
+     "latency_ms": 1922.7769,
      "n": 3
     },
     "multi_doc": {
@@ -4224,7 +5264,7 @@
      "all@10": 0.75,
      "all@20": 0.875,
      "mrr": 0.5807,
-     "latency_ms": 756.85,
+     "latency_ms": 1826.8763,
      "n": 8
     },
     "multi_hop": {
@@ -4239,7 +5279,7 @@
      "all@10": 0.9,
      "all@20": 0.9,
      "mrr": 0.95,
-     "latency_ms": 831.6754,
+     "latency_ms": 1708.3345,
      "n": 10
     },
     "simple": {
@@ -4254,7 +5294,7 @@
      "all@10": 1.0,
      "all@20": 1.0,
      "mrr": 0.9583,
-     "latency_ms": 681.1492,
+     "latency_ms": 2737.6572,
      "n": 12
     }
    },
@@ -4276,11 +5316,11 @@
      "top_docs": [
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:inc-2038_kyc-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 687.5226239935728
+     "latency_ms": 1964.6433339948999
     },
     {
      "id": "s02",
@@ -4303,7 +5343,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:runbook_bonus_engine.docx"
      ],
-     "latency_ms": 703.1337520165835
+     "latency_ms": 1972.4128750240197
     },
     {
      "id": "s03",
@@ -4326,7 +5366,7 @@
       "incidents:inc-2044_reporting-service.md",
       "incidents:email_payflex_account_manager_2026-03-13.html"
      ],
-     "latency_ms": 690.0789579958655
+     "latency_ms": 2844.1645830025664
     },
     {
      "id": "s04",
@@ -4349,7 +5389,7 @@
       "incidents:weekly_ops_report_2026_w03.md",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 657.3495849879691
+     "latency_ms": 2982.5836250092834
     },
     {
      "id": "s05",
@@ -4372,7 +5412,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 689.6093319664942
+     "latency_ms": 3021.782331983559
     },
     {
      "id": "s06",
@@ -4391,11 +5431,11 @@
      "top_docs": [
       "incidents:chg-1047_change_record.md",
       "incidents:change_log_2026_q1.csv",
-      "incidents:chg-1031_change_record.md",
       "incidents:oncall_handover_notes_2026-03-19.txt",
+      "incidents:chg-1031_change_record.md",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 656.0664159915177
+     "latency_ms": 3575.62612601032
     },
     {
      "id": "s07",
@@ -4418,7 +5458,7 @@
       "incidents:weekly_ops_report_2026_w15.md",
       "incidents:weekly_ops_report_2026_w09.md"
      ],
-     "latency_ms": 704.8333750135498
+     "latency_ms": 2552.4072910047835
     },
     {
      "id": "s08",
@@ -4441,7 +5481,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 681.6444989963202
+     "latency_ms": 2787.6851679902757
     },
     {
      "id": "s09",
@@ -4464,7 +5504,7 @@
       "incidents:chg-1053_change_record.md",
       "incidents:chg-1055_change_record.md"
      ],
-     "latency_ms": 650.6801660143537
+     "latency_ms": 3661.6622069996083
     },
     {
      "id": "s10",
@@ -4487,7 +5527,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 690.6132509902818
+     "latency_ms": 3001.6180820093723
     },
     {
      "id": "s11",
@@ -4508,9 +5548,9 @@
       "incidents:payments_architecture_overview_v1.docx",
       "incidents:service_catalog.html",
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
-      "incidents:pm-2041_draft_v0.9.md"
+      "incidents:oncall_handover_notes_2026-03-19.txt"
      ],
-     "latency_ms": 682.562207992305
+     "latency_ms": 2415.709667999181
     },
     {
      "id": "s12",
@@ -4533,7 +5573,7 @@
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 679.6960009960458
+     "latency_ms": 2071.5908749989467
     },
     {
      "id": "m01",
@@ -4556,7 +5596,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 690.9292920026928
+     "latency_ms": 1650.6724159989972
     },
     {
      "id": "m02",
@@ -4579,7 +5619,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:chg-1051_change_record.md"
      ],
-     "latency_ms": 710.1168740045978
+     "latency_ms": 1575.6675000011455
     },
     {
      "id": "m03",
@@ -4602,7 +5642,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 838.3536659821402
+     "latency_ms": 1582.4931679817382
     },
     {
      "id": "m04",
@@ -4625,7 +5665,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:weekly_ops_report_2026_w11.md"
      ],
-     "latency_ms": 826.9906269997591
+     "latency_ms": 2042.5790820154361
     },
     {
      "id": "m05",
@@ -4643,12 +5683,12 @@
      "mrr": 1.0,
      "top_docs": [
       "incidents:inc-2038_kyc-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2044_reporting-service.md",
+      "incidents:inc-2029_notification-service_incident.txt",
       "incidents:inc-2052_game-aggregator.pdf",
       "incidents:inc-2033_bonus-engine.pdf"
      ],
-     "latency_ms": 996.7538739729207
+     "latency_ms": 2109.6254169970052
     },
     {
      "id": "m06",
@@ -4671,7 +5711,7 @@
       "incidents:weekly_ops_report_2026_w11.md",
       "incidents:chg-1053_change_record.md"
      ],
-     "latency_ms": 766.2319579831092
+     "latency_ms": 1549.995665976894
     },
     {
      "id": "m07",
@@ -4694,7 +5734,7 @@
       "incidents:oncall_handover_notes_2026-03-19.txt",
       "incidents:slack_inc-2041_export.json"
      ],
-     "latency_ms": 886.4712490030797
+     "latency_ms": 1555.590249976376
     },
     {
      "id": "m08",
@@ -4717,7 +5757,7 @@
       "incidents:inc-2033_bonus-engine.pdf",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 841.0412930097664
+     "latency_ms": 1935.8632089715684
     },
     {
      "id": "m09",
@@ -4740,7 +5780,7 @@
       "incidents:cab_meeting_notes_2026-03-06.md",
       "incidents:pm-2041_draft_v0.9.md"
      ],
-     "latency_ms": 945.413791021565
+     "latency_ms": 1637.8375420172233
     },
     {
      "id": "m10",
@@ -4763,7 +5803,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:weekly_ops_report_2026_w12.md"
      ],
-     "latency_ms": 814.4509160047164
+     "latency_ms": 1443.0204590171343
     },
     {
      "id": "d01",
@@ -4786,7 +5826,7 @@
       "incidents:pm-2041_draft_v0.9.md",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 737.5744989985833
+     "latency_ms": 1389.9895840149838
     },
     {
      "id": "d02",
@@ -4809,7 +5849,7 @@
       "incidents:email_payflex_account_manager_2026-03-13.html",
       "incidents:inc-2047_withdrawal_processing_stalled.pdf"
      ],
-     "latency_ms": 767.9056260240031
+     "latency_ms": 1472.1901250013616
     },
     {
      "id": "d03",
@@ -4832,7 +5872,7 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:weekly_ops_report_2026_w03.md"
      ],
-     "latency_ms": 725.704415992368
+     "latency_ms": 1269.5259159809211
     },
     {
      "id": "d04",
@@ -4855,7 +5895,7 @@
       "incidents:change_log_2026_q1.csv",
       "incidents:weekly_ops_report_2026_w02.md"
      ],
-     "latency_ms": 709.3485840014182
+     "latency_ms": 1784.7715409880038
     },
     {
      "id": "d05",
@@ -4878,7 +5918,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:inc-2033_bonus-engine.pdf"
      ],
-     "latency_ms": 778.356916984194
+     "latency_ms": 2322.003164983471
     },
     {
      "id": "d06",
@@ -4898,10 +5938,10 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:inc-2041_initial_incident_report.md",
       "incidents:inc-2044_reporting-service.md",
-      "incidents:inc-2029_notification-service_incident.txt",
-      "incidents:weekly_ops_report_2026_w12.md"
+      "incidents:weekly_ops_report_2026_w12.md",
+      "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 753.9350440056296
+     "latency_ms": 2039.9921249918407
     },
     {
      "id": "d07",
@@ -4924,7 +5964,7 @@
       "incidents:chg-1055_change_record.md",
       "incidents:change_log_2026_q1.csv"
      ],
-     "latency_ms": 761.2326249945909
+     "latency_ms": 2468.5722919966793
     },
     {
      "id": "d08",
@@ -4947,7 +5987,7 @@
       "incidents:weekly_ops_report_2026_w12.md",
       "incidents:inc-2038_kyc-service.md"
      ],
-     "latency_ms": 820.7422910054447
+     "latency_ms": 1867.9655839805491
     },
     {
      "id": "c01",
@@ -4970,7 +6010,7 @@
       "incidents:inc-2047_withdrawal_processing_stalled.pdf",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 773.0819579737727
+     "latency_ms": 2499.8365409992402
     },
     {
      "id": "c02",
@@ -4993,7 +6033,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:inc-2052_game-aggregator.pdf"
      ],
-     "latency_ms": 741.1216660111677
+     "latency_ms": 2968.494667991763
     },
     {
      "id": "c03",
@@ -5016,7 +6056,7 @@
       "incidents:inc-2052_game-aggregator.pdf",
       "incidents:pm-2047_withdrawals_postmortem.md"
      ],
-     "latency_ms": 748.1941239966545
+     "latency_ms": 2707.2562490211567
     },
     {
      "id": "c04",
@@ -5039,7 +6079,7 @@
       "incidents:chg-1042_change_record.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 780.9576260187896
+     "latency_ms": 2168.582873986452
     },
     {
      "id": "c05",
@@ -5062,7 +6102,7 @@
       "incidents:service_catalog.html",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 727.60704200482
+     "latency_ms": 1727.5585009774659
     },
     {
      "id": "c06",
@@ -5085,7 +6125,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:status_page_2026-03-12.html"
      ],
-     "latency_ms": 798.271917985403
+     "latency_ms": 1876.974875020096
     },
     {
      "id": "c07",
@@ -5108,7 +6148,7 @@
       "incidents:pm-2041_deposit_delays_postmortem.pdf",
       "incidents:q1_2026_reliability_review.docx"
      ],
-     "latency_ms": 887.3479979956755
+     "latency_ms": 1935.9717079933034
     },
     {
      "id": "c08",
@@ -5131,7 +6171,7 @@
       "incidents:weekly_ops_report_2026_w14.md",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 915.861166009563
+     "latency_ms": 2139.9148749915184
     },
     {
      "id": "i01",
@@ -5154,7 +6194,7 @@
       "incidents:q1_2026_reliability_review.docx",
       "incidents:pm-2041_deposit_delays_postmortem.pdf"
      ],
-     "latency_ms": 765.8335009909933
+     "latency_ms": 2113.07991699141
     },
     {
      "id": "i02",
@@ -5177,7 +6217,7 @@
       "incidents:pm-2047_withdrawals_postmortem.md",
       "incidents:inc-2038_kyc-service.md"
      ],
-     "latency_ms": 744.5339159894502
+     "latency_ms": 1978.6418750009034
     },
     {
      "id": "i03",
@@ -5200,10 +6240,10 @@
       "incidents:alerts_export_2026-03.json",
       "incidents:inc-2041_initial_incident_report.md"
      ],
-     "latency_ms": 726.3581249862909
+     "latency_ms": 1676.6089160228148
     }
    ],
-   "seconds": 31.2
+   "seconds": 88.4
   }
  }
 }

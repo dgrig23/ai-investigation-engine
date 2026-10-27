@@ -30,7 +30,7 @@ from app.agent.prompts import RESEARCH_TOOLS, SUBMIT_TOOL, SYSTEM_PROMPT
 from app.agent.verify import verify_answer
 from app.index.store import VectorStore, build_filter
 from app.ingestion.metadata import ID_RE
-from app.llm.client import LLMClient, LLMUnavailableError
+from app.llm.client import LLMClient, LLMUnavailableError, parse_json_lenient
 from app.retrieval.retriever import HybridRetriever, RetrievalConfig
 
 log = logging.getLogger(__name__)
@@ -98,7 +98,7 @@ class Investigator:
                     yield {"type": "thought", "step": step, "text": response.content.strip()[:500]}
 
                 if not response.tool_calls:  # model answered in plain text
-                    submitted = {"answer": response.content, "status": "answered", "claims": []}
+                    submitted = _submission_from_text(response.content)
                     break
 
                 messages.append({
@@ -251,6 +251,18 @@ class _RunState:
     tool_trace: list[dict[str, Any]] = field(default_factory=list)
     llm_trace: list[dict[str, Any]] = field(default_factory=list)
     reported_hints: set[str] = field(default_factory=set)
+
+
+def _submission_from_text(content: str) -> dict[str, Any]:
+    """Some models write the submit_answer JSON as plain text instead of making the tool call.
+    If the text parses as a submission, use it; otherwise treat the text as the answer."""
+    try:
+        parsed = parse_json_lenient(content)
+        if isinstance(parsed.get("answer"), str):
+            return parsed
+    except (ValueError, json.JSONDecodeError):
+        pass
+    return {"answer": content, "status": "answered", "claims": []}
 
 
 def _tool_text(text: str) -> dict[str, Any]:

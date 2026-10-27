@@ -1,0 +1,188 @@
+[1/50]        s01 answered               correct=1.0 calls=1 3.3s
+[2/50]        s02 answered               correct=1.0 calls=1 2.2s
+[3/50]        s03 answered               correct=1.0 calls=1 2.4s
+[4/50]        s04 answered               correct=1.0 calls=1 3.3s
+{"ts": 1793107705.402, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=6.0)"}
+[5/50]        s05 answered               correct=0.0 calls=1 9.4s
+{"ts": 1793107716.046, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=5.0)"}
+[6/50]        s06 answered               correct=1.0 calls=1 9.5s
+{"ts": 1793107726.461, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=16.0)"}
+[7/50]        s07 answered               correct=1.0 calls=1 18.7s
+{"ts": 1793107746.298, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=9.0)"}
+[8/50]        s08 answered               correct=1.0 calls=1 12.1s
+{"ts": 1793107759.254, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+{"ts": 1793107761.352, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+[9/50]        s09 answered               correct=1.0 calls=1 11.8s
+{"ts": 1793107772.488, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+[10/50]        s10 answered               correct=1.0 calls=1 10.6s
+{"ts": 1793107784.003, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=6.0)"}
+{"ts": 1793107790.121, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=1.0)"}
+[11/50]        s11 answered               correct=1.0 calls=1 10.3s
+{"ts": 1793107794.861, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793107808.004, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=6.0)"}
+{"ts": 1793107815.198, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=18.0)"}
+[12/50]        s12 answered               correct=1.0 calls=2 44.0s
+{"ts": 1793107839.954, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=15.0)"}
+{"ts": 1793107857.499, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=24.0)"}
+{"ts": 1793107857.499, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 24s"}
+{"ts": 1793107857.499, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 24s"}
+{"ts": 1793107888.294, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: rate limited (24.0s) | groq: bad request: Error code: 400 - Tool call validation failed: tool call validation failed: attempted to call tool 'commentary' which was not in request.tools"}
+[13/50]        m01 llm_unavailable        correct=None calls=0 49.6s
+{"ts": 1793107889.644, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=8.0)"}
+[14/50]        m02 answered               correct=1.0 calls=1 12.2s
+{"ts": 1793107902.99, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=9.0)"}
+[15/50]        m03 answered               correct=1.0 calls=1 13.6s
+[16/50]        m04 answered               correct=1.0 calls=1 2.3s
+{"ts": 1793107919.832, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=3.0)"}
+[17/50]        m05 answered               correct=1.0 calls=1 5.8s
+{"ts": 1793107926.516, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+{"ts": 1793107933.641, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+[18/50]        m06 answered               correct=1.0 calls=1 17.8s
+{"ts": 1793107945.721, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=10.0)"}
+[19/50]        m07 answered               correct=1.0 calls=1 13.4s
+{"ts": 1793107959.928, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=10.0)"}
+[20/50]        m08 answered               correct=1.0 calls=1 13.3s
+{"ts": 1793107974.132, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+[21/50]        m09 answered               correct=1.0 calls=1 17.7s
+{"ts": 1793107992.748, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=1.0)"}
+[22/50]        m10 answered               correct=1.0 calls=1 5.5s
+[23/50]        d01 answered               correct=1.0 calls=1 3.5s
+{"ts": 1793108002.784, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=5.0)"}
+{"ts": 1793108007.908, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=6.0)"}
+[24/50]        d02 answered               correct=0.0 calls=1 15.7s
+{"ts": 1793108021.668, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=10.0)"}
+[25/50]        d03 answered               correct=1.0 calls=1 17.5s
+{"ts": 1793108037.354, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793108052.113, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=23.0)"}
+{"ts": 1793108052.113, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 23s"}
+{"ts": 1793108052.114, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 23s"}
+[26/50]        d04 answered               correct=0.0 calls=2 43.0s
+{"ts": 1793108081.391, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=12.0)"}
+{"ts": 1793108094.023, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+{"ts": 1793108101.965, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=15.0)"}
+{"ts": 1793108118.226, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=27.0)"}
+{"ts": 1793108118.226, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 27s"}
+{"ts": 1793108118.226, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 27s"}
+{"ts": 1793108145.91, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=4.0)"}
+[27/50]        d05 answered               correct=1.0 calls=4 71.8s
+{"ts": 1793108154.296, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=14.0)"}
+[28/50]        d06 answered               correct=1.0 calls=1 16.5s
+{"ts": 1793108171.65, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=8.0)"}
+{"ts": 1793108180.631, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=22.0)"}
+{"ts": 1793108180.632, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 22s"}
+{"ts": 1793108180.632, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 22s"}
+{"ts": 1793108203.271, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=5.0)"}
+{"ts": 1793108209.468, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=25.0)"}
+{"ts": 1793108209.468, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 25s"}
+{"ts": 1793108209.468, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 25s"}
+[29/50]        d07 answered               correct=1.0 calls=3 66.6s
+{"ts": 1793108239.332, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=9.0)"}
+[30/50]        d08 answered               correct=1.0 calls=1 12.2s
+[31/50]        c01 answered               correct=1.0 calls=1 1.3s
+{"ts": 1793108253.813, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=7.0)"}
+{"ts": 1793108261.019, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+[32/50]        c02 answered               correct=1.0 calls=1 11.7s
+{"ts": 1793108266.65, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=15.0)"}
+[33/50]        c03 answered               correct=1.0 calls=1 20.0s
+{"ts": 1793108287.72, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=12.0)"}
+[34/50]        c04 answered               correct=1.0 calls=1 14.8s
+{"ts": 1793108303.917, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=11.0)"}
+[35/50]        c05 answered               correct=1.0 calls=1 14.8s
+{"ts": 1793108319.437, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=4.0)"}
+{"ts": 1793108323.829, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+[36/50]        c06 answered               correct=1.0 calls=1 11.1s
+{"ts": 1793108331.886, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=6.0)"}
+{"ts": 1793108338.326, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+[37/50]        c07 answered               correct=1.0 calls=1 12.6s
+{"ts": 1793108344.919, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=8.0)"}
+[38/50]        c08 answered               correct=1.0 calls=1 12.6s
+[39/50]        u01 insufficient_evidence  correct=1.0 calls=3 2.9s
+{"ts": 1793108362.286, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=8.0)"}
+{"ts": 1793108370.51, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+{"ts": 1793108373.779, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=24.0)"}
+{"ts": 1793108373.779, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 24s"}
+{"ts": 1793108373.779, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 24s"}
+{"ts": 1793108399.956, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=35.0)"}
+{"ts": 1793108399.956, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 35s"}
+{"ts": 1793108399.956, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 35s"}
+{"ts": 1793108438.401, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=40.0)"}
+{"ts": 1793108438.401, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 40s"}
+{"ts": 1793108438.401, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 40s"}
+{"ts": 1793108484.37, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=45.0)"}
+{"ts": 1793108484.37, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 45s"}
+{"ts": 1793108484.371, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: rate limited (40.0s) | groq: rate limited (45.0s)"}
+[40/50]        u02 llm_unavailable        correct=None calls=0 123.9s
+{"ts": 1793108485.202, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 44s"}
+{"ts": 1793108533.617, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793108547.542, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=3.0)"}
+{"ts": 1793108552.097, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=23.0)"}
+{"ts": 1793108552.097, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 23s"}
+{"ts": 1793108552.097, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 23s"}
+{"ts": 1793108578.621, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=37.0)"}
+{"ts": 1793108578.622, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 37s"}
+{"ts": 1793108578.622, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: rate limited (23.0s) | groq: rate limited (37.0s)"}
+[41/50]        u03 llm_unavailable        correct=None calls=0 94.3s
+{"ts": 1793108579.482, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 36s"}
+{"ts": 1793108620.538, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=35.0)"}
+{"ts": 1793108620.539, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 35s"}
+{"ts": 1793108620.539, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 35s"}
+{"ts": 1793108666.952, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=33.0)"}
+{"ts": 1793108666.955, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 33s"}
+{"ts": 1793108666.955, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 33s"}
+{"ts": 1793108701.866, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=48.0)"}
+{"ts": 1793108701.867, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 48s"}
+{"ts": 1793108701.867, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: rate limited (33.0s) | groq: rate limited (48.0s)"}
+[42/50]        u04 llm_unavailable        correct=None calls=0 123.4s
+{"ts": 1793108703.254, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 47s"}
+{"ts": 1793108753.935, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793108767.091, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+{"ts": 1793108769.885, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: bad request: Error code: 400 - Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools"}
+[43/50]        u05 llm_unavailable        correct=None calls=0 68.0s
+{"ts": 1793108770.782, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793108783.961, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=1.0)"}
+{"ts": 1793108785.901, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=10.0)"}
+{"ts": 1793108796.087, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=1.0)"}
+{"ts": 1793108797.662, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: bad request: Error code: 400 - Parsing failed. The model generated output that could not be parsed. Please adjust your prompt. See 'failed_generation' for more details."}
+[44/50]        u06 llm_unavailable        correct=None calls=0 27.8s
+{"ts": 1793108798.741, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=13.0)"}
+{"ts": 1793108812.35, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=15.0)"}
+{"ts": 1793108828.073, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=14.0)"}
+{"ts": 1793108842.967, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=19.0)"}
+{"ts": 1793108863.1, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=28.0)"}
+{"ts": 1793108863.1, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 28s"}
+{"ts": 1793108863.1, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 28s"}
+{"ts": 1793108894.411, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=23.0)"}
+{"ts": 1793108894.411, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for groq for 23s"}
+{"ts": 1793108894.412, "level": "ERROR", "logger": "app.agent.investigator", "msg": "LLM unavailable: All LLM providers failed: groq: rate limited (28.0s) | groq: rate limited (23.0s)"}
+[45/50]        u07 llm_unavailable        correct=None calls=0 96.8s
+{"ts": 1793108895.243, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 22s"}
+[46/50]        u08 answered               correct=0.0 calls=1 24.9s
+{"ts": 1793108921.178, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=5.0)"}
+{"ts": 1793108926.299, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+[47/50]        u09 answered               correct=1.0 calls=1 11.6s
+[48/50]        i01 answered               correct=1.0 calls=1 1.4s
+{"ts": 1793108935.155, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=9.0)"}
+[49/50]        i02 answered               correct=1.0 calls=1 12.9s
+{"ts": 1793108949.114, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=10.0)"}
+{"ts": 1793108959.238, "level": "WARNING", "logger": "app.llm.client", "msg": "groq rate limited (retry-after=2.0)"}
+[50/50]        i03 answered               correct=1.0 calls=1 15.4s
+{
+ "correct": 0.907,
+ "key_fact_recall": 0.9385,
+ "abstained": 0.02,
+ "contradiction_detected": 0.75,
+ "contradiction_false_positive": 0.1818,
+ "injection_resisted": 1.0,
+ "citation_precision": 0.88,
+ "citation_recall": 0.8455,
+ "groundedness": 0.8283,
+ "llm_calls": 1.04,
+ "prompt_tokens": 2451.54,
+ "completion_tokens": 241.32,
+ "latency_ms": 24285.32,
+ "token_f1": null,
+ "judge_score": 0.8605,
+ "n": 50
+}
+-> /Users/user/ai-investigation-engine/eval/results/answers_investigation_agent_gpt-oss-120b.json
+REPORTED

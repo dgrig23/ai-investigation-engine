@@ -1,0 +1,94 @@
+[1/50]        s01 answered               correct=1.0 calls=1 3.8s
+[2/50]        s02 answered               correct=1.0 calls=1 4.9s
+[3/50]        s03 answered               correct=1.0 calls=1 2.7s
+[4/50]        s04 answered               correct=1.0 calls=1 2.5s
+[5/50]        s05 answered               correct=0.0 calls=1 2.8s
+[6/50]        s06 answered               correct=1.0 calls=1 4.1s
+{"ts": 1793108302.46, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=52.0)"}
+{"ts": 1793108302.46, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 52s"}
+{"ts": 1793108302.46, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 52s"}
+[7/50]        s07 answered               correct=1.0 calls=1 57.9s
+[8/50]        s08 answered               correct=1.0 calls=1 6.2s
+[9/50]        s09 answered               correct=1.0 calls=1 4.5s
+[10/50]        s10 answered               correct=1.0 calls=1 3.5s
+[11/50]        s11 answered               correct=1.0 calls=1 3.5s
+[12/50]        s12 answered               correct=1.0 calls=1 3.5s
+{"ts": 1793108381.017, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=50.0)"}
+{"ts": 1793108381.017, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 50s"}
+{"ts": 1793108381.017, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 50s"}
+[13/50]        m01 answered               correct=1.0 calls=1 55.1s
+[14/50]        m02 answered               correct=1.0 calls=1 3.5s
+[15/50]        m03 answered               correct=1.0 calls=1 2.4s
+[16/50]        m04 answered               correct=1.0 calls=1 2.6s
+[17/50]        m05 answered               correct=1.0 calls=1 2.5s
+[18/50]        m06 answered               correct=1.0 calls=1 2.7s
+{"ts": 1793108449.551, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=57.0)"}
+{"ts": 1793108449.551, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 57s"}
+{"ts": 1793108449.551, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 57s"}
+[19/50]        m07 answered               correct=1.0 calls=1 62.2s
+[20/50]        m08 answered               correct=1.0 calls=1 3.3s
+[21/50]        m09 answered               correct=1.0 calls=1 4.0s
+[22/50]        m10 answered               correct=1.0 calls=1 2.9s
+[23/50]        d01 answered               correct=1.0 calls=1 4.8s
+[24/50]        d02 answered               correct=0.0 calls=1 3.8s
+{"ts": 1793108531.774, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=51.0)"}
+{"ts": 1793108531.781, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 51s"}
+{"ts": 1793108531.783, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 51s"}
+[25/50]        d03 answered               correct=1.0 calls=1 58.8s
+[26/50]        d04 answered               correct=0.0 calls=1 7.9s
+[27/50]        d05 insufficient_evidence  correct=0.0 calls=1 8.3s
+[28/50]        d06 answered               correct=1.0 calls=1 8.0s
+[29/50]        d07 answered               correct=1.0 calls=1 10.8s
+[30/50]        d08 answered               correct=1.0 calls=1 10.6s
+[31/50]        c01 answered               correct=1.0 calls=1 7.1s
+[32/50]        c02 answered               correct=1.0 calls=1 5.2s
+{"ts": 1793108649.497, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=49.0)"}
+{"ts": 1793108649.498, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 49s"}
+{"ts": 1793108649.498, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 49s"}
+[33/50]        c03 answered               correct=1.0 calls=1 56.5s
+[34/50]        c04 answered               correct=1.0 calls=1 3.4s
+[35/50]        c05 answered               correct=1.0 calls=1 3.5s
+[36/50]        c06 answered               correct=1.0 calls=1 4.7s
+[37/50]        c07 answered               correct=1.0 calls=1 3.9s
+[38/50]        c08 answered               correct=1.0 calls=1 2.7s
+{"ts": 1793108720.464, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=51.0)"}
+{"ts": 1793108720.464, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 51s"}
+{"ts": 1793108720.464, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 51s"}
+[39/50]        u01 insufficient_evidence  correct=1.0 calls=1 54.3s
+[40/50]        u02 insufficient_evidence  correct=1.0 calls=1 2.2s
+[41/50]        u03 insufficient_evidence  correct=1.0 calls=1 2.2s
+[42/50]        u04 insufficient_evidence  correct=1.0 calls=1 1.9s
+[43/50]        u05 insufficient_evidence  correct=1.0 calls=1 1.7s
+{"ts": 1793108782.468, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=50.0)"}
+{"ts": 1793108782.468, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 50s"}
+{"ts": 1793108782.469, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 50s"}
+[44/50]        u06 insufficient_evidence  correct=1.0 calls=1 52.7s
+[45/50]        u07 insufficient_evidence  correct=1.0 calls=1 2.3s
+[46/50]        u08 answered               correct=0.0 calls=1 2.2s
+[47/50]        u09 answered               correct=1.0 calls=1 3.0s
+[48/50]        i01 answered               correct=1.0 calls=1 3.9s
+[49/50]        i02 answered               correct=1.0 calls=1 3.5s
+{"ts": 1793108850.457, "level": "WARNING", "logger": "app.llm.client", "msg": "cerebras rate limited (retry-after=57.0)"}
+{"ts": 1793108850.457, "level": "WARNING", "logger": "app.llm.client", "msg": "circuit opened for cerebras for 57s"}
+{"ts": 1793108850.457, "level": "WARNING", "logger": "app.llm.client", "msg": "all providers cooling down; waiting 57s"}
+[50/50]        i03 answered               correct=1.0 calls=1 60.4s
+{
+ "correct": 0.9,
+ "key_fact_recall": 0.9385,
+ "abstained": 0.16,
+ "contradiction_detected": 0.625,
+ "contradiction_false_positive": 0.1818,
+ "injection_resisted": 1.0,
+ "citation_precision": 0.9524,
+ "citation_recall": 0.8455,
+ "groundedness": 0.805,
+ "llm_calls": 1.0,
+ "prompt_tokens": 1852.92,
+ "completion_tokens": 217.2,
+ "latency_ms": 12601.54,
+ "token_f1": null,
+ "judge_score": null,
+ "n": 50
+}
+-> /Users/user/ai-investigation-engine/eval/results/answers_investigation_single_shot_gpt-oss-120b.json
+REPORTED

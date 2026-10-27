@@ -144,7 +144,10 @@ def verify_answer(
         status = "insufficient_evidence"
         warnings.append("Weak evidence and weakly supported claims; abstaining.")
     elif status == "answered" and not checks:
-        warnings.append("Answer has no citations.")
+        # Strict grounding: an answer that cites nothing cannot be verified, so it is not presented
+        # as an answer (this is how invented "facts" without sources are caught).
+        status = "insufficient_evidence"
+        warnings.append("The draft answer cited no evidence, so it could not be verified; abstaining.")
 
     contradictions = [c for c in (submitted.get("contradictions") or []) if isinstance(c, dict)]
     covered = " ".join(str(c.get("description", "")) for c in contradictions).lower()

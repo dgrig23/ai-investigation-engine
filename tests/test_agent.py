@@ -227,3 +227,15 @@ def test_citation_lists_are_split():
     from app.agent.verify import normalize_llm_text
 
     assert normalize_llm_text("delayed [ S6 , S13 ] and [S2;S4]") == "delayed [S6][S13] and [S2][S4]"
+
+
+def test_submission_written_as_text_is_parsed(store, retriever, corpus):
+    text = '{"answer": "Not in the documents.", "status": "insufficient_evidence", "claims": []}'
+    result = _agent(store, retriever, [text]).run("What was the financial loss?", corpus="t")
+    assert result["status"] == "insufficient_evidence" and result["answer"] == "Not in the documents."
+
+
+def test_answer_without_citations_abstains(store, retriever, corpus):
+    result = _agent(store, retriever, ["PayFlex charges roughly 12 EUR per connection."]).run("PayFlex fee?", corpus="t")
+    assert result["status"] == "insufficient_evidence"
+    assert any("cited no evidence" in w for w in result["warnings"])
