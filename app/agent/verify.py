@@ -34,7 +34,9 @@ def normalize_llm_text(text: str) -> str:
     """Models often write 'CHG‑1042' with a non-breaking hyphen (U+2011), '1 800' with a narrow
     space or '[ S1 ]' with spaces. Normalizing keeps IDs, numbers and citations comparable."""
     text = text.translate(_UNICODE_FIXES)
-    return re.sub(r"\[\s*(S\d+)\s*\]", r"[\1]", text)
+    # "[ S6 , S13 ]" or "[S6, S13]" -> "[S6][S13]"
+    return re.sub(r"\[\s*(S\d+(?:\s*[,;]\s*S\d+)*)\s*\]",
+                  lambda m: "".join(f"[{sid}]" for sid in re.findall(r"S\d+", m.group(1))), text)
 
 
 EXACT_TOKEN_RE = re.compile(r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{1,2}:\d{2}\b|\b\d[\d,]*(?:\.\d+)?%?")

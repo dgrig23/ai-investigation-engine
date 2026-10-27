@@ -221,3 +221,9 @@ def test_conflict_hint_names_the_most_reliable_source():
     hint = next(h for h in find_conflicts(reg.all()) if h.attribute == "duration")
     assert hint.most_reliable[0] == "107 min" and hint.most_reliable[1] == "S3"
     assert "most reliable: 107 min [S3]" in hint.describe()
+
+
+def test_citation_lists_are_split():
+    from app.agent.verify import normalize_llm_text
+
+    assert normalize_llm_text("delayed [ S6 , S13 ] and [S2;S4]") == "delayed [S6][S13] and [S2][S4]"

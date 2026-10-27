@@ -49,7 +49,10 @@ class ConflictHint:
     most_reliable: tuple[str, str, str] | None = None  # (value, evidence id, why)
 
     def describe(self) -> str:
-        vals = "; ".join(f"{v} [{sid}]" for v, sid in self.values)
+        grouped: dict[str, list[str]] = {}
+        for value, sid in self.values:  # "107 min [S1, S3]; 45 min [S5]"
+            grouped.setdefault(value, []).append(sid)
+        vals = "; ".join(f"{v} [{', '.join(sids)}]" for v, sids in grouped.items())
         text = f"{self.entity} {self.attribute}: {vals}"
         if self.most_reliable:
             value, sid, why = self.most_reliable
