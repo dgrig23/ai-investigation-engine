@@ -277,3 +277,27 @@ def test_list_documents_tool(store, retriever, corpus):
     assert "1 postmortem" in result_event["message"]
     tool_replies = [m["content"] for m in agent.llm.calls[-1]["messages"] if m["role"] == "tool"]
     assert any("t:pm.md" in r for r in tool_replies)
+
+
+def test_version_numbers_dates_and_empty_claims():
+    from app.agent.verify import verify_answer
+
+    reg = EvidenceRegistry()
+    reg.add(Chunk(chunk_id="a", doc_id="chg", corpus="t", position=0, title="Change record CHG-1053",
+                  text="Roll back fraud model v3.2 to v3.1 at 15:31 UTC.", metadata={"date": "2026-03-12"}))
+    ok = check_claim("CHG-1053 rolled back model v3.2 to v3.1 at 15:31 UTC on 2026-03-12", ["S1"], reg)
+    assert ok.missing_tokens == [] and ok.support == "supported"
+    out = verify_answer({"answer": "Rolled back at 15:31 [S1].", "status": "answered", "claims": [
+        {"statement": "[S1]", "citations": ["S1"]},
+        {"statement": "CHG-1053 rolled back the fraud model at 15:31 UTC", "citations": ["S1"]}]}, reg, [], 0.0, -4.0)
+    assert out["status"] == "answered" and len(out["claims"]) == 1
+
+
+def test_one_unverified_claim_makes_answer_partial():
+    from app.agent.verify import verify_answer
+
+    reg = _registry_with("PayFlex charges per persistent connection. Reducing the pool saves EUR 1,800 per month.")
+    out = verify_answer({"answer": "x", "status": "answered", "claims": [
+        {"statement": "PayFlex charges per persistent connection", "citations": ["S1"]},
+        {"statement": "The fee is about 12 EUR per connection", "citations": ["S1"]}]}, reg, [], 0.0, -4.0)
+    assert out["status"] == "partial" and "could not be verified" in out["warnings"][0]

@@ -42,7 +42,11 @@ def normalize_llm_text(text: str) -> str:
                   lambda m: "".join(f"[{sid}]" for sid in re.findall(r"S\d+", m.group(1))), text)
 
 
-EXACT_TOKEN_RE = re.compile(r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{1,2}:\d{2}\b|\b\d[\d,]*(?:\.\d+)?%?")
+# Facts that must appear verbatim in a cited source: IDs (CHG-1042), ISO dates, times (14:05) and
+# free-standing numbers. Numbers glued to letters (v3.2, gpt-4) are part of a name, not a quantity.
+EXACT_TOKEN_RE = re.compile(
+    r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}:\d{2}\b|(?<![\w.\-])\d[\d,]*(?:\.\d+)?%?(?![\w.]*\d)"
+)
 CITATION_RE = re.compile(r"\[(S\d+)\]")
 
 
@@ -64,7 +68,8 @@ def _norm_number(tok: str) -> str:
 def _token_in(token: str, text: str) -> bool:
     """Whole-token match: '0' must not match inside '2052'; '1,800' matches '1800'."""
     tok = re.escape(_norm_number(token))
-    return re.search(rf"(?<![\w.]){tok}(?![\w])", text.replace(",", "")) is not None
+    # Not part of a longer number, a version (v3.2) or a date/range (2026-03-12): "12" must stand alone.
+    return re.search(rf"(?<![\w.])(?<!\d-){tok}(?![\w])(?!-\d)", text.replace(",", "")) is not None
 
 
 def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry, embedder=None) -> ClaimCheck:
@@ -74,7 +79,9 @@ def check_claim(statement: str, citations: list[str], registry: EvidenceRegistry
         return ClaimCheck(statement, [], "unsupported", invalid_citations=invalid)
 
     cited_texts = [registry.get(c).chunk.context_text() for c in valid]
-    joined = " ".join(cited_texts)
+    # Document-level context of the cited passages (title + date) also counts as the source.
+    doc_context = " ".join(f"{registry.get(c).chunk.title} {registry.get(c).chunk.metadata.get('date') or ''}" for c in valid)
+    joined = " ".join(cited_texts) + " " + doc_context
     # Ignore numbers that are only part of a citation marker like [S3].
     claim_wo_citations = CITATION_RE.sub("", statement)
     missing = []
@@ -165,7 +172,7 @@ def verify_answer(
         cites = [str(c).strip("[] ") for c in claim.get("citations") or []]
         statement = str(claim.get("statement", "")).strip()
         cites += [c for c in CITATION_RE.findall(statement) if c not in cites]
-        if statement:
+        if len(CITATION_RE.sub("", statement).split()) >= 3:  # skip empty "claims" like "[S1]"
             checks.append(check_claim(statement, cites, registry, embedder))
 
     supported = [c for c in checks if c.support == "supported"]
@@ -180,6 +187,8 @@ def verify_answer(
         status = "insufficient_evidence"
         warnings.append("No claim in the draft answer was supported by the cited evidence; abstaining.")
     elif status == "answered" and any(c.support == "unsupported" for c in checks):
+        # Some claims are grounded, some are not: present it as a partial answer and name what is unverified.
+        status = "partial"
         bad = [c.statement[:80] for c in checks if c.support == "unsupported"]
         warnings.append(f"{len(bad)} claim(s) could not be verified against the cited sources: " + " | ".join(bad))
     if status == "answered" and low_retrieval and groundedness < 0.5:
