@@ -26,15 +26,14 @@
    .venv/bin/python -m scripts.index_corpus --corpus incidents
    .venv/bin/python -m scripts.index_corpus --corpus hotpotqa
    ```
-3. **Hugging Face Space** - New Space → SDK *Docker* → hardware *CPU basic (free)*. The README's
-   front matter (`sdk: docker`, `app_port: 7860`) configures it. Push the repository:
+3. **Hugging Face token** - huggingface.co → Settings → Access Tokens → *New token* with **write**
+   permission; put it in `.env` as `HF_TOKEN` (git-ignored).
+4. **Deploy with one command** - creates the Space (Docker SDK, free CPU), copies the keys from `.env`
+   into the Space's encrypted *secrets*, and uploads only `app/`, `Dockerfile`, `pyproject.toml`, `README.md`:
    ```bash
-   git remote add space https://huggingface.co/spaces/<user>/<space-name>
-   git push space main
+   .venv/bin/python -m scripts.deploy_hf_space --space <hf-username>/ai-investigation-engine
    ```
-4. **Space secrets** (Settings → Variables and secrets): `QDRANT_URL`, `QDRANT_API_KEY`,
-   `GROQ_API_KEY` and/or `CEREBRAS_API_KEY`, `MISTRAL_API_KEY`, `GEMINI_API_KEY`, `LLM_PROVIDERS`,
-   `ADMIN_TOKEN`.
+   The README front matter (`sdk: docker`, `app_port: 7860`) configures the Space.
 5. Open the Space URL; `/api/health` shows the vector DB mode (`cloud`) and the active LLM providers.
 
 ## Free-tier limits and how the app handles them

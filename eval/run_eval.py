@@ -204,7 +204,8 @@ def main() -> None:
     parser.add_argument("--ids", default=None, help="comma-separated question ids")
     parser.add_argument("--sleep", type=float, default=2.0)
     parser.add_argument("--name", default=None, help="output file name (without .json)")
-    parser.add_argument("--judge", default=None, help="LLM provider(s) used as judge, e.g. cerebras")
+    parser.add_argument("--judge", default=None, help="judge as provider or provider:model, e.g. groq:qwen/qwen3.8-27b")
+    parser.add_argument("--model", default=None, help="override the model of the (single) provider, e.g. openai/gpt-oss-20b")
     args = parser.parse_args()
 
     setup_logging("WARNING")
@@ -215,16 +216,25 @@ def main() -> None:
         updates["chunk_strategy"] = args.strategy
     if args.providers:
         updates["llm_providers"] = args.providers
+    if args.model and args.providers:
+        updates[f"{args.providers.split(',')[0]}_model"] = args.model
     svc = Services(settings.model_copy(update=updates) if updates else settings)
 
     if args.kind == "retrieval":
         report = run_retrieval(svc, args.dataset, args.configs.split(","), args.limit, svc.settings.chunk_strategy)
         name = args.name or f"retrieval_{args.dataset}_{svc.settings.chunk_strategy}"
     else:
-        judge = LLMClient(svc.settings.model_copy(update={"llm_providers": args.judge})) if args.judge else None
+        judge = None
+        if args.judge:
+            provider, _, model = args.judge.partition(":")
+            jupd: dict[str, Any] = {"llm_providers": provider, "llm_max_output_tokens": 800}
+            if model:
+                jupd[f"{provider}_model"] = model
+            judge = LLMClient(svc.settings.model_copy(update=jupd))
         report = run_answers(svc, args.dataset, args.mode, args.limit, args.sleep,
                              args.ids.split(",") if args.ids else None, judge)
-        provider = (args.providers or svc.llm.describe()[0]["provider"] if svc.llm.describe() else "none").replace(",", "+")
+        described = svc.llm.describe()
+        provider = described[0]["model"].split("/")[-1] if described else "none"
         name = args.name or f"answers_{args.dataset}_{args.mode}_{provider}"
         o = report["summary"]["overall"]
         print(json.dumps({k: v for k, v in o.items()}, indent=1))
