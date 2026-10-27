@@ -223,7 +223,12 @@ function traceLine(ev) {
 }
 
 function linkCitations(text) {
-  return esc(text).replace(/\[(S\d+)\]/g, (m, id) => `<a class="cite" data-sid="${id}">[${id}]</a>`);
+  // Escape first (documents and model output are untrusted), then allow a tiny markdown subset.
+  return esc(text)
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+    .replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,;:]|$)/g, "$1<i>$2</i>")
+    .replace(/^\s*[*-]\s+/gm, "• ")
+    .replace(/\[(S\d+)\]/g, (m, id) => `<a class="cite" data-sid="${id}">[${id}]</a>`);
 }
 
 function renderResult(r) {
