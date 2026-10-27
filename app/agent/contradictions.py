@@ -46,10 +46,44 @@ class ConflictHint:
     entity: str
     attribute: str
     values: list[tuple[str, str]]  # (value, evidence id)
+    most_reliable: tuple[str, str, str] | None = None  # (value, evidence id, why)
 
     def describe(self) -> str:
         vals = "; ".join(f"{v} [{sid}]" for v, sid in self.values)
-        return f"{self.entity} {self.attribute}: {vals}"
+        text = f"{self.entity} {self.attribute}: {vals}"
+        if self.most_reliable:
+            value, sid, why = self.most_reliable
+            text += f" - most reliable: {value} [{sid}] ({why})"
+        return text
+
+
+# How authoritative a document type is for facts about an incident (higher = more reliable).
+# A reviewed postmortem is written after the investigation; an initial report or a chat message is
+# written while facts are still unknown.
+DOC_TYPE_RELIABILITY = {
+    "postmortem": 5.0, "report": 4.5, "change_record": 4.0, "alerts": 4.0, "runbook": 3.5,
+    "incident_report": 3.0, "service_catalog": 2.5, "architecture": 2.5, "ops_report": 2.0,
+    "status_update": 2.0, "notes": 2.0, "chat_export": 1.5, "email": 1.0,
+}
+
+
+def source_reliability(ev: Evidence) -> tuple[float, str]:
+    """Score a source: document type, minus a penalty for drafts/preliminary numbers, plus recency."""
+    meta = ev.chunk.metadata
+    doc_type = str(meta.get("doc_type") or "document")
+    score = DOC_TYPE_RELIABILITY.get(doc_type, 2.0)
+    reasons = [doc_type.replace("_", " ")]
+    label = f"{ev.chunk.title} {meta.get('status', '')}".lower()
+    opening = ev.chunk.text[:200].lower()
+    if any(w in label for w in ("draft", "initial", "preliminary")) or any(
+            w in opening for w in ("draft", "preliminary", "not yet confirmed")):
+        score -= 1.5
+        reasons.append("draft/preliminary")
+    date_int = meta.get("date_int") or 0
+    if date_int:
+        score += (date_int % 10000) / 100000  # tiny tie-breaker: newer wins between equal types
+        reasons.append(str(meta.get("date")))
+    return score, ", ".join(reasons)
 
 
 def _minutes(number: str, unit: str) -> float:
@@ -95,6 +129,7 @@ def _similar_cause(a: str, b: str) -> bool:
 
 
 def find_conflicts(evidence: list[Evidence]) -> list[ConflictHint]:
+    by_sid = {ev.sid: ev for ev in evidence}
     facts = [f for ev in evidence for f in extract_facts(ev)]
     groups: dict[tuple[str, str], list[Fact]] = {}
     for f in facts:
@@ -111,5 +146,9 @@ def find_conflicts(evidence: list[Evidence]) -> list[ConflictHint]:
                 conflicting.setdefault(a.sid + a.value, a)
                 conflicting.setdefault(b.sid + b.value, b)
         if conflicting:
-            hints.append(ConflictHint(entity, attribute, [(f.value, f.sid) for f in conflicting.values()]))
+            ranked = sorted(conflicting.values(), key=lambda f: -source_reliability(by_sid[f.sid])[0])
+            best = ranked[0]
+            why = source_reliability(by_sid[best.sid])[1]
+            hints.append(ConflictHint(entity, attribute, [(f.value, f.sid) for f in conflicting.values()],
+                                      most_reliable=(best.value, best.sid, why)))
     return hints

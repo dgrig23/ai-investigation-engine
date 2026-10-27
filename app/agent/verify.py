@@ -31,9 +31,10 @@ _UNICODE_FIXES = str.maketrans({
 
 
 def normalize_llm_text(text: str) -> str:
-    """Models often write 'CHG‑1042' with a non-breaking hyphen (U+2011) or '1 800' with a narrow
-    space. Normalizing keeps IDs and numbers comparable with the source documents."""
-    return text.translate(_UNICODE_FIXES)
+    """Models often write 'CHG‑1042' with a non-breaking hyphen (U+2011), '1 800' with a narrow
+    space or '[ S1 ]' with spaces. Normalizing keeps IDs, numbers and citations comparable."""
+    text = text.translate(_UNICODE_FIXES)
+    return re.sub(r"\[\s*(S\d+)\s*\]", r"[\1]", text)
 
 
 EXACT_TOKEN_RE = re.compile(r"\b[A-Z]{2,6}-\d{2,6}\b|\b\d{1,2}:\d{2}\b|\b\d[\d,]*(?:\.\d+)?%?")

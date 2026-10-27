@@ -19,6 +19,7 @@ from app.config import DATA_DIR, get_settings
 from app.index.bm25 import tokenize
 from app.index.embeddings import CachedPassageEmbedder
 from app.ingestion.metadata import extract_entities
+from app.ingestion.pipeline import make_doc_id
 from app.models import Document
 from app.observability import setup_logging
 from app.services import Services
@@ -28,13 +29,15 @@ HOTPOT_DOCS = DATA_DIR / "processed" / "hotpotqa_docs.jsonl"
 EMBED_CACHE = DATA_DIR / "cache" / "hotpotqa_embeddings.npz"
 
 
-def index_incidents(svc: Services) -> None:
+def index_incidents(svc: Services, force: bool = False) -> None:
     files = sorted(p for p in INCIDENTS_DIR.rglob("*") if p.is_file())
     if not files:
         raise SystemExit("No corpus files. Run: python -m scripts.generate_incident_corpus")
     counts: dict[str, int] = {}
     lengths = []
     for path in files:
+        if force:  # re-ingest from scratch (e.g. after adding a metadata field); only this corpus is touched
+            svc.ingestion.delete(make_doc_id("incidents", path.name))
         res = svc.ingestion.ingest_file(path.name, path.read_bytes(), corpus="incidents", protected=True)
         counts[res.status] = counts.get(res.status, 0) + 1
         extra = f" duplicate_of={res.duplicate_of}" if res.duplicate_of else ""
@@ -84,7 +87,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus", choices=["incidents", "hotpotqa"], required=True)
     parser.add_argument("--strategy", choices=["structure", "fixed"], default=None)
-    parser.add_argument("--reset", action="store_true", help="delete this strategy's collections first")
+    parser.add_argument("--reset", action="store_true", help="delete this strategy's collections first (ALL corpora)")
+    parser.add_argument("--force", action="store_true", help="incidents: re-ingest every file even if unchanged")
     parser.add_argument("--limit", type=int, default=None, help="index only the first N HotpotQA docs")
     parser.add_argument("--embed-only", action="store_true", help="HotpotQA: only compute and cache embeddings")
     args = parser.parse_args()
@@ -100,7 +104,7 @@ def main() -> None:
     if args.reset:
         svc.store.reset()
     if args.corpus == "incidents":
-        index_incidents(svc)
+        index_incidents(svc, args.force)
     else:
         index_hotpotqa(svc, args.limit, args.embed_only)
     print(f"total chunks in collection: {svc.store.count_chunks()}")

@@ -205,3 +205,19 @@ def test_llm_client_waits_when_all_providers_cool_down(settings, monkeypatch):
     client.providers[0].open_until = __import__("time").time() + 5  # rate-limited for 5 more seconds
     resp = client.chat([{"role": "user", "content": "hi"}])
     assert resp.content == "hello" and slept and 4 <= slept[0] <= 6
+
+
+def test_conflict_hint_names_the_most_reliable_source():
+    reg = EvidenceRegistry()
+    reg.add(Chunk(chunk_id="a", doc_id="initial", corpus="t", position=0, title="Incident report INC-2041",
+                  text="The incident lasted approximately 60 minutes.",
+                  metadata={"doc_type": "incident_report", "status": "initial", "date": "2026-03-12", "date_int": 20260312}))
+    reg.add(Chunk(chunk_id="b", doc_id="draft", corpus="t", position=0, title="Postmortem PM-2041 (draft v0.9)",
+                  text="Status: DRAFT. The incident lasted 102 minutes.",
+                  metadata={"doc_type": "postmortem", "status": "draft", "date": "2026-03-16", "date_int": 20260316}))
+    reg.add(Chunk(chunk_id="c", doc_id="final", corpus="t", position=0, title="Postmortem PM-2041",
+                  text="Status: Final. The initial suspicion was wrong. The incident lasted 107 minutes.",
+                  metadata={"doc_type": "postmortem", "date": "2026-03-18", "date_int": 20260318}))
+    hint = next(h for h in find_conflicts(reg.all()) if h.attribute == "duration")
+    assert hint.most_reliable[0] == "107 min" and hint.most_reliable[1] == "S3"
+    assert "most reliable: 107 min [S3]" in hint.describe()

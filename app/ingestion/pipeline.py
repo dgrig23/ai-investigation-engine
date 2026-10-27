@@ -164,6 +164,7 @@ class IngestionService:
             "source": doc.source,
             "format": doc.format,
             "version": version,
+            "status": doc.metadata.get("status"),  # e.g. draft / initial / final (used to rank sources)
         }
         chunks = []
         for span in spans:
