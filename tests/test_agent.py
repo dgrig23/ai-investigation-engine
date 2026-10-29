@@ -319,3 +319,15 @@ def test_years_multipart_ids_and_commentary():
     assert len(checks) == 2  # the commentary sentence is tolerated (1 of 3 ungrounded)
     checks, _ = attribute_citations("StarReels games loaded slowly because of an outage at StarReels. It lasted 45 minutes.", reg)
     assert checks == []  # an ungrounded sentence with a number is never tolerated
+
+
+def test_conflicting_counts_are_detected():
+    reg = EvidenceRegistry()
+    reg.add(Chunk(chunk_id="a", doc_id="pm", corpus="t", position=0, title="Postmortem PM-2041",
+                  text="In total 41,300 deposit transactions were delayed and 2,140 deposits failed."))
+    reg.add(Chunk(chunk_id="b", doc_id="weekly", corpus="t", position=0, title="Weekly report",
+                  text="INC-2041: 38000 transactions were delayed; 2140 deposits failed."))
+    hints = {(h.entity, h.attribute): h for h in find_conflicts(reg.all())}
+    assert ("INC-2041", "transactions delayed") in hints  # 41300 vs 38000: a real conflict
+    assert {v for v, _ in hints[("INC-2041", "transactions delayed")].values} == {"41300", "38000"}
+    assert ("INC-2041", "deposits failed") not in hints  # "2,140" and "2140" are the same number

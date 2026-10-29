@@ -27,6 +27,12 @@ covers my own role, how the AI was used, and the problems we found by running th
 - **Added XML support.** I implemented `.xml` as the ninth input format by completing the
   `load_xml` loader from a skeleton the assistant provided: the parse-error handling, which elements
   count as text, and how the paragraphs are joined. The assistant integrated it and added the test.
+- **Added search filters to the API.** I extended `GET /api/search` with a document-type filter and
+  a validated date range, passed through to the retriever's Qdrant filters (completed from a skeleton;
+  the assistant caught one bug in my version, returning the raw result object instead of JSON).
+- **Extended the contradiction detector.** I added a fourth conflict type, affected counts (e.g.
+  delayed transactions), completing the extraction loop from a skeleton the assistant provided: the
+  number group, removing thousands separators so 41,300 and 41300 are equal, and recording the fact.
 - **Own the code.** I am going through the codebase module by module (ingestion, indexing, hybrid
   retrieval, agent, verification, evaluation) so that I can explain every design decision and change
   the code without AI assistance.

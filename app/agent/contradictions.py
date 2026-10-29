@@ -28,6 +28,11 @@ START_RE = re.compile(
     re.I,
 )
 ROOT_CAUSE_RE = re.compile(r"root cause\s*(?:was|is|:|\u2014|-)\s*([^.\n]{12,180})", re.I)
+COUNT_RE = re.compile(
+    r"(\d[\d,]*)\s+(?:deposit\s+|withdrawal\s+)?(transactions|deposits|withdrawals|requests|players)"
+    r"\s+(?:were\s+|was\s+)?(delayed|failed|affected)",
+    re.I,
+)
 _WORD = re.compile(r"[a-z0-9]+")
 _STOP = {"the", "a", "an", "of", "to", "in", "on", "and", "by", "was", "is", "that", "for", "with", "from"}
 
@@ -122,6 +127,11 @@ def extract_facts(ev: Evidence) -> list[Fact]:
     for m in ROOT_CAUSE_RE.finditer(text):
         if entity := _entity_at(text, m.start(), default):
             facts.append(Fact(entity, "root cause", m.group(1).strip(), ev.sid, ev.chunk.doc_id))
+    for m in COUNT_RE.finditer(text):
+        if entity := _entity_at(text, m.start(), default):
+            number = m.group(1).replace(",", "")
+            attribute = f"{m.group(2).lower()} {m.group(3).lower()}"  # e.g. "transactions delayed"
+            facts.append(Fact(entity, attribute, number, ev.sid, ev.chunk.doc_id))
     return facts
 
 

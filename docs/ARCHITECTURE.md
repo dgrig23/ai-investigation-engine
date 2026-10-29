@@ -127,7 +127,8 @@ query ─┬─ dense: bge-small-en-v1.5 (ONNX, CPU), cosine, top 40 ─┐
   plus weak support also abstains. If the model writes its final JSON as text instead of a tool call, it
   is parsed as the submission.
 - **Contradictions** (`contradictions.py`): rule-based extraction of (incident, attribute, value) facts -
-  duration, start time, root cause - compared across *different* documents. Conflicts are shown to the
+  duration, start time, root cause and affected counts (e.g. "41,300 transactions delayed", where the
+  counted thing and the outcome are part of the attribute) - compared across *different* documents. Conflicts are shown to the
   model during the investigation and merged into the answer if the model omitted them. The model is
   told how to weigh sources (final postmortem > initial report > chat; newer > older).
 - **Prompt injection** (`security.py`): documents are untrusted. Pattern detection at ingestion and
