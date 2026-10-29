@@ -112,3 +112,17 @@ def test_fact_matching_tolerates_formatting():
     assert m.fact_present("usage exceeds 80 % for 5 minutes", "80%")
     assert m.fact_present("CHG‑1042 was deployed", "CHG-1042")
     assert not m.fact_present("usage exceeds 8 % for 5 minutes", "80%")
+
+
+def test_search_filters_by_type_and_date(client):
+    march = b"---\ndoc_type: postmortem\ndate: 2026-03-12\n---\n# Deposit delays\n\nDeposits were delayed by pool exhaustion."
+    april = b"---\ndoc_type: incident_report\ndate: 2026-04-02\n---\n# Deposit delays again\n\nDeposits were delayed again."
+    client.post("/api/documents", files=[("files", ("march.md", march, "text/markdown")),
+                                         ("files", ("april.md", april, "text/markdown"))])
+    params = {"q": "deposit delays", "corpus": "uploads", "rerank": False}
+    assert {h["doc_id"] for h in client.get("/api/search", params=params).json()["hits"]} == {"uploads:march.md", "uploads:april.md"}
+    by_type = client.get("/api/search", params={**params, "doc_type": "postmortem"}).json()["hits"]
+    assert [h["doc_id"] for h in by_type] == ["uploads:march.md"]
+    by_date = client.get("/api/search", params={**params, "date_from": "2026-04-01", "date_to": "2026-04-30"}).json()["hits"]
+    assert [h["doc_id"] for h in by_date] == ["uploads:april.md"]
+    assert client.get("/api/search", params={**params, "date_from": "April 1"}).status_code == 422

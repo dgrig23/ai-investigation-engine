@@ -85,7 +85,7 @@ docs/          ARCHITECTURE.md · EVALUATION.md · DEPLOYMENT.md · AI_USAGE.md
 | POST | `/api/documents` | upload files (multipart `files`, `corpus`) |
 | PUT | `/api/documents/{doc_id}` | replace content → new version |
 | DELETE | `/api/documents/{doc_id}` | delete document and chunks |
-| GET | `/api/search?q=&mode=&rerank=&mmr=` | raw hybrid search with every stage's scores |
+| GET | `/api/search?q=&mode=&rerank=&mmr=&doc_type=&date_from=&date_to=` | raw hybrid search with every stage's scores; optional document-type and date-range filters |
 | POST | `/api/ask` | `{question, corpus, mode}` → answer, claims, contradictions, sources, trace |
 | POST | `/api/ask/stream` | same as Server-Sent Events (live agent steps) |
 
@@ -124,7 +124,7 @@ failures), so the report adds held-out HotpotQA results and a full error analysi
 - Free tiers: the Space sleeps after inactivity (first request after sleep takes ~1 minute), and LLM
   daily quotas can run out under heavy use - the app then returns the retrieved evidence instead of an
   answer and says so.
-- Contradiction detection by rules covers durations, start times and root causes; other conflicts
+- Contradiction detection by rules covers durations, start times, root causes and affected counts; other conflicts
   rely on the LLM.
 - Metadata extraction is rule-based and tuned to identifiers like `INC-1234`; other organizations
   would need their own patterns.

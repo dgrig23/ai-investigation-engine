@@ -258,9 +258,15 @@ def delete_document(doc_id: str, x_admin_token: str | None = Header(None), svc: 
 @app.get("/api/search")
 def search(q: str = Query(..., min_length=2, max_length=500), corpus: str | None = None,
            mode: str = Query("hybrid", pattern="^(dense|sparse|hybrid)$"), k: int = Query(8, ge=1, le=30),
-           rerank: bool = True, mmr: bool = True, svc: Services = Depends(services)) -> dict[str, Any]:
+           rerank: bool = True, mmr: bool = True,
+           doc_type: str | None = None,
+           date_from: str | None = Query(None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
+           date_to: str | None = Query(None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
+           svc: Services = Depends(services)) -> dict[str, Any]:
     cfg = svc.retrieval_config.with_overrides(mode=mode, final_k=k, use_reranker=rerank, use_mmr=mmr)
-    res = svc.retriever.search(q, corpus=corpus or None, config=cfg)
+    res = svc.retriever.search(q, corpus=corpus or None,
+                               doc_types=[doc_type] if doc_type else None,
+                               date_from=date_from, date_to=date_to, config=cfg)
     return {"query": q, "timings_ms": {k: round(v, 1) for k, v in res.timings_ms.items()},
             "best_rerank_score": res.best_rerank_score,
             "hits": [{"chunk_id": h.chunk.chunk_id, "doc_id": h.chunk.doc_id, "title": h.chunk.title,
