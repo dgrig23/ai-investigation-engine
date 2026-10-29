@@ -6,14 +6,8 @@ covers my own role, how the AI was used, and the problems we found by running th
 
 ## My role
 
-- **Owned the direction and scope.** I chose the approach: HotpotQA for scale and measurable
-  multi-hop retrieval, plus a synthetic incident corpus that reproduces the brief's payment-delay
-  example. With two days to the deadline I set the order of work: every mandatory requirement first,
-  bonuses only after that.
-- **Changed the plan on cost.** The first proposal included a small paid LLM budget. I rejected it
-  because section 4 requires the project to run without paid infrastructure. That decision shaped the
-  LLM layer: an all-free provider chain (Groq, Cerebras, Gemini) with rate-limit handling, fallback
-  and caching, which later proved itself when free quotas ran out during evaluation.
+- **Owned the direction and scope.** I chose the overall approach and the datasets, and set the
+  priorities: all mandatory requirements first, bonuses after.
 - **Ran all infrastructure and secrets.** I created and configured the GitHub repository (including
   the CI workflow permission), the Qdrant Cloud cluster, the Groq, Cerebras and Google AI Studio API
   keys, and the Render service. I kept every secret myself, in my local `.env` and in Render's
