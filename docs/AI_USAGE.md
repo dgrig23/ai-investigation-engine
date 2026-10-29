@@ -24,6 +24,9 @@ covers my own role, how the AI was used, and the problems we found by running th
   brief, refused to leave the two missing bonus items (embedding-model comparison, load test) undone,
   and required a full re-check before submission: tests, CI, a secret scan of the git history, the
   documentation, and the live demo end to end.
+- **Added XML support.** I implemented `.xml` as the ninth input format by completing the
+  `load_xml` loader from a skeleton the assistant provided: the parse-error handling, which elements
+  count as text, and how the paragraphs are joined. The assistant integrated it and added the test.
 - **Own the code.** I am going through the codebase module by module (ingestion, indexing, hybrid
   retrieval, agent, verification, evaluation) so that I can explain every design decision and change
   the code without AI assistance.

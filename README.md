@@ -19,7 +19,7 @@ when the evidence is not there.
 
 | Requirement | How it is met |
 |---|---|
-| ≥ 3 file formats | PDF, DOCX, Markdown, HTML, TXT, CSV, JSON, JSONL (`app/ingestion/loaders.py`) |
+| ≥ 3 file formats | PDF, DOCX, Markdown, HTML, TXT, CSV, JSON, JSONL, XML (`app/ingestion/loaders.py`) |
 | Text + metadata extraction | per-format metadata (PDF info, DOCX properties, HTML meta, front matter) + rule-based entities, dates, doc type |
 | Chunking, 2 strategies compared | fixed sliding window vs structure-aware chunker (`chunking.py`), compared in the evaluation |
 | Duplicates | exact (SHA-256) and near-duplicates (MinHash + LSH, implemented from scratch) |

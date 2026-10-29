@@ -2,7 +2,7 @@
 
 Every loader produces "light markdown": headings become `#` lines and paragraphs are
 separated by blank lines. That shared shape lets one structure-aware chunker work for
-every format. Supported formats: PDF, DOCX, Markdown, HTML, TXT, CSV, JSON, JSONL.
+every format. Supported formats: PDF, DOCX, Markdown, HTML, TXT, CSV, JSON, JSONL, XML.
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ import io
 import json
 import re
 import unicodedata
+import xml.etree.ElementTree as ET
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -217,6 +218,23 @@ def load_html(data: bytes) -> LoadedFile:
     return LoadedFile(text="\n\n".join(parts), metadata=meta, title=title)
 
 
+def load_xml(data: bytes) -> LoadedFile:
+    try:
+        root = ET.fromstring(data)
+    except ET.ParseError as exc:
+        raise DocumentParseError(f"Invalid XML: {exc}") from exc
+
+    paragraphs = []
+    for el in root.iter():
+        text = (el.text or "").strip()
+        if text:
+            paragraphs.append(text)
+
+    title_el = root.find(".//title")
+    title = title_el.text.strip() if title_el is not None and title_el.text else ""
+    return LoadedFile(text="\n\n".join(paragraphs), title=title)
+
+
 def _record_to_text(record: dict[str, Any]) -> str:
     """Flatten one record (CSV row / JSON object) to `key: value; key: value`."""
     if {"user", "text"} <= record.keys():  # chat-style export (e.g. Slack)
@@ -290,6 +308,7 @@ LOADERS: dict[str, Callable[[bytes], LoadedFile]] = {
     "txt": load_txt,
     "html": load_html,
     "htm": load_html,
+    "xml": load_xml,
     "csv": load_csv,
     "json": load_json,
     "jsonl": load_jsonl,

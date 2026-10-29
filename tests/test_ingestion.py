@@ -28,6 +28,16 @@ def test_html_strips_scripts_and_keeps_headings():
     assert loaded.metadata["date"] == "2026-01-01"
 
 
+def test_xml_elements_become_paragraphs():
+    loaded = load_file("report.xml", b"<report><title>Incident INC-1</title><body><p>Pool exhausted.</p>"
+                                     b"<p>Fixed at 15:31.</p></body></report>")
+    assert loaded.title == "Incident INC-1"
+    assert loaded.text == "Incident INC-1\n\nPool exhausted.\n\nFixed at 15:31."
+    assert loaded.metadata["format"] == "xml"
+    with pytest.raises(DocumentParseError):
+        load_file("broken.xml", b"<report><p>unclosed</report>")
+
+
 def test_csv_rows_become_records():
     loaded = load_file("log.csv", b"id,service\nCHG-1,api-gateway\nCHG-2,wallet-service\n")
     assert loaded.text.split("\n\n") == ["id: CHG-1; service: api-gateway", "id: CHG-2; service: wallet-service"]
